@@ -79,7 +79,8 @@
     </nav>
 
     <!-- 2. Hamburger Menu Overlay (Right-Side Slide-In) -->
-    <div id="main-menu" class="fixed inset-0 z-40 hidden justify-end menu-overlay">
+    <!-- WICHTIG: 'flex' Klasse HIER hinzugefügt, um das Menü korrekt anzuzeigen, wenn 'hidden' entfernt wird. -->
+    <div id="main-menu" class="fixed inset-0 z-40 hidden flex justify-end menu-overlay">
         <div 
             id="menu-content" 
             class="w-80 h-full bg-white shadow-2xl menu-slide-enter"
@@ -206,12 +207,13 @@
     </section>
     
     <!-- 6. Modal for Reservations (EmailJS integrated) -->
-    <div id="reservation-modal" class="fixed inset-0 z-50 hidden items-center justify-center modal-overlay" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <!-- WICHTIG: 'flex' Klasse HIER hinzugefügt, um das Modal korrekt anzuzeigen, wenn 'hidden' entfernt wird. -->
+    <div id="reservation-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center modal-overlay" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div 
             id="modal-content" 
             class="bg-white rounded-lg shadow-2xl overflow-hidden max-w-lg w-full m-4 relative menu-slide-enter"
         >
-            <!-- NEW: Close Button (X icon) in the top corner -->
+            <!-- Close Button (X icon) in the top corner -->
             <button 
                 onclick="toggleModal(false)" 
                 class="absolute top-4 right-4 p-2 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition duration-150"
@@ -339,20 +341,24 @@
          */
         function toggleMenu(show) {
             if (show) {
+                // 1. Show container instantly
                 mainMenu.classList.remove('hidden');
-                mainMenu.classList.add('flex');
+                
+                // 2. Start slide-in animation
                 setTimeout(() => {
                     menuContent.classList.remove('menu-slide-enter');
                     menuContent.classList.add('menu-slide-enter-active');
                 }, 10);
             } else {
+                // 1. Start slide-out animation
                 menuContent.classList.remove('menu-slide-enter-active');
                 menuContent.classList.add('menu-slide-leave-active');
+
+                // 2. Hide container after animation completes (300ms)
                 setTimeout(() => {
                     mainMenu.classList.add('hidden');
-                    mainMenu.classList.remove('flex');
                     menuContent.classList.remove('menu-slide-leave-active');
-                    menuContent.classList.add('menu-slide-enter');
+                    menuContent.classList.add('menu-slide-enter'); // Reset state for next time
                 }, 300);
             }
         }
@@ -363,35 +369,29 @@
          */
         function toggleModal(show) {
             if (show) {
+                // 1. Show container instantly
                 modal.classList.remove('hidden');
-                modal.classList.add('flex');
+                
+                // 2. Start slide-in animation
                 setTimeout(() => {
                     modalContent.classList.add('menu-slide-enter-active');
                     modalContent.classList.remove('menu-slide-enter');
                 }, 10);
                 reservationMessage.classList.add('hidden'); // Reset message on open
             } else {
+                // 1. Start slide-out animation
                 modalContent.classList.remove('menu-slide-enter-active');
                 modalContent.classList.add('menu-slide-leave-active');
+
+                // 2. Hide container after animation completes (300ms)
                 setTimeout(() => {
                     modal.classList.add('hidden');
-                    modal.classList.remove('flex');
                     modalContent.classList.remove('menu-slide-leave-active');
-                    modalContent.classList.add('menu-slide-enter');
+                    modalContent.classList.add('menu-slide-enter'); // Reset state for next time
                 }, 300);
             }
         }
         
         /**
          * Handles form submission and sends reservation data via EmailJS.
-         * @param {Event} event - The form submission event.
-         */
-        function sendReservation(event) {
-            event.preventDefault(); // Stop the default form submission
-
-            const form = document.getElementById('reservation-form');
-            
-            // 1. Show Loading State
-            reservationMessage.classList.remove('hidden', 'text-green-600', 'text-red-500');
-            reservationMessage.classList.add('flex', 'items-center', 'justify-center', 'text-gray-600');
-            reservationMessage.innerHTML = '<div cla
+  
