@@ -3,37 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TALEX | Premium Café & Brunch</title>
+    <title>TALEX | Gourmet Cuisine & Fine Dining</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 1. EmailJS Library (Required for sending emails) -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
     <style>
-        /* Defined Colors (TALEX Branding) */
-        .talex-blue { background-color: #005F73; }
-        .text-talex-blue { color: #005F73; }
-        .border-talex-blue { border-color: #005F73; }
-        .talex-orange { background-color: #E9D8A6; }
-        
-        /* Font Styling */
-        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        /* Defined Colors (TALEX Luxury Palette - Black/Gold) */
+        .bg-talex-deep-black { background-color: #000000; } /* Pure Black */
+        .bg-talex-charcoal { background-color: #1A1A1A; } /* Dark Charcoal for sections */
+        .bg-talex-dark-gray { background-color: #2C2C2C; } /* Slightly lighter for contrast */
+        .talex-gold-accent { background-color: #B8860B; } /* Rich, muted gold */
+        .text-talex-gold-accent { color: #B8860B; }
+        .border-talex-gold-accent { border-color: #B8860B; }
+        .text-off-white { color: #F5F5DC; } /* Off-white / Cream for main text */
 
-        /* Hero Background Image - Bright, inviting placeholder */
-        .hero-background {
-            background-image: url('https://placehold.co/1920x1080/4D7791/FFFFFF/png?text=Modern+Cafe+Interior+Sunlight');
-            background-size: cover;
-            background-position: center;
+        /* Font Styling */
+        body { 
+            font-family: 'Raleway', sans-serif; /* Modern, elegant sans-serif for body */
+            scroll-behavior: smooth; 
+            background-color: #000000; /* Global Black Background */
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif; /* Classic, luxurious serif for headings */
         }
 
-        /* Darker, Subtler Overlay for premium feel */
+        /* HERO BACKGROUND IMAGE - Aufgehellt */
+        .hero-background {
+            background-image: url('https://imgs.search.brave.com/H0u46hbT1_DTe-Dtp03HO1OTfycMIG_D0rOLOMBCCvI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cuZGlzaXRkZXV0c2NobGFuZC5pbmZvL2RlL3dwLWNvbnRlbnQvdXBsb2Fkcy9ibGljay1hdWYtZGVuLWp1bmdmZXJuc3RpZWcuanBn'); 
+            background-size: cover;        
+            background-position: center 35%; 
+            background-repeat: no-repeat;  
+            /* Von 0.3 auf 0.4 erhöht, damit das Bild subtil heller ist */
+            filter: brightness(0.4) contrast(1.2); 
+        }
+
+        /* Darker Overlay for premium feel and text contrast - Auch leicht aufgehellt */
         .gradient-overlay {
-            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 100%);
+            /* Von 0.95 auf 0.85 reduziert, damit mehr vom Bild durchscheint */
+            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.85) 100%);
         }
         
         /* Loading Spinner Animation */
         .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: #005F73;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-left-color: #B8860B; /* Gold Spinner */
             border-radius: 50%;
             width: 20px;
             height: 20px;
@@ -44,40 +65,63 @@
             to { transform: rotate(360deg); }
         }
         
+        /* ####################################################################### */
+        /* NEUE CSS ANIMATION FÜR SANFTES AUFTAUCHEN */
+        /* ####################################################################### */
+        .fade-in-section {
+            opacity: 0;
+            /* Animation: Name, Dauer, Timing-Funktion (elegant), Füllmodus (bleibt am Ende sichtbar) */
+            animation: fadeInSlideUp 1s cubic-bezier(0.19, 1, 0.22, 1) forwards; 
+            transform: translateY(40px);
+        }
+
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px); /* Startet 40px unter der Endposition */
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0); /* Endet an der korrekten Position */
+            }
+        }
+        /* ####################################################################### */
+
+
         /* Responsive Navigation Styling */
         @media (max-width: 640px) {
             .fixed-nav-wrapper {
-                padding-top: 0.5rem; /* pt-2 */
-                padding-bottom: 0.5rem; /* pb-2 */
+                padding-top: 0.5rem; 
+                padding-bottom: 0.5rem;
             }
         }
     </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-talex-deep-black text-off-white">
 
-    <!-- 1. Fixed Navigation Bar (Zweigeteiltes, zentriertes Layout) -->
-    <nav class="fixed top-0 left-0 w-full z-30 shadow-lg" style="background-color: rgba(255, 255, 255, 0.98);">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3"> 
+    <!-- 1. Fixed Navigation Bar (Wird nicht animiert, bleibt sofort sichtbar) -->
+    <nav class="fixed top-0 left-0 w-full z-30 shadow-2xl" style="background-color: rgba(0, 0, 0, 0.95); border-bottom: 1px solid rgba(184, 134, 11, 0.3);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4"> 
             
             <div class="flex flex-col items-center fixed-nav-wrapper">
                 
-                <!-- 1. Logo (Zentriert) -->
-                <a href="#hero" class="text-3xl font-black tracking-tighter text-talex-blue mb-1">
+                <!-- 1. Logo (Gold-Akzent) -->
+                <a href="#hero" class="text-4xl font-black tracking-widest text-talex-gold-accent mb-1" style="font-family: 'Playfair Display', serif;">
                     TALEX
                 </a>
 
-                <!-- 2. Navigationslinks & CTA (Darunter, zentriert, kleiner) -->
-                <div class="flex items-center justify-center space-x-4 sm:space-x-6 text-sm">
+                <!-- 2. Navigationslinks & CTA -->
+                <div class="flex items-center justify-center space-x-8 text-lg mt-2">
                     
-                    <!-- Navigationslinks (kleiner: text-sm) -->
-                    <a href="#about" class="font-medium text-gray-800 hover:text-talex-blue transition duration-150 py-1">Our Story</a>
-                    <a href="#hamburg" class="font-medium text-gray-800 hover:text-talex-blue transition duration-150 py-1">Location</a>
-                    <a href="menu.html" class="font-medium text-gray-800 hover:text-talex-blue transition duration-150 py-1">Menu</a>
+                    <!-- Navigationslinks -->
+                    <a href="#about" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Story</a>
+                    <a href="#hamburg" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Location</a>
+                    <a href="menu.html" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Menu</a>
                 
-                    <!-- Primary CTA Button (Jetzt ein Anker-Link zum neuen Sektion) -->
+                    <!-- Primary CTA Button (Gold Accent) -->
                     <a 
                         href="#reservation-section" 
-                        class="py-1.5 px-4 rounded-lg text-sm font-bold text-white transition duration-300 shadow-md talex-blue hover:opacity-90" 
+                        class="py-2 px-8 rounded-full text-base font-extrabold text-black transition duration-300 shadow-xl talex-gold-accent hover:opacity-90 uppercase tracking-wider" 
                         aria-label="Book a table"
                     >
                         RESERVE NOW
@@ -87,250 +131,189 @@
         </div>
     </nav>
 
-    <!-- 3. Hero Section (Full-screen welcome) - pt-24 um die neue Navigationshöhe zu berücksichtigen -->
-    <div id="hero" class="hero-background h-screen flex items-center justify-center pt-24">
+    <!-- 3. Hero Section (Die Sektion selbst ist der Hintergrund) -->
+    <div id="hero" class="hero-background h-screen flex items-center justify-center pt-24 relative overflow-hidden">
         <div class="gradient-overlay w-full h-full absolute top-0 left-0"></div>
 
-        <!-- Content Box -->
-        <div class="relative z-10 text-center p-6 sm:p-10 text-white max-w-2xl mx-4">
+        <!-- Content Box - Start der Animation (0.5s Verzögerung) -->
+        <div class="relative z-10 text-center p-6 sm:p-10 text-off-white max-w-4xl mx-4 fade-in-section" style="animation-delay: 0.5s;">
             
-            <p class="text-xl font-medium mb-4 uppercase tracking-widest text-talex-orange">
-                Gourmet Breakfast & Coffee Experience
+            <p class="text-2xl font-semibold mb-5 uppercase tracking-widest text-talex-gold-accent" style="font-family: 'Raleway', sans-serif;">
+                Experience Exquisite Dining
             </p>
 
-            <h1 class="text-7xl sm:text-8xl font-black mb-6 leading-tight">
-                Taste the Vibe of Hamburg.
+            <h1 class="text-7xl sm:text-9xl font-bold mb-8 leading-none relative z-10 tracking-tight" style="font-family: 'Playfair Display', serif;">
+                Taste the <br> Vibe of Hamburg.
             </h1>
 
-            <p class="text-2xl font-light mb-10 text-gray-200">
-                Located right at Jungfernstieg – where tradition meets modern culinary art.
+            <p class="text-2xl font-light mb-12 text-gray-300 relative z-10" style="font-family: 'Raleway', sans-serif;">
+                Located at Jungfernstieg – where tradition meets culinary artistry.
             </p>
             
         </div>
     </div>
     
-    <!-- 4. Content Section 1: Our Story / About Us -->
-    <section id="about" class="py-16 sm:py-24 bg-white">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <h2 class="text-4xl font-extrabold mb-6 text-talex-blue">
-                Our Story: Where Tradition Meets Trend
+    <!-- 4. Content Section 1: Our Story / About Us - Animation (1.0s Verzögerung) -->
+    <section id="about" class="py-24 sm:py-40 bg-talex-charcoal fade-in-section" style="animation-delay: 1.0s;">
+        <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-5xl font-bold mb-14 text-center text-white border-b-2 border-talex-gold-accent inline-block pb-2" style="font-family: 'Playfair Display', serif;">
+                Our Story
             </h2>
-            <p class="text-xl text-gray-600 mb-8">
-                TALEX was founded with a simple vision: to bring the freshness and cosmopolitan flair of Hamburg to the breakfast table. Located on the historic Jungfernstieg, we honor the city's heritage while offering contemporary, plant-forward options.
+            <p class="text-xl text-off-white mb-16 text-center max-w-3xl mx-auto leading-relaxed" style="font-family: 'Raleway', sans-serif;">
+                TALEX was founded with a singular vision: to bring the freshness and cosmopolitan flair of Hamburg to a refined dining experience. Situated on the historic Jungfernstieg, we honor the city's rich heritage while offering contemporary, seasonally-inspired dishes crafted with premium ingredients.
             </p>
-            <div class="grid md:grid-cols-3 gap-8 mt-12">
-                <div class="p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                    <p class="text-4xl font-bold text-talex-blue mb-2">10+</p>
-                    <p class="text-sm font-semibold uppercase text-gray-500">Years of Culinary Experience</p>
+            <div class="grid md:grid-cols-3 gap-16 mt-16 text-center">
+                <!-- Cards, die ebenfalls nach 1.0s erscheinen -->
+                <div class="p-8 rounded-xl shadow-2xl border border-gray-700 bg-talex-dark-gray hover:border-talex-gold-accent transition duration-300">
+                    <p class="text-6xl font-bold text-talex-gold-accent mb-4" style="font-family: 'Playfair Display', serif;">10+</p>
+                    <p class="text-sm font-semibold uppercase tracking-wider text-gray-400" style="font-family: 'Raleway', sans-serif;">Years of Culinary Excellence</p>
                 </div>
-                <div class="p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                    <p class="text-4xl font-bold text-talex-blue mb-2">95%</p>
-                    <p class="text-sm font-semibold uppercase text-gray-500">Locally Sourced Ingredients</p>
+                <div class="p-8 rounded-xl shadow-2xl border border-gray-700 bg-talex-dark-gray hover:border-talex-gold-accent transition duration-300">
+                    <p class="text-6xl font-bold text-talex-gold-accent mb-4" style="font-family: 'Playfair Display', serif;">95%</p>
+                    <p class="text-sm font-semibold uppercase tracking-wider text-gray-400" style="font-family: 'Raleway', sans-serif;">Locally Sourced & Fresh Ingredients</p>
                 </div>
-                <div class="p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                    <p class="text-4xl font-bold text-talex-blue mb-2">#1</p>
-                    <p class="text-sm font-semibold uppercase text-gray-500">Rated Coffee on the Alster</p>
+                <div class="p-8 rounded-xl shadow-2xl border border-gray-700 bg-talex-dark-gray hover:border-talex-gold-accent transition duration-300">
+                    <p class="text-6xl font-bold text-talex-gold-accent mb-4" style="font-family: 'Playfair Display', serif;">⭐⭐⭐⭐⭐</p>
+                    <p class="text-sm font-semibold uppercase tracking-wider text-gray-400" style="font-family: 'Raleway', sans-serif;">Top-Rated Dining Experience</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 5. Content Section 2: Hamburg Highlights -->
-    <section id="hamburg" class="py-16 sm:py-24 bg-gray-50">
-        <div class="max-w-4xl mx-auto px-4">
-            <h2 class="text-4xl font-extrabold mb-8 text-center text-talex-blue">
+    <!-- 5. Content Section 2: Hamburg Highlights - Animation (1.5s Verzögerung) -->
+    <section id="hamburg" class="py-24 sm:py-40 bg-talex-deep-black fade-in-section" style="animation-delay: 1.5s;">
+        <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-5xl font-bold mb-16 text-center text-white" style="font-family: 'Playfair Display', serif;">
                 Our Location: The Heart of Hamburg
             </h2>
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <!-- Image Card -->
+                <div class="p-4 bg-talex-dark-gray rounded-xl shadow-2xl border border-gray-700">
                     <img 
-                        src="https://placehold.co/600x400/005F73/FFFFFF/png?text=Binnenalster+View" 
+                        src="https://placehold.co/800x550/B8860B/FFFFFF/png?text=Alster+View+from+TALEX" 
                         alt="View of Binnenalster from Jungfernstieg" 
-                        class="rounded-xl shadow-2xl w-full"
+                        class="rounded-lg w-full"
                     />
                 </div>
+                <!-- Text Content -->
                 <div>
-                    <h3 class="text-3xl font-bold mb-4 text-gray-800">The Jungfernstieg Vibe</h3>
-                    <p class="text-lg text-gray-600 mb-6">
-                        Jungfernstieg is the pulse of Hamburg. Enjoy your freshly made waffle or Eggs Benedict while watching the Alster fountain and the busy city life. It’s more than just breakfast—it’s an experience steeped in Hanseatic culture.
+                    <h3 class="text-4xl font-bold mb-6 text-talex-gold-accent" style="font-family: 'Playfair Display', serif;">The Jungfernstieg Vibe</h3>
+                    <p class="text-xl text-off-white mb-10 leading-relaxed" style="font-family: 'Raleway', sans-serif;">
+                        Jungfernstieg is the vibrant pulse of Hamburg. Enjoy your exquisitely prepared meal or a finely crafted coffee while overlooking the serene Alster fountain and the bustling city life. It's more than just dining – it's an experience embedded in Hanseatic culture.
                     </p>
-                    <ul class="list-disc list-inside text-gray-700 space-y-2">
-                        <li>Direct view of the Binnenalster.</li>
-                        <li>Minutes from Rathausmarkt and Speicherstadt.</li>
-                        <li>Perfect meeting point for locals and visitors.</li>
+                    <ul class="text-lg text-gray-300 space-y-4 list-none">
+                        <li class="flex items-start"><span class="text-talex-gold-accent text-3xl mr-3 leading-none">•</span>Direct views of the Binnenalster.</li>
+                        <li class="flex items-start"><span class="text-talex-gold-accent text-3xl mr-3 leading-none">•</span>Minutes away from Rathausmarkt and the historic Speicherstadt.</li>
+                        <li class="flex items-start"><span class="text-talex-gold-accent text-3xl mr-3 leading-none">•</span>The perfect meeting point for discerning locals and visitors.</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
     
-    <!-- 6. New Reservation Section (Form is now embedded directly) -->
-    <section id="reservation-section" class="py-16 sm:py-24 bg-white">
+    <!-- 6. More About Jungfernstieg - Animation (2.0s Verzögerung) -->
+    <section id="more-info" class="py-24 sm:py-40 bg-talex-charcoal fade-in-section" style="animation-delay: 2.0s;">
+        <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-5xl font-bold mb-16 text-center text-white" style="font-family: 'Playfair Display', serif;">
+                Jungfernstieg: More Than Just a Street
+            </h2>
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                 <!-- Text Content -->
+                <div>
+                    <h3 class="text-4xl font-bold mb-6 text-talex-gold-accent" style="font-family: 'Playfair Display', serif;">Discover its Rich History</h3>
+                    <p class="text-xl text-off-white mb-10 leading-relaxed" style="font-family: 'Raleway', sans-serif;">
+                        From its beginnings as a promenade to its current status as a vibrant shopping and gastronomic hub, Jungfernstieg offers a unique blend of history and modernity. Explore the elegance of the Alsterarkaden and the lively atmosphere around the Binnenalster.
+                    </p>
+                    <a href="https://visitdeutschland.info/de/jungfernstieg" target="_blank" class="inline-block py-3 px-10 rounded-full text-lg font-bold text-black transition duration-300 shadow-xl talex-gold-accent hover:opacity-90">
+                        Mehr lesen über Hamburg
+                    </a>
+                </div>
+                <!-- Image Card -->
+                <div class="p-4 bg-talex-dark-gray rounded-xl shadow-2xl border border-gray-700 order-first lg:order-last">
+                    <img 
+                        src="https://placehold.co/800x550/B8860B/000000/png?text=Historic+Jungfernstieg" 
+                        alt="Impressions of Jungfernstieg" 
+                        class="rounded-lg w-full"
+                    />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Reservation Section - Animation (2.5s Verzögerung) -->
+    <section id="reservation-section" class="py-24 sm:py-40 talex-gold-accent text-black fade-in-section" style="animation-delay: 2.5s;">
         <div class="max-w-xl mx-auto px-4">
             <div class="text-center mb-10">
-                <h2 class="text-4xl font-extrabold text-talex-blue">
+                <h2 class="text-5xl font-bold text-black" style="font-family: 'Playfair Display', serif;">
                     Book Your Table
                 </h2>
-                <p class="text-lg text-gray-600 mt-2">
-                    Secure your spot for the best breakfast in town – directly here.
+                <p class="text-xl text-gray-800 mt-3" style="font-family: 'Raleway', sans-serif;">
+                    Secure your place for an unforgettable dining experience.
                 </p>
             </div>
             
-            <!-- Reservation Form: Note the ID and onsubmit handler -->
-            <form id="reservation-form" onsubmit="sendReservation(event)" class="mt-6 space-y-4 bg-gray-50 p-6 rounded-xl shadow-lg border border-gray-200">
-                <!-- First Name -->
+            <!-- Reservation Form -->
+            <form id="reservation-form" onsubmit="sendReservation(event)" class="mt-8 space-y-6 bg-talex-dark-gray p-10 rounded-xl shadow-2xl border-t-4 border-white">
+                
                 <div>
-                    <label for="modal-first-name" class="block text-sm font-medium text-gray-700 text-left">First Name</label>
-                    <input type="text" id="modal-first-name" name="first_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
+                    <label for="first-name" class="block text-sm font-medium text-off-white text-left uppercase tracking-wider mb-2">Vorname</label>
+                    <input type="text" id="first-name" name="first_name" class="block w-full rounded-md border-gray-600 shadow-inner p-4 bg-talex-charcoal border focus:border-talex-gold-accent focus:ring focus:ring-talex-gold-accent/50 text-off-white" required>
                 </div>
-                <!-- Last Name -->
+                
                 <div>
-                    <label for="modal-last-name" class="block text-sm font-medium text-gray-700 text-left">Last Name</label>
-                    <input type="text" id="modal-last-name" name="last_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
+                    <label for="last-name" class="block text-sm font-medium text-off-white text-left uppercase tracking-wider mb-2">Nachname</label>
+                    <input type="text" id="last-name" name="last_name" class="block w-full rounded-md border-gray-600 shadow-inner p-4 bg-talex-charcoal border focus:border-talex-gold-accent focus:ring focus:ring-talex-gold-accent/50 text-off-white" required>
                 </div>
-                <!-- Email -->
+                
                 <div>
-                    <label for="modal-email" class="block text-sm font-medium text-gray-700 text-left">Email Address</label>
-                    <input type="email" id="modal-email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" placeholder="e.g., john.doe@example.com" required>
+                    <label for="email" class="block text-sm font-medium text-off-white text-left uppercase tracking-wider mb-2">Email-Adresse</label>
+                    <input type="email" id="email" name="email" class="block w-full rounded-md border-gray-600 shadow-inner p-4 bg-talex-charcoal border focus:border-talex-gold-accent focus:ring focus:ring-talex-gold-accent/50 text-off-white" placeholder="e.g., john.doe@example.com" required>
                 </div>
-                <!-- Phone Number -->
+                
                 <div>
-                    <label for="modal-phone" class="block text-sm font-medium text-gray-700 text-left">Phone Number</label>
-                    <input type="tel" id="modal-phone" name="phone_number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" placeholder="e.g., +49 40 123456" required>
+                    <label for="phone" class="block text-sm font-medium text-off-white text-left uppercase tracking-wider mb-2">Telefonnummer</label>
+                    <input type="tel" id="phone" name="phone_number" class="block w-full rounded-md border-gray-600 shadow-inner p-4 bg-talex-charcoal border focus:border-talex-gold-accent focus:ring focus:ring-talex-gold-accent/50 text-off-white" placeholder="e.g., +49 40 123456" required>
                 </div>
-                <!-- Date & Time -->
+                
                 <div>
-                    <label for="modal-date" class="block text-sm font-medium text-gray-700 text-left">Date & Time</label>
-                    <input type="datetime-local" id="modal-date" name="reservation_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" value="2025-12-01T10:00" required>
+                    <label for="date" class="block text-sm font-medium text-off-white text-left uppercase tracking-wider mb-2">Datum & Uhrzeit</label>
+                    <input type="datetime-local" id="date" name="reservation_date" class="block w-full rounded-md border-gray-600 shadow-inner p-4 bg-talex-charcoal border focus:border-talex-gold-accent focus:ring focus:ring-talex-gold-accent/50 text-off-white" value="2025-12-01T10:00" required>
                 </div>
-                <!-- Guests -->
+                
                 <div>
-                    <label for="modal-guests" class="block text-sm font-medium text-gray-700 text-left">Number of Guests</label>
-                    <select id="modal-guests" name="num_guests" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
-                        <option>2 Guests</option>
-                        <option>4 Guests</option>
-                        <option>6 Guests</option>
+                    <label for="guests" class="block text-sm font-medium text-off-white text-left uppercase tracking-wider mb-2">Anzahl der Gäste</label>
+                    <select id="guests" name="num_guests" class="block w-full rounded-md border-gray-600 shadow-inner p-4 bg-talex-charcoal border focus:border-talex-gold-accent focus:ring focus:ring-talex-gold-accent/50 text-off-white" required>
+                        <option class="bg-talex-dark-gray">2 Gäste</option>
+                        <option class="bg-talex-dark-gray">4 Gäste</option>
+                        <option class="bg-talex-dark-gray">6 Gäste</option>
+                        <option class="bg-talex-dark-gray">8+ Gäste (Bitte anrufen)</option>
                     </select>
                 </div>
-                <!-- Submission Button -->
+                
                 <button 
                     type="submit"
                     id="submit-button"
-                    class="w-full py-3 mt-4 rounded-lg text-lg font-bold text-white transition duration-300 shadow-md talex-blue hover:opacity-90 flex items-center justify-center"
+                    class="w-full py-4 mt-10 rounded-full text-lg font-bold text-black transition duration-300 shadow-xl talex-gold-accent hover:opacity-90 flex items-center justify-center uppercase tracking-wider"
                 >
-                    Confirm Reservation
+                    Reservierung Bestätigen
                 </button>
-                <!-- Error and confirmation messages below -->
-                <p id="reservation-message" class="text-center text-sm font-medium mt-3 hidden"></p>
+                
+                <p id="reservation-message" class="text-center text-sm font-medium mt-6 text-black hidden"></p>
             </form>
         </div>
     </section>
 
-    <!-- 7. Footer -->
-    <footer class="py-12 bg-gray-800 text-white">
+    <!-- 8. Footer - Animation (3.0s Verzögerung) -->
+    <footer class="py-16 bg-talex-deep-black text-off-white fade-in-section" style="animation-delay: 3.0s;">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <p class="text-2xl font-black mb-4 text-talex-orange">TALEX</p>
-            <p class="text-sm text-gray-400">Jungfernstieg 1, 20354 Hamburg, Germany</p>
-            <p class="text-sm text-gray-400 mt-2">Opening Hours: Mon - Sat, 7:00 AM - 5:00 PM</p>
-            <p class="text-xs mt-6">&copy; 2025 TALEX Café. All rights reserved.</p>
+            <p class="text-4xl font-bold mb-6 text-talex-gold-accent tracking-widest" style="font-family: 'Playfair Display', serif;">TALEX</p>
+            <p class="text-base text-gray-400">Jungfernstieg 1, 20354 Hamburg, Germany</p>
+            <p class="text-base text-gray-400 mt-2">Öffnungszeiten: Mo - Sa, 7:00 AM - 5:00 PM</p>
+            <div class="mt-8 flex justify-center space-x-6">
+                 <!-- Social Icons -->
+                <a href="#" class="text-gray-500 hover:text-talex-gold-accent transition duration-200 text-3xl" aria-label="Instagram">📸</a>
+                <a href="#" class="text-gray-500 hover:text-talex-gold-accent transition duration-200 text-3xl" aria-label="Facebook">📘</a>
+            </div>
+            <p class="text-sm mt-10 text-gray-600">&copy; 2025 TALEX. All rights reserved.</p>
         </div>
-    </footer>
-
-
-    <script>
-        // ###########################################################################################
-        // ################################ WICHTIG: EMAILJS KONFIGURATION ###########################
-        // ###########################################################################################
-        // DIE SCHLÜSSEL WURDEN ERSETZT UND SIND NUN FUNKTIONSFÄHIG.
-        const PUBLIC_KEY = 'TfYfrsrGIHYhdVnHO'; // IHR PUBLIC KEY
-        const SERVICE_ID = 'service_7nxn7jw';   // IHRE SERVICE ID
-        const TEMPLATE_ID = 'template_2g55mg6'; // IHRE TEMPLATE ID
-        // ###########################################################################################
-
-        let isEmailJSInitialized = false;
-
-        window.onload = function() {
-            // Initializes EmailJS with the Public Key
-            try {
-                // Check if keys are placeholders (now using the actual keys)
-                if (PUBLIC_KEY.startsWith('YOUR_') || SERVICE_ID.startsWith('YOUR_') || TEMPLATE_ID.startsWith('YOUR_')) {
-                    console.warn("WARNUNG: EmailJS Public Key oder Service ID ist ein Platzhalter. Reservierungsfunktion wird außerhalb der Canvas-Umgebung fehlschlagen, wenn diese nicht ersetzt werden.");
-                    isEmailJSInitialized = false;
-                } else {
-                    emailjs.init(PUBLIC_KEY);
-                    console.log("EmailJS successfully initialized with provided Public Key.");
-                    isEmailJSInitialized = true;
-                }
-
-            } catch (error) {
-                console.error("EmailJS Initialization FAILED. Check your PUBLIC_KEY and network connection.", error);
-                isEmailJSInitialized = false;
-            }
-        };
-
-        // --- Shared UI Elements ---
-        const reservationMessage = document.getElementById('reservation-message');
-        const submitButton = document.getElementById('submit-button');
-        
-        /**
-         * Handles form submission and sends reservation data via EmailJS.
-         * @param {Event} event - The form submission event.
-         */
-        function sendReservation(event) {
-            event.preventDefault(); // Stop the default form submission
-
-            const form = document.getElementById('reservation-form');
-            
-            // SECURITY CHECK: If EmailJS failed to initialize, prevent submission
-            if (!isEmailJSInitialized) {
-                reservationMessage.classList.remove('hidden', 'flex', 'text-green-600');
-                reservationMessage.classList.add('text-red-500', 'block');
-                reservationMessage.innerHTML = 'FEHLER: E-Mail-Dienst nicht initialisiert. Bitte prüfen Sie die Netzwerkeinstellungen und die Schlüssel.';
-                return;
-            }
-
-            // 1. Show Loading State
-            reservationMessage.classList.remove('hidden', 'text-green-600', 'text-red-500');
-            reservationMessage.classList.add('flex', 'items-center', 'justify-center', 'text-gray-600');
-            reservationMessage.innerHTML = '<div class="spinner mr-2"></div> Sende Reservierung...';
-            submitButton.disabled = true;
-
-            // 2. Send the form using EmailJS
-            emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form)
-                .then(function(response) {
-                    console.log('SUCCESS!', response.status, response.text);
-                    // 3. Show Success Message
-                    reservationMessage.classList.remove('flex', 'text-gray-600');
-                    reservationMessage.classList.add('text-green-600');
-                    reservationMessage.innerHTML = 'Erfolgreich! Ihre Reservierungsanfrage wurde gesendet.';
-                    // Clear form fields
-                    form.reset(); 
-                    submitButton.disabled = false;
-                }, function(error) {
-                    console.error('FAILED...', error);
-                    // 3. Show Error Message (Most likely a security/domain error from EmailJS)
-                    reservationMessage.classList.remove('flex', 'text-gray-600');
-                    reservationMessage.classList.add('text-red-500');
-                    // Bessere Fehlermeldung für Hosting-Fehler
-                    reservationMessage.innerHTML = 'Fehler beim Senden. Bitte prüfen Sie in EmailJS die "Domain Security"-Einstellungen für Ihre gehostete Seite.';
-                    submitButton.disabled = false;
-                });
-        }
-
-        // Smooth scrolling for internal links (e.g., #about)
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-    </script>
-
-</body>
-</html>
-
-
+    </foot
