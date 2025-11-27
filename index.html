@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TALEX | Exclusive Restaurant & Bar</title>
     
-    <!-- Tailwind CSS CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS CDN - Mit 'defer' geladen, um das Rendern der Seite nicht zu blockieren. -->
+    <script src="https://cdn.tailwindcss.com" defer></script>
     
     <!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
     
-    <!-- EmailJS SDK (Aktualisierte Version 3.12.0 für Cache-Bypass) -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3.12.0/dist/email.min.js"></script>
+    <!-- EmailJS SDK - Mit 'defer' geladen, da es erst beim Formular-Submit benötigt wird. -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3.12.0/dist/email.min.js" defer></script>
 
     <style>
         /* Definierte Farben (TALEX Luxus-Palette - Schwarz/Gold) */
@@ -122,20 +122,20 @@
 <body class="bg-talex-deep-black text-off-white">
 
     <!-- Navigation -->
-<nav class="fixed top-0 left-0 w-full z-30 shadow-2xl" style="background-color: rgba(0, 0, 0, 0.95); border-bottom: 1px solid rgba(184, 134, 11, 0.3);">
+    <nav class="fixed top-0 left-0 w-full z-30 shadow-2xl" style="background-color: rgba(0, 0, 0, 0.95); border-bottom: 1px solid rgba(184, 134, 11, 0.3);">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4"> 
             
             <!-- Logo -->
-<div class="flex flex-col sm:flex-row justify-between items-center">
+            <div class="flex flex-col sm:flex-row justify-between items-center">
                 <a href="#hero" class="text-3xl sm:text-4xl font-black tracking-widest text-talex-gold-accent mb-2 sm:mb-0" style="font-family: 'Playfair Display', serif;">
                     TALEX
                 </a>
 
                 <!-- Navigation Links -->
-<div class="flex items-center space-x-4 sm:space-x-8 text-sm sm:text-lg">
+                <div class="flex items-center space-x-4 sm:space-x-8 text-sm sm:text-lg">
                     
                     <!-- Link: Story -->
-<a href="#about" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Story</a>
+                    <a href="#about" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Story</a>
                     <a href="menu.html" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Menu</a>
                     <a href="#hamburg" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Location</a>
                 </div>
@@ -144,12 +144,12 @@
     </nav>
 
     <!-- Header / Hero Section -->
-<header id="hero" class="hero-background text-off-white flex items-center justify-center min-h-screen pt-24 sm:pt-0">
+    <header id="hero" class="hero-background text-off-white flex items-center justify-center min-h-screen pt-24 sm:pt-0">
         <div class="hero-content text-center px-6 py-16 sm:py-0">
             <p class="text-xl sm:text-2xl text-talex-gold-accent uppercase tracking-widest mb-4">Welcome to the Exclusive</p>
             
             <!-- Headline -->
-<h1 class="text-3xl sm:text-7xl font-bold mb-6 leading-tight" style="font-family: 'Playfair Display', serif;">
+            <h1 class="text-3xl sm:text-7xl font-bold mb-6 leading-tight" style="font-family: 'Playfair Display', serif;">
                 CULINARY ARTISTRY. <br class="hidden sm:block"> TIMELESS ELEGANCE.
             </h1>
             <p class="text-lg sm:text-xl max-w-2xl mx-auto text-gray-300">
@@ -165,12 +165,12 @@
     </header>
 
     <!-- About Section -->
-<section id="about" class="py-20 sm:py-32 bg-talex-charcoal border-b border-gray-800">
+    <section id="about" class="py-20 sm:py-32 bg-talex-charcoal border-b border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-8">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 
                 <!-- Text Content -->
-<div class="md:order-1 order-2">
+                <div class="md:order-1 order-2">
                     <p class="text-lg text-talex-gold-accent uppercase tracking-widest mb-2">Our Philosophy</p>
                     <h2 class="text-4xl sm:text-5xl font-bold mb-6" style="font-family: 'Playfair Display', serif;">
                         The TALEX Story
@@ -183,12 +183,14 @@
                     </p>
                 </div>
                 
-                <!-- Image -->
-<div class="rounded-lg overflow-hidden shadow-2xl md:order-2 order-1">
+                <!-- Image (Optimiert mit lazy loading für bessere wahrgenommene Performance) -->
+                <div class="rounded-lg overflow-hidden shadow-2xl md:order-2 order-1">
                     <img 
                         src="https://placehold.co/800x600/1A1A1A/B8860B?text=Luxurious+Interior" 
                         alt="Luxurious Restaurant Interior" 
                         class="w-full h-auto object-cover rounded-lg"
+                        loading="lazy" 
+                        decoding="async"
                     >
                 </div>
             </div>
@@ -196,36 +198,45 @@
     </section>
 
     <!-- Location Section (Hamburg) -->
-<section id="hamburg" class="py-20 sm:py-32 bg-talex-deep-black border-b border-gray-900">
+    <section id="hamburg" class="py-20 sm:py-32 bg-talex-deep-black border-b border-gray-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-8">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 
                 <!-- START: Image Carousel with 4 images -->
                 <div class="rounded-lg overflow-hidden shadow-2xl relative">
                     <div class="carousel-container">
+                        <!-- Hinweis: Bilder von GitHub Raw Content können langsam laden. Besser wäre ein CDN. -->
                         <!-- Image 1 (Active on load) -->
                         <img 
                             src="https://raw.githubusercontent.com/66-phantom-ghost/TALEX/136656f58814370f793c002edd729f4ab2adf6a3/1764262874405.jpg" 
                             alt="Jungfernstieg View 1" 
                             class="carousel-image active"
+                            loading="lazy" 
+                            decoding="async"
                         >
                         <!-- Image 2 -->
                         <img 
                             src="https://raw.githubusercontent.com/66-phantom-ghost/TALEX/136656f58814370f793c002edd729f4ab2adf6a3/1764262877609.jpg" 
                             alt="Jungfernstieg View 2" 
                             class="carousel-image"
+                            loading="lazy" 
+                            decoding="async"
                         >
                         <!-- Image 3 (NEW) -->
                         <img 
                             src="https://raw.githubusercontent.com/66-phantom-ghost/TALEX/7b57314d9ac2d01ec47b252f8c223cab47fb5448/1764263237204.jpg" 
                             alt="Jungfernstieg View 3" 
                             class="carousel-image"
+                            loading="lazy" 
+                            decoding="async"
                         >
                         <!-- Image 4 (NEW) -->
                         <img 
                             src="https://raw.githubusercontent.com/66-phantom-ghost/TALEX/7b57314d9ac2d01ec47b252f8c223cab47fb5448/1764263270589.jpg" 
                             alt="Jungfernstieg View 4" 
                             class="carousel-image"
+                            loading="lazy" 
+                            decoding="async"
                         >
 
                         <button id="prev-btn" class="carousel-button left">
@@ -239,7 +250,7 @@
                 <!-- END: Image Carousel -->
                 
                 <!-- Text Content -->
-<div>
+                <div>
                     <p class="text-lg text-talex-gold-accent uppercase tracking-widest mb-2">Hamburg's Premier Location</p>
                     <h2 class="text-4xl sm:text-5xl font-bold mb-6" style="font-family: 'Playfair Display', serif;">
                         The Jungfernstieg Promenade
@@ -262,7 +273,7 @@
     </section>
 
     <!-- Reservation Section -->
-<section id="reservation-section" class="py-20 sm:py-32 bg-talex-charcoal">
+    <section id="reservation-section" class="py-20 sm:py-32 bg-talex-charcoal">
         <div class="max-w-xl mx-auto px-4 sm:px-6 text-center">
             
             <h2 class="text-4xl sm:text-5xl font-bold mb-4 text-talex-gold-accent" style="font-family: 'Playfair Display', serif;">
@@ -270,16 +281,16 @@
             </h2>
             
             <!-- Reservation Form Container -->
-<div id="reservation-form-container">
+            <div id="reservation-form-container">
                 <p class="text-xl text-gray-300 mb-10">
                     Secure your exclusive dining experience at TALEX.
                 </p>
 
                 <!-- Reservation Form -->
-<form id="reservation-form" class="space-y-6 text-left">
+                <form id="reservation-form" class="space-y-6 text-left">
                     
                     <!-- Name Fields -->
-<div class="grid sm:grid-cols-2 gap-6">
+                    <div class="grid sm:grid-cols-2 gap-6">
                         <div>
                             <label for="first_name" class="block text-sm font-medium text-gray-400 mb-2">First Name</label>
                             <input type="text" id="first_name" name="first_name" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
@@ -291,7 +302,7 @@
                     </div>
 
                     <!-- Contact Fields -->
-<div class="grid sm:grid-cols-2 gap-6">
+                    <div class="grid sm:grid-cols-2 gap-6">
                         <div>
                             <label for="email_input" class="block text-sm font-medium text-gray-400 mb-2">Email Address</label>
                             <input type="email" id="email_input" name="email" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
@@ -303,12 +314,12 @@
                     </div>
 
                     <!-- Date & Guests Fields -->
-<div class="grid sm:grid-cols-2 gap-6">
+                    <div class="grid sm:grid-cols-2 gap-6">
                         <div>
                             <label for="date" class="block text-sm font-medium text-gray-400 mb-2">Date</label>
                             
                             <!-- Date Input (raw) -->
-<input type="date" id="date" name="raw_date_input" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150" style="color-scheme: dark;">
+                            <input type="date" id="date" name="raw_date_input" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150" style="color-scheme: dark;">
                         </div>
                         <div>
                             <label for="guests" class="block text-sm font-medium text-gray-400 mb-2">Number of Guests</label>
@@ -317,27 +328,27 @@
                     </div>
 
                     <!-- Time Field -->
-<div>
+                    <div>
                         <label for="time" class="block text-sm font-medium text-gray-400 mb-2">Desired Time</label>
                          
                         <!-- Time Input (raw) -->
-<input type="time" id="time" name="raw_time_input" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150" style="color-scheme: dark;">
+                        <input type="time" id="time" name="raw_time_input" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150" style="color-scheme: dark;">
                     </div>
 
                     <!-- Hidden Fields for Formatted Date/Time (used for EmailJS template) -->
-<input type="hidden" id="formatted_date_output" name="reservation_date_formatted">
+                    <input type="hidden" id="formatted_date_output" name="reservation_date_formatted">
                     
-<input type="hidden" id="formatted_time_output" name="reservation_time_formatted">
+                    <input type="hidden" id="formatted_time_output" name="reservation_time_formatted">
 
 
                     <!-- Notes Field -->
-<div>
+                    <div>
                         <label for="notes" class="block text-sm font-medium text-gray-400 mb-2">Special Requests/Notes</label>
                         <textarea id="notes" name="message" rows="3" class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150"></textarea>
                     </div>
 
                     <!-- Submit Button -->
-<button type="submit" id="submit-button"
+                    <button type="submit" id="submit-button"
                         class="w-full py-3 px-4 rounded-md text-lg font-extrabold text-black transition duration-300 shadow-xl talex-gold-accent hover:opacity-90 uppercase tracking-wider transform hover:scale-[1.01] flex items-center justify-center space-x-2"
                     >
                         <span id="button-text">Confirm Reservation</span>
@@ -347,7 +358,7 @@
             </div>
 
             <!-- Success Message -->
-<div id="success-message" class="hidden mt-10 p-8 rounded-xl border-4 border-talex-gold-accent bg-talex-deep-black shadow-lg">
+            <div id="success-message" class="hidden mt-10 p-8 rounded-xl border-4 border-talex-gold-accent bg-talex-deep-black shadow-lg">
                 <h3 class="text-3xl font-bold text-talex-gold-accent mb-4" style="font-family: 'Playfair Display', serif;">Reservation Confirmed!</h3>
                 <p class="text-xl text-gray-300">
                     Thank you for your reservation. A confirmation email with the details of your exclusive table booking will be sent to you shortly.
@@ -355,24 +366,4 @@
                 <p class="text-sm text-gray-500 mt-4">We look forward to welcoming you.</p>
             </div>
 
-            <!-- Error Message -->
-<div id="error-message" class="hidden mt-10 p-8 rounded-xl border-4 border-red-700 bg-talex-deep-black shadow-lg">
-                <h3 class="text-3xl font-bold text-red-500 mb-4" style="font-family: 'Playfair Display', serif;">Reservation Failed</h3>
-                <p class="text-xl text-gray-300 mb-4">
-                    We apologize, but an error occurred while processing your request. Please check your configuration.
-                </p>
-                <p id="error-details" class="text-sm text-red-400 font-mono bg-red-900/50 p-3 rounded-md overflow-auto whitespace-pre-wrap">
-                    Error details will appear here.
-                </p>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Footer -->
-<footer class="py-16 bg-talex-deep-black text-off-white border-t border-gray-900">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            
-            <!-- Logo in Footer -->
-<p class="text-4xl font-bold mb-6 text-talex-gold-accent tracking-widest" style="font-family: 'Playfair Display', serif;">TALEX</p>
-            <p class="text-b
+   
