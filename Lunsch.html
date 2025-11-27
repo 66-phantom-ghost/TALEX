@@ -1,1 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TALEX | Lunch Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Playfair Display (Serif) & Raleway (Sans-Serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Defined Colors (TALEX Luxury Palette - Black/Gold) */
+        .bg-talex-deep-black { background-color: #000000; } /* Pure Black */
+        .bg-talex-charcoal { background-color: #1A1A1A; } /* Dark Charcoal for sections */
+        .bg-talex-dark-gray { background-color: #2C2C2C; } /* Lighter Charcoal for cards/border */
+        .talex-gold-accent { background-color: #B8860B; } /* Rich, muted gold */
+        .text-talex-gold-accent { color: #B8860B; }
+        .border-talex-gold-accent { border-color: #B8860B; }
+        .text-off-white { color: #F5F5DC; } /* Off-white / Cream for main text */
+        
+        /* Font Styling */
+        body { 
+            font-family: 'Raleway', sans-serif; /* Modern, elegant sans-serif for body */
+            background-color: #000000;
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif; /* Classic, luxurious serif for headings */
+        }
+
+        /* Adjusted background for contrast */
+        .menu-card {
+            background-color: #1A1A1A; 
+            border: 2px solid #2C2C2C; /* Subtle dark border */
+        }
+    </style>
+</head>
+<body class="bg-talex-deep-black p-4 sm:p-8 text-off-white">
+
+    <div class="max-w-4xl mx-auto menu-card shadow-2xl rounded-xl overflow-hidden p-6 sm:p-10 border-t-8 border-talex-gold-accent" id="menu">
+
+        <!-- Header Section -->
+        <header class="text-center pb-8 border-b border-gray-700">
+            <!-- Link back to the index page -->
+            <a href="index.html" class="text-talex-gold-accent text-sm hover:opacity-75 block mb-2 uppercase tracking-widest">← BACK TO HOMEPAGE</a>
+            
+            <h1 class="text-6xl sm:text-7xl font-black text-talex-gold-accent tracking-tight mb-2" style="font-family: 'Playfair Display', serif;">TALEX LUNCH</h1>
+            <p class="text-xl mt-1 text-gray-400 font-light mb-4" style="font-family: 'Raleway', sans-serif;">Daily Specials and Classics for Midday</p>
+            
+            <!-- BUTTON to Breakfast Menu -->
+            <a href="menu.html" class="mt-4 inline-block py-2 px-8 rounded-full text-base font-bold text-black bg-white hover:bg-gray-200 transition duration-300 shadow-lg uppercase tracking-wider transform hover:scale-[1.03]">
+                Go to Breakfast Menu
+            </a>
+        </header>
+
+        <!-- Motto and Divider -->
+        <div class="my-8">
+            <div class="h-px bg-talex-gold-accent w-full"></div>
+            <p class="text-center text-xl font-bold py-3 text-talex-gold-accent tracking-widest uppercase" style="font-family: 'Playfair Display', serif;">
+                A MODERN MIDDAY RECHARGE.
+            </p>
+            <div class="h-px bg-talex-gold-accent w-full"></div>
+        </div>
+
+        <!-- Menu Content -->
+        <div class="space-y-12">
+            
+            <!-- Section: Starters & Salads -->
+            <section>
+                <h2 class="text-4xl font-bold text-off-white uppercase mb-6 border-b-2 border-talex-gold-accent pb-2" style="font-family: 'Playfair Display', serif;">Starters & Salads</h2>
+                <div class="space-y-6">
+                    <!-- Item 1: French Onion Soup -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-xl text-off-white">French Onion Soup</p>
+                            <p class="text-base text-gray-500 italic mt-1">Classic beef broth, caramelized onions, topped with a cheese crouton.</p>
+                        </div>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">8.50 €</span>
+                    </div>
+                    <!-- Item 2: TALEX Caesar Salad -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-xl text-off-white">TALEX Caesar Salad</p>
+                            <p class="text-base text-gray-500 italic mt-1">Romaine lettuce, Parmesan crisps, sun-dried tomatoes, and creamy house dressing. (Optional with Chicken Breast: + 4.00 €)</p>
+                        </div>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">14.00 €</span>
+                    </div>
+                    <!-- Item 3: Burrata -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-xl text-off-white">Burrata with Arugula (VEGETARIAN)</p>
+                            <p class="text-base text-gray-500 italic mt-1">Creamy Burrata on a bed of arugula, topped with balsamic reduction and pine nuts.</p>
+                        </div>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">16.50 €</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Main Courses -->
+            <section>
+                <h2 class="text-4xl font-bold text-off-white uppercase mb-6 border-b-2 border-talex-gold-accent pb-2" style="font-family: 'Playfair Display', serif;">Main Courses</h2>
+                <div class="space-y-6">
+                    <!-- Item 1: Salmon -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-xl text-off-white">Salmon Fillet on Beluga Lentils</p>
+                            <p class="text-base text-gray-500 italic mt-1">Tender salmon fillet (MSC) on hearty seasoned Beluga lentils with a lemon-butter sauce.</p>
+                        </div>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">26.00 €</span>
+                    </div>
+                    <!-- Item 2: Hamburger Beef -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-xl text-off-white">Dry-Aged Beef Burger</p>
+                            <p class="text-base text-gray-500 italic mt-1">200g dry-aged patty, brioche bun, truffle mayo, caramelized onions, and arugula. Served with French fries.</p>
+                        </div>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">24.50 €</span>
+                    </div>
+                    <!-- Item 3: Pasta -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-xl text-off-white">Tagliatelle with Prawns</p>
+                            <p class="text-base text-gray-500 italic mt-1">Fresh Tagliatelle in a light chili-garlic-oil sauce with pan-fried Black Tiger Prawns.</p>
+                        </div>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">22.00 €</span>
+                    </div>
+                    <!-- Item 4: Vegan bowl -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-xl text-off-white">Buddha Bowl (VEGAN)</p>
+                            <p class="text-base text-gray-500 italic mt-1">Quinoa, Edamame, sweet potato, avocado, and fresh vegetables with peanut dressing.</p>
+                        </div>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">18.50 €</span>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section: Desserts -->
+            <section>
+                <h2 class="text-4xl font-bold text-off-white uppercase mb-6 border-b-2 border-talex-gold-accent pb-2" style="font-family: 'Playfair Display', serif;">Desserts</h2>
+                <div class="space-y-6">
+                    <!-- Item 1 -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-xl text-off-white">Classic Crème Brûlée</p>
+                            <p class="text-base text-gray-500 italic mt-1">Vanilla custard with a caramelized sugar crust.</p>
+                        </div>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">7.50 €</span>
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-xl text-off-white">Chocolate Lava Cake</p>
+                            <p class="text-base text-gray-500 italic mt-1">Warm cake with a molten center, served with a scoop of Bourbon vanilla ice cream.</p>
+                        </div>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">9.00 €</span>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <footer class="mt-12 pt-6 text-center text-gray-600 text-sm border-t border-gray-800">
+            All prices are in Euro (€) including statutory VAT.
+        </footer>
+
+    </div>
+</body>
+</html>
+
 
