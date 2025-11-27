@@ -12,6 +12,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
     
+    <!-- EmailJS SDK Integration -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
     <style>
         /* Definierte Farben (TALEX Luxus-Palette - Schwarz/Gold) */
         .bg-talex-deep-black { background-color: #000000; } /* Pure Black */
@@ -53,6 +56,20 @@
             z-index: 2;
         }
 
+        /* Loading Spinner CSS */
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #B8860B;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
     </style>
 </head>
 <body class="bg-talex-deep-black text-off-white">
@@ -86,7 +103,8 @@
     <header id="hero" class="hero-background text-off-white flex items-center justify-center min-h-screen pt-24 sm:pt-0">
         <div class="hero-content text-center px-6 py-16 sm:py-0">
             <p class="text-xl sm:text-2xl text-talex-gold-accent uppercase tracking-widest mb-4">Welcome to the Exclusive</p>
-            <h1 class="text-4xl sm:text-7xl font-bold mb-6 leading-tight" style="font-family: 'Playfair Display', serif;">
+            <!-- Angepasste Schriftgröße für Mobile: text-3xl -->
+            <h1 class="text-3xl sm:text-7xl font-bold mb-6 leading-tight" style="font-family: 'Playfair Display', serif;">
                 CULINARY ARTISTRY. <br class="hidden sm:block"> TIMELESS ELEGANCE.
             </h1>
             <p class="text-lg sm:text-xl max-w-2xl mx-auto text-gray-300">
@@ -170,59 +188,101 @@
     <!-- 5. Reservation Section (Optimized Form) -->
     <section id="reservation-section" class="py-20 sm:py-32 bg-talex-charcoal">
         <div class="max-w-xl mx-auto px-4 sm:px-6 text-center">
+            
             <h2 class="text-4xl sm:text-5xl font-bold mb-4 text-talex-gold-accent" style="font-family: 'Playfair Display', serif;">
                 Reserve Your Table
             </h2>
-            <p class="text-xl text-gray-300 mb-10">
-                Secure your exclusive dining experience at TALEX.
-            </p>
+            
+            <!-- Reservation Form Container -->
+            <div id="reservation-form-container">
+                <p class="text-xl text-gray-300 mb-10">
+                    Secure your exclusive dining experience at TALEX.
+                </p>
 
-            <!-- Form Container (Full width on Mobile) -->
-            <form class="space-y-6 text-left">
-                
-                <!-- Name and Email (side-by-side on desktop) -->
-                <div class="grid sm:grid-cols-2 gap-6">
-                    <div>
-                        <label for="name" class="block text-sm font-medium text-gray-400 mb-2">Full Name</label>
-                        <input type="text" id="name" name="name" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
+                <!-- Form - `name` attributes now match EmailJS template variables -->
+                <form id="reservation-form" class="space-y-6 text-left">
+                    
+                    <!-- First Name and Last Name (side-by-side on desktop) -->
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="first_name" class="block text-sm font-medium text-gray-400 mb-2">First Name</label>
+                            <input type="text" id="first_name" name="first_name" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
+                        </div>
+                        <div>
+                            <label for="last_name" class="block text-sm font-medium text-gray-400 mb-2">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
+                        </div>
                     </div>
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-400 mb-2">Email Address</label>
-                        <input type="email" id="email" name="email" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
+
+                    <!-- Email and Phone (side-by-side on desktop) -->
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="email_input" class="block text-sm font-medium text-gray-400 mb-2">Email Address</label>
+                            <input type="email" id="email_input" name="email" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-400 mb-2">Phone Number</label>
+                            <input type="tel" id="phone" name="phone_number" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
+                        </div>
                     </div>
-                </div>
 
-                <!-- Date and Guests (side-by-side on desktop) -->
-                <div class="grid sm:grid-cols-2 gap-6">
-                    <div>
-                        <label for="date" class="block text-sm font-medium text-gray-400 mb-2">Date</label>
-                        <input type="date" id="date" name="date" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150" style="color-scheme: dark;">
+                    <!-- Date and Guests (side-by-side on desktop) -->
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="date" class="block text-sm font-medium text-gray-400 mb-2">Date</label>
+                            <!-- KORREKTUR: Name geändert, damit nur der formatierte Wert gesendet wird -->
+                            <input type="date" id="date" name="raw_date_input" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150" style="color-scheme: dark;">
+                        </div>
+                        <div>
+                            <label for="guests" class="block text-sm font-medium text-gray-400 mb-2">Number of Guests</label>
+                            <input type="number" id="guests" name="num_guests" min="1" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
+                        </div>
                     </div>
+
+                    <!-- Time -->
                     <div>
-                        <label for="guests" class="block text-sm font-medium text-gray-400 mb-2">Number of Guests</label>
-                        <input type="number" id="guests" name="guests" min="1" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
+                        <label for="time" class="block text-sm font-medium text-gray-400 mb-2">Desired Time</label>
+                        <input type="time" id="time" name="reservation_time" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150" style="color-scheme: dark;">
                     </div>
-                </div>
 
-                <!-- Time -->
-                <div>
-                    <label for="time" class="block text-sm font-medium text-gray-400 mb-2">Desired Time</label>
-                    <input type="time" id="time" name="time" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150" style="color-scheme: dark;">
-                </div>
+                    <!-- Hidden Input for Formatted Date/Time (This will be sent to EmailJS) -->
+                    <!-- This field retains the correct name 'reservation_date' -->
+                    <input type="hidden" id="formatted_datetime" name="reservation_date">
 
-                <!-- Notes -->
-                <div>
-                    <label for="notes" class="block text-sm font-medium text-gray-400 mb-2">Special Requests/Notes</label>
-                    <textarea id="notes" name="notes" rows="3" class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150"></textarea>
-                </div>
 
-                <!-- Submit Button -->
-                <button type="submit" 
-                    class="w-full py-3 px-4 rounded-md text-lg font-extrabold text-black transition duration-300 shadow-xl talex-gold-accent hover:opacity-90 uppercase tracking-wider transform hover:scale-[1.01]"
-                >
-                    Confirm Reservation
-                </button>
-            </form>
+                    <!-- Notes -->
+                    <div>
+                        <label for="notes" class="block text-sm font-medium text-gray-400 mb-2">Special Requests/Notes</label>
+                        <textarea id="notes" name="message" rows="3" class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150"></textarea>
+                    </div>
+
+                    <!-- Submit Button with Loading State -->
+                    <button type="submit" id="submit-button"
+                        class="w-full py-3 px-4 rounded-md text-lg font-extrabold text-black transition duration-300 shadow-xl talex-gold-accent hover:opacity-90 uppercase tracking-wider transform hover:scale-[1.01] flex items-center justify-center space-x-2"
+                    >
+                        <span id="button-text">Confirm Reservation</span>
+                        <div id="loading-spinner" class="spinner hidden"></div>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Confirmation Message Container (Initially hidden) -->
+            <div id="success-message" class="hidden mt-10 p-8 rounded-xl border-4 border-talex-gold-accent bg-talex-deep-black shadow-lg">
+                <h3 class="text-3xl font-bold text-talex-gold-accent mb-4" style="font-family: 'Playfair Display', serif;">Reservation Confirmed!</h3>
+                <p class="text-xl text-gray-300">
+                    Thank you for your reservation. A confirmation email with the details of your exclusive table booking will be sent to you shortly.
+                </p>
+                <p class="text-sm text-gray-500 mt-4">We look forward to welcoming you.</p>
+            </div>
+
+            <!-- Error Message Container (Initially hidden) -->
+            <div id="error-message" class="hidden mt-10 p-8 rounded-xl border-4 border-red-700 bg-talex-deep-black shadow-lg">
+                <h3 class="text-3xl font-bold text-red-500 mb-4" style="font-family: 'Playfair Display', serif;">Reservation Failed</h3>
+                <p class="text-xl text-gray-300">
+                    We apologize, but an error occurred while processing your request. Please check your network connection or try again later.
+                </p>
+            </div>
+
         </div>
     </section>
 
@@ -241,6 +301,38 @@
         </div>
     </footer>
 
-</body>
-</html>
+    <!-- JavaScript for Form Submission Handling with EmailJS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('reservation-form');
+            const dateInput = document.getElementById('date');
+            const timeInput = document.getElementById('time');
+            const formattedDatetimeInput = document.getElementById('formatted_datetime');
 
+            const formContainer = document.getElementById('reservation-form-container');
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+            const submitButton = document.getElementById('submit-button');
+            const buttonText = document.getElementById('button-text');
+            const loadingSpinner = document.getElementById('loading-spinner');
+
+            // --- EMAILJS CONFIGURATION (Using provided keys) ---
+            const serviceID = 'service_7nxn7jw'; 
+            const templateID = 'template_2g55mg6'; 
+            const publicKey = 'TfYfrsrGIHYhdVnHO'; 
+            // ---------------------------------------------------------------------
+
+            if (form) {
+                // Initialize EmailJS with the Public Key
+                emailjs.init(publicKey);
+
+                // Function to format the date and time
+                const formatDateTime = (dateStr, timeStr) => {
+                    if (!dateStr || !timeStr) return '';
+
+                    try {
+                        // Create a combined Date object
+                        const combinedDateTimeString = `${dateStr}T${timeStr}:00`;
+                        const dateObj = new Date(combinedDateTimeString);
+
+                     
