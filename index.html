@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TALEX | Willkommen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Definierte Farben */
+        .talex-blue { background-color: #005F73; }
+        .text-talex-blue { color: #005F73; }
+        
+        /* Font-Styling (Konsistent mit den vorherigen Entwürfen) */
+        body { font-family: 'Inter', sans-serif; }
+
+        /* Hintergrundbild für den Hero-Bereich (Platzhalter) */
+        .hero-background {
+            /* Verwenden Sie einen atmosphärischen Placeholder für ein Café/Brunch */
+            background-image: url('https://placehold.co/1200x800/2A4E6C/FFFFFF/png?text=TALEX+Cafe+View');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Optional: Parallax-Effekt */
+        }
+
+        /* Überlagerung für bessere Lesbarkeit */
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.4); /* Dunkle, leicht transparente Schicht */
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Willkommensbildschirm (Volle Höhe und Breite) -->
+    <div class="hero-background h-screen flex items-center justify-center">
+        <div class="overlay w-full h-full absolute"></div>
+
+        <!-- Content Box -->
+        <div class="relative z-10 text-center p-6 sm:p-10 bg-white bg-opacity-95 rounded-xl shadow-2xl max-w-lg mx-4">
+            
+            <p class="text-lg font-medium text-talex-blue mb-2 uppercase tracking-widest">
+                Kaffee, Frühstück & Brunch
+            </p>
+
+            <h1 class="text-8xl sm:text-9xl font-black mb-6 leading-none" style="color: #005F73;">
+                TALEX
+            </h1>
+
+            <p class="text-2xl sm:text-3xl font-light text-gray-700 mb-8">
+                Ihr Ort am Jungfernstieg.
+            </p>
+
+            <!-- Call-to-Action Button -->
+            <button 
+                onclick="window.location.href='#menu';" 
+                class="inline-block py-4 px-10 rounded-full text-white font-bold text-xl uppercase tracking-wider transition duration-300 transform hover:scale-105 shadow-lg"
+                style="background-color: #005F73; border: 2px solid #005F73;"
+            >
+                Menü entdecken
+            </button>
+            
+            <!-- Hinweis auf Social Media/Weitere Infos -->
+            <div class="mt-8 text-gray-600 text-sm">
+                <p>Öffnungszeiten: Mo-Sa 8:00 - 18:00 Uhr</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- HINWEIS: Hier müsste der eigentliche Menü-Inhalt folgen, wenn Sie die Seite scrollbar machen möchten. 
+         Der Button würde zu einem Abschnitt mit der ID "menu" springen. -->
+    
+</body>
+</html>
+
