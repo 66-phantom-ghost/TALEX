@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TALEX | Exclusive Restaurant & Bar</title>
     
-    <!-- Tailwind CSS CDN - Mit 'defer' geladen, um das Rendern der Seite nicht zu blockieren. -->
-    <script src="https://cdn.tailwindcss.com" defer></script>
+    <!-- Tailwind CSS CDN - WIRD JETZT SYNCHRON GELADEN (ohne 'defer'), um Layout-Fehler zu vermeiden. -->
+    <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
     
-    <!-- EmailJS SDK - Mit 'defer' geladen, da es erst beim Formular-Submit benötigt wird. -->
+    <!-- EmailJS SDK - WIRD WEITERHIN MIT 'defer' GELADEN, da es die Anzeige der Seite nicht beeinflusst. -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3.12.0/dist/email.min.js" defer></script>
 
     <style>
@@ -205,7 +206,6 @@
                 <!-- START: Image Carousel with 4 images -->
                 <div class="rounded-lg overflow-hidden shadow-2xl relative">
                     <div class="carousel-container">
-                        <!-- Hinweis: Bilder von GitHub Raw Content können langsam laden. Besser wäre ein CDN. -->
                         <!-- Image 1 (Active on load) -->
                         <img 
                             src="https://raw.githubusercontent.com/66-phantom-ghost/TALEX/136656f58814370f793c002edd729f4ab2adf6a3/1764262874405.jpg" 
@@ -366,4 +366,5 @@
                 <p class="text-sm text-gray-500 mt-4">We look forward to welcoming you.</p>
             </div>
 
-   
+            <!-- Error Message -->
+            <div id="error-message" class="hidden mt-10 p-8 rounde
