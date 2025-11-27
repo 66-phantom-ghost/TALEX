@@ -1,19 +1,23 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TALEX | Exclusive Restaurant & Bar</title>
-    <!-- Tailwind CSS (Used for responsiveness and styling) -->
-    <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts: Playfair Display (Serif) & Raleway (Sans-Serif) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+<script src="https://cdn.tailwindcss.com"></script>
+    
+    
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
     
-    <!-- EmailJS SDK Integration -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
     <style>
         /* Definierte Farben (TALEX Luxus-Palette - Schwarz/Gold) */
@@ -35,7 +39,6 @@
 
         /* Hero Background Image with dark overlay */
         .hero-background {
-            /* Text wieder auf TALEX gesetzt */
             background-image: url('https://placehold.co/1920x1080/000000/B8860B?text=TALEX+Luxury+Restaurant+View');
             background-size: cover;
             background-position: center;
@@ -71,26 +74,76 @@
             100% { transform: rotate(360deg); }
         }
 
+        /* Carousel specific styles */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 75%; /* 4:3 Aspect Ratio (adjust as needed, e.g., 56.25% for 16:9) */
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        .carousel-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s ease-in-out;
+            opacity: 0; /* Hidden by default */
+        }
+        .carousel-image.active {
+            opacity: 1;
+        }
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 2rem;
+            line-height: 1;
+            border-radius: 4px;
+            z-index: 10;
+            transition: background 0.3s ease;
+        }
+        .carousel-button:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .carousel-button.left {
+            left: 10px;
+        }
+        .carousel-button.right {
+            right: 10px;
+        }
     </style>
 </head>
 <body class="bg-talex-deep-black text-off-white">
 
-    <!-- 1. Fixed Navigation Bar (Optimized for Mobile) -->
-    <nav class="fixed top-0 left-0 w-full z-30 shadow-2xl" style="background-color: rgba(0, 0, 0, 0.95); border-bottom: 1px solid rgba(184, 134, 11, 0.3);">
+    
+
+<nav class="fixed top-0 left-0 w-full z-30 shadow-2xl" style="background-color: rgba(0, 0, 0, 0.95); border-bottom: 1px solid rgba(184, 134, 11, 0.3);">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4"> 
             
             <div class="flex flex-col sm:flex-row justify-between items-center">
                 
-                <!-- Logo: Wieder TALEX -->
-                <a href="#hero" class="text-3xl sm:text-4xl font-black tracking-widest text-talex-gold-accent mb-2 sm:mb-0" style="font-family: 'Playfair Display', serif;">
+                
+
+<a href="#hero" class="text-3xl sm:text-4xl font-black tracking-widest text-talex-gold-accent mb-2 sm:mb-0" style="font-family: 'Playfair Display', serif;">
                     TALEX
                 </a>
 
-                <!-- Navigation Links -->
-                <div class="flex items-center space-x-4 sm:space-x-8 text-sm sm:text-lg">
+                
+
+<div class="flex items-center space-x-4 sm:space-x-8 text-sm sm:text-lg">
                     
-                    <!-- Links -->
-                    <a href="#about" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Story</a>
+                    
+
+<a href="#about" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Story</a>
                     <a href="menu.html" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Menu</a>
                     <a href="#hamburg" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Location</a>
                 </div>
@@ -98,12 +151,14 @@
         </div>
     </nav>
 
-    <!-- 2. Hero Section -->
-    <header id="hero" class="hero-background text-off-white flex items-center justify-center min-h-screen pt-24 sm:pt-0">
+    
+
+<header id="hero" class="hero-background text-off-white flex items-center justify-center min-h-screen pt-24 sm:pt-0">
         <div class="hero-content text-center px-6 py-16 sm:py-0">
             <p class="text-xl sm:text-2xl text-talex-gold-accent uppercase tracking-widest mb-4">Welcome to the Exclusive</p>
-            <!-- Angepasste Schriftgröße für Mobile: text-3xl -->
-            <h1 class="text-3xl sm:text-7xl font-bold mb-6 leading-tight" style="font-family: 'Playfair Display', serif;">
+            
+
+<h1 class="text-3xl sm:text-7xl font-bold mb-6 leading-tight" style="font-family: 'Playfair Display', serif;">
                 CULINARY ARTISTRY. <br class="hidden sm:block"> TIMELESS ELEGANCE.
             </h1>
             <p class="text-lg sm:text-xl max-w-2xl mx-auto text-gray-300">
@@ -118,12 +173,14 @@
         </div>
     </header>
 
-    <!-- 3. About Section -->
-    <section id="about" class="py-20 sm:py-32 bg-talex-charcoal border-b border-gray-800">
+    
+
+<section id="about" class="py-20 sm:py-32 bg-talex-charcoal border-b border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-8">
             <div class="grid md:grid-cols-2 gap-12 items-center">
-                <!-- Text Content -->
-                <div class="md:order-1 order-2">
+                
+
+<div class="md:order-1 order-2">
                     <p class="text-lg text-talex-gold-accent uppercase tracking-widest mb-2">Our Philosophy</p>
                     <h2 class="text-4xl sm:text-5xl font-bold mb-6" style="font-family: 'Playfair Display', serif;">
                         The TALEX Story
@@ -135,8 +192,9 @@
                         "Where classic meets modern – an experience for all senses."
                     </p>
                 </div>
-                <!-- Image Placeholder (w-full ensures responsiveness) -->
-                <div class="rounded-lg overflow-hidden shadow-2xl md:order-2 order-1">
+                
+
+<div class="rounded-lg overflow-hidden shadow-2xl md:order-2 order-1">
                     <img 
                         src="https://placehold.co/800x600/1A1A1A/B8860B?text=Luxurious+Interior" 
                         alt="Luxurious Restaurant Interior" 
@@ -147,22 +205,54 @@
         </div>
     </section>
 
-    <!-- 4. Location Section (Expanded Content) -->
-    <section id="hamburg" class="py-20 sm:py-32 bg-talex-deep-black border-b border-gray-900">
+    
+
+<section id="hamburg" class="py-20 sm:py-32 bg-talex-deep-black border-b border-gray-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-8">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 
-                <!-- Image Placeholder (w-full ensures responsiveness) -->
-                <div class="rounded-lg overflow-hidden shadow-2xl">
-                    <img 
-                        src="https://placehold.co/800x600/1A1A1A/B8860B?text=Jungfernstieg%2C+Hamburg" 
-                        alt="Jungfernstieg, Hamburg" 
-                        class="w-full h-auto object-cover rounded-lg"
-                    >
-                </div>
                 
-                <!-- Text Content -->
-                <div>
+                <!-- START: Image Carousel with 4 images -->
+                <div class="rounded-lg overflow-hidden shadow-2xl relative">
+                    <div class="carousel-container">
+                        <!-- Image 1 (Active on load) -->
+                        <img 
+                            src="https://raw.githubusercontent.com/66-phantom-ghost/TALEX/136656f58814370f793c002edd729f4ab2adf6a3/1764262874405.jpg" 
+                            alt="Jungfernstieg View 1" 
+                            class="carousel-image active"
+                        >
+                        <!-- Image 2 -->
+                        <img 
+                            src="https://raw.githubusercontent.com/66-phantom-ghost/TALEX/136656f58814370f793c002edd729f4ab2adf6a3/1764262877609.jpg" 
+                            alt="Jungfernstieg View 2" 
+                            class="carousel-image"
+                        >
+                        <!-- Image 3 (NEW) -->
+                        <img 
+                            src="https://raw.githubusercontent.com/66-phantom-ghost/TALEX/7b57314d9ac2d01ec47b252f8c223cab47fb5448/1764263237204.jpg" 
+                            alt="Jungfernstieg View 3" 
+                            class="carousel-image"
+                        >
+                        <!-- Image 4 (NEW) -->
+                        <img 
+                            src="https://raw.githubusercontent.com/66-phantom-ghost/TALEX/7b57314d9ac2d01ec47b252f8c223cab47fb5448/1764263270589.jpg" 
+                            alt="Jungfernstieg View 4" 
+                            class="carousel-image"
+                        >
+
+                        <button id="prev-btn" class="carousel-button left">
+                            &#10094; <!-- White left arrow -->
+                        </button>
+                        <button id="next-btn" class="carousel-button right">
+                            &#10095; <!-- White right arrow -->
+                        </button>
+                    </div>
+                </div>
+                <!-- END: Image Carousel -->
+                
+                
+
+<div>
                     <p class="text-lg text-talex-gold-accent uppercase tracking-widest mb-2">Hamburg's Premier Location</p>
                     <h2 class="text-4xl sm:text-5xl font-bold mb-6" style="font-family: 'Playfair Display', serif;">
                         The Jungfernstieg Promenade
@@ -184,25 +274,29 @@
         </div>
     </section>
 
-    <!-- 5. Reservation Section (Optimized Form) -->
-    <section id="reservation-section" class="py-20 sm:py-32 bg-talex-charcoal">
+    
+
+<section id="reservation-section" class="py-20 sm:py-32 bg-talex-charcoal">
         <div class="max-w-xl mx-auto px-4 sm:px-6 text-center">
             
             <h2 class="text-4xl sm:text-5xl font-bold mb-4 text-talex-gold-accent" style="font-family: 'Playfair Display', serif;">
                 Reserve Your Table
             </h2>
             
-            <!-- Reservation Form Container -->
-            <div id="reservation-form-container">
+            
+
+<div id="reservation-form-container">
                 <p class="text-xl text-gray-300 mb-10">
                     Secure your exclusive dining experience at TALEX.
                 </p>
 
-                <!-- Form - `name` attributes now match EmailJS template variables -->
-                <form id="reservation-form" class="space-y-6 text-left">
+                
+
+<form id="reservation-form" class="space-y-6 text-left">
                     
-                    <!-- First Name and Last Name (side-by-side on desktop) -->
-                    <div class="grid sm:grid-cols-2 gap-6">
+                    
+
+<div class="grid sm:grid-cols-2 gap-6">
                         <div>
                             <label for="first_name" class="block text-sm font-medium text-gray-400 mb-2">First Name</label>
                             <input type="text" id="first_name" name="first_name" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
@@ -213,8 +307,9 @@
                         </div>
                     </div>
 
-                    <!-- Email and Phone (side-by-side on desktop) -->
-                    <div class="grid sm:grid-cols-2 gap-6">
+                    
+
+<div class="grid sm:grid-cols-2 gap-6">
                         <div>
                             <label for="email_input" class="block text-sm font-medium text-gray-400 mb-2">Email Address</label>
                             <input type="email" id="email_input" name="email" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
@@ -225,12 +320,14 @@
                         </div>
                     </div>
 
-                    <!-- Date and Guests (side-by-side on desktop) -->
-                    <div class="grid sm:grid-cols-2 gap-6">
+                    
+
+<div class="grid sm:grid-cols-2 gap-6">
                         <div>
                             <label for="date" class="block text-sm font-medium text-gray-400 mb-2">Date</label>
-                            <!-- Name geändert, damit das Feld ignoriert wird und nur der formatierte Wert gesendet wird -->
-                            <input type="date" id="date" name="raw_date_input" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150" style="color-scheme: dark;">
+                            
+
+<input type="date" id="date" name="raw_date_input" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150" style="color-scheme: dark;">
                         </div>
                         <div>
                             <label for="guests" class="block text-sm font-medium text-gray-400 mb-2">Number of Guests</label>
@@ -238,28 +335,33 @@
                         </div>
                     </div>
 
-                    <!-- Time -->
-                    <div>
+                    
+
+<div>
                         <label for="time" class="block text-sm font-medium text-gray-400 mb-2">Desired Time</label>
-                         <!-- Name geändert, damit das Feld ignoriert wird und nur der formatierte Wert gesendet wird -->
-                        <input type="time" id="time" name="raw_time_input" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150" style="color-scheme: dark;">
+                         
+
+<input type="time" id="time" name="raw_time_input" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150" style="color-scheme: dark;">
                     </div>
 
-                    <!-- NEUE HIDDEN INPUTS FÜR FORMATIERTES DATUM UND UHRZEIT -->
-                    <!-- Dies ist das Feld für das formatierte Datum (z.B. 30. November 2025) -->
-                    <input type="hidden" id="formatted_date_output" name="reservation_date_formatted">
-                    <!-- Dies ist das Feld für die formatierte Uhrzeit (z.B. 05:26 Uhr) -->
-                    <input type="hidden" id="formatted_time_output" name="reservation_time_formatted">
+                    
+
+<input type="hidden" id="formatted_date_output" name="reservation_date_formatted">
+                    
+
+<input type="hidden" id="formatted_time_output" name="reservation_time_formatted">
 
 
-                    <!-- Notes -->
-                    <div>
+                    
+
+<div>
                         <label for="notes" class="block text-sm font-medium text-gray-400 mb-2">Special Requests/Notes</label>
                         <textarea id="notes" name="message" rows="3" class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150"></textarea>
                     </div>
 
-                    <!-- Submit Button with Loading State -->
-                    <button type="submit" id="submit-button"
+                    
+
+<button type="submit" id="submit-button"
                         class="w-full py-3 px-4 rounded-md text-lg font-extrabold text-black transition duration-300 shadow-xl talex-gold-accent hover:opacity-90 uppercase tracking-wider transform hover:scale-[1.01] flex items-center justify-center space-x-2"
                     >
                         <span id="button-text">Confirm Reservation</span>
@@ -268,8 +370,9 @@
                 </form>
             </div>
 
-            <!-- Confirmation Message Container (Initially hidden) -->
-            <div id="success-message" class="hidden mt-10 p-8 rounded-xl border-4 border-talex-gold-accent bg-talex-deep-black shadow-lg">
+            
+
+<div id="success-message" class="hidden mt-10 p-8 rounded-xl border-4 border-talex-gold-accent bg-talex-deep-black shadow-lg">
                 <h3 class="text-3xl font-bold text-talex-gold-accent mb-4" style="font-family: 'Playfair Display', serif;">Reservation Confirmed!</h3>
                 <p class="text-xl text-gray-300">
                     Thank you for your reservation. A confirmation email with the details of your exclusive table booking will be sent to you shortly.
@@ -277,8 +380,9 @@
                 <p class="text-sm text-gray-500 mt-4">We look forward to welcoming you.</p>
             </div>
 
-            <!-- Error Message Container (Initially hidden) -->
-            <div id="error-message" class="hidden mt-10 p-8 rounded-xl border-4 border-red-700 bg-talex-deep-black shadow-lg">
+            
+
+<div id="error-message" class="hidden mt-10 p-8 rounded-xl border-4 border-red-700 bg-talex-deep-black shadow-lg">
                 <h3 class="text-3xl font-bold text-red-500 mb-4" style="font-family: 'Playfair Display', serif;">Reservation Failed</h3>
                 <p class="text-xl text-gray-300">
                     We apologize, but an error occurred while processing your request. Please check your network connection or try again later.
@@ -288,25 +392,30 @@
         </div>
     </section>
 
-    <!-- 6. Footer -->
-    <footer class="py-16 bg-talex-deep-black text-off-white border-t border-gray-900">
+    
+
+<footer class="py-16 bg-talex-deep-black text-off-white border-t border-gray-900">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <!-- Footer Logo: Wieder TALEX -->
-            <p class="text-4xl font-bold mb-6 text-talex-gold-accent tracking-widest" style="font-family: 'Playfair Display', serif;">TALEX</p>
+            
+
+<p class="text-4xl font-bold mb-6 text-talex-gold-accent tracking-widest" style="font-family: 'Playfair Display', serif;">TALEX</p>
             <p class="text-base text-gray-400">Jungfernstieg 1, 20354 Hamburg, Germany</p>
             <p class="text-base text-gray-400 mt-2">Opening Hours: Mon - Sat, 7:00 AM - 5:00 PM</p>
             <div class="mt-8 flex justify-center space-x-6">
-                 <!-- Social Icons -->
-                <a href="#" class="text-gray-500 hover:text-talex-gold-accent transition duration-200 text-3xl" aria-label="Instagram">📸</a>
+                 
+
+<a href="#" class="text-gray-500 hover:text-talex-gold-accent transition duration-200 text-3xl" aria-label="Instagram">📸</a>
                 <a href="#" class="text-gray-500 hover:text-talex-gold-accent transition duration-200 text-3xl" aria-label="Facebook">📘</a>
             </div>
-            <!-- Copyright: Hier bleibt Marvin & Linus, wie gewünscht -->
-            <p class="text-sm mt-10 text-gray-600">&copy; 2025 Marvin & Linus. All Rights Reserved.</p>
+            
+
+<p class="text-sm mt-10 text-gray-600">&copy; 2025 Marvin & Linus. All Rights Reserved.</p>
         </div>
     </footer>
 
-    <!-- JavaScript for Form Submission Handling with EmailJS -->
-    <script>
+    
+
+<script>
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('reservation-form');
             const dateInput = document.getElementById('date');
@@ -328,4 +437,130 @@
             const serviceID = 'service_bk7l6sh'; 
             const templateID = 'template_2g55mg6'; 
             const publicKey = 'TfYfrsrGIHYhdVnHO'; 
-            // ----------------------------
+            // ---------------------------------------------------------------------
+
+            if (form) {
+                // Initialize EmailJS with the Public Key
+                emailjs.init(publicKey);
+
+                // Funktion zur Formatierung des Datums (z.B. "30. November 2025")
+                const formatDateOnly = (dateStr) => {
+                    if (!dateStr) return '';
+                    try {
+                        // Datumsobjekt erstellen, um Probleme mit Zeitzonen zu vermeiden
+                        const dateObj = new Date(dateStr + 'T00:00:00'); 
+                        const formatter = new Intl.DateTimeFormat('de-DE', { // DEUTSCHE LOKALISIERUNG
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric',
+                            timeZone: 'Europe/Berlin' 
+                        });
+                        return formatter.format(dateObj); 
+                    } catch (e) {
+                        return dateStr;
+                    }
+                };
+
+                // Funktion zur Formatierung der Uhrzeit (z.B. "05:26 Uhr")
+                const formatTimeOnly = (timeStr) => {
+                    if (!timeStr) return '';
+                    // timeStr ist bereits im Format HH:MM
+                    return `${timeStr} Uhr`; 
+                };
+                
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault(); 
+                    
+                    // 1. Formatierte Werte berechnen
+                    const formattedDate = formatDateOnly(dateInput.value);
+                    const formattedTime = formatTimeOnly(timeInput.value);
+                    
+                    // 2. Formatierte Werte in die NEUEN Hidden-Felder eintragen
+                    formattedDateOutput.value = formattedDate;
+                    formattedTimeOutput.value = formattedTime;
+
+                    // Reset messages
+                    successMessage.classList.add('hidden');
+                    errorMessage.classList.add('hidden');
+
+                    if (form.checkValidity()) {
+                        // Show loading state
+                        submitButton.disabled = true;
+                        buttonText.textContent = 'Sending...';
+                        loadingSpinner.classList.remove('hidden');
+
+                        // Send the form data using EmailJS
+                        emailjs.sendForm(serviceID, templateID, this)
+                            .then((response) => {
+                                console.log('EmailJS SUCCESS!', response.status, response.text);
+
+                                // Hide the form and show success message
+                                formContainer.classList.add('hidden');
+                                successMessage.classList.remove('hidden');
+                                form.reset();
+
+                                successMessage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }, (error) => {
+                                console.error('EmailJS FAILED:', error);
+                                
+                                // Show error message
+                                errorMessage.classList.remove('hidden');
+                                errorMessage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            })
+                            .finally(() => {
+                                // Revert loading state
+                                submitButton.disabled = false;
+                                buttonText.textContent = 'Confirm Reservation';
+                                loadingSpinner.classList.add('hidden');
+                            });
+                        
+                    } else {
+                        // Display the standard HTML5 validation errors if fields are missing
+                        this.reportValidity();
+                    }
+                });
+            }
+
+            // --- Carousel JavaScript ---
+            const carouselImages = document.querySelectorAll('.carousel-image');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            let currentIndex = 0;
+
+            function showImage(index) {
+                // Ensure index wraps around if necessary
+                if (index >= carouselImages.length) {
+                    index = 0;
+                } else if (index < 0) {
+                    index = carouselImages.length - 1;
+                }
+                currentIndex = index;
+
+                carouselImages.forEach((img, i) => {
+                    if (i === currentIndex) {
+                        img.classList.add('active');
+                    } else {
+                        img.classList.remove('active');
+                    }
+                });
+            }
+
+            // Initially show the first image
+            if (carouselImages.length > 0) {
+                showImage(currentIndex);
+            }
+
+            prevBtn.addEventListener('click', () => {
+                showImage(currentIndex - 1);
+            });
+
+            nextBtn.addEventListener('click', () => {
+                showImage(currentIndex + 1);
+            });
+            // --- End Carousel JavaScript ---
+
+        });
+    </script>
+</body>
+</html>
+
