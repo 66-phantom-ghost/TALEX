@@ -35,6 +35,7 @@
 
         /* Hero Background Image with dark overlay */
         .hero-background {
+            /* Text wieder auf TALEX gesetzt */
             background-image: url('https://placehold.co/1920x1080/000000/B8860B?text=TALEX+Luxury+Restaurant+View');
             background-size: cover;
             background-position: center;
@@ -80,20 +81,18 @@
             
             <div class="flex flex-col sm:flex-row justify-between items-center">
                 
-                <!-- Logo -->
+                <!-- Logo: Wieder TALEX -->
                 <a href="#hero" class="text-3xl sm:text-4xl font-black tracking-widest text-talex-gold-accent mb-2 sm:mb-0" style="font-family: 'Playfair Display', serif;">
                     TALEX
                 </a>
 
-                <!-- Navigation Links (CTA removed as requested) -->
+                <!-- Navigation Links -->
                 <div class="flex items-center space-x-4 sm:space-x-8 text-sm sm:text-lg">
                     
                     <!-- Links -->
                     <a href="#about" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Story</a>
                     <a href="menu.html" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Menu</a>
                     <a href="#hamburg" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Location</a>
-                    
-                    <!-- Removed Primary CTA Button here to avoid redundancy -->
                 </div>
             </div>
         </div>
@@ -230,7 +229,7 @@
                     <div class="grid sm:grid-cols-2 gap-6">
                         <div>
                             <label for="date" class="block text-sm font-medium text-gray-400 mb-2">Date</label>
-                            <!-- KORREKTUR: Name geändert, damit nur der formatierte Wert gesendet wird -->
+                            <!-- Name geändert, damit das Feld ignoriert wird und nur der formatierte Wert gesendet wird -->
                             <input type="date" id="date" name="raw_date_input" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150" style="color-scheme: dark;">
                         </div>
                         <div>
@@ -242,12 +241,15 @@
                     <!-- Time -->
                     <div>
                         <label for="time" class="block text-sm font-medium text-gray-400 mb-2">Desired Time</label>
-                        <input type="time" id="time" name="reservation_time" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150" style="color-scheme: dark;">
+                         <!-- Name geändert, damit das Feld ignoriert wird und nur der formatierte Wert gesendet wird -->
+                        <input type="time" id="time" name="raw_time_input" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150" style="color-scheme: dark;">
                     </div>
 
-                    <!-- Hidden Input for Formatted Date/Time (This will be sent to EmailJS) -->
-                    <!-- This field retains the correct name 'reservation_date' -->
-                    <input type="hidden" id="formatted_datetime" name="reservation_date">
+                    <!-- NEUE HIDDEN INPUTS FÜR FORMATIERTES DATUM UND UHRZEIT -->
+                    <!-- Dies ist das Feld für das formatierte Datum (z.B. 30. November 2025) -->
+                    <input type="hidden" id="formatted_date_output" name="reservation_date_formatted">
+                    <!-- Dies ist das Feld für die formatierte Uhrzeit (z.B. 05:26 Uhr) -->
+                    <input type="hidden" id="formatted_time_output" name="reservation_time_formatted">
 
 
                     <!-- Notes -->
@@ -289,6 +291,7 @@
     <!-- 6. Footer -->
     <footer class="py-16 bg-talex-deep-black text-off-white border-t border-gray-900">
         <div class="max-w-4xl mx-auto px-4 text-center">
+            <!-- Footer Logo: Wieder TALEX -->
             <p class="text-4xl font-bold mb-6 text-talex-gold-accent tracking-widest" style="font-family: 'Playfair Display', serif;">TALEX</p>
             <p class="text-base text-gray-400">Jungfernstieg 1, 20354 Hamburg, Germany</p>
             <p class="text-base text-gray-400 mt-2">Opening Hours: Mon - Sat, 7:00 AM - 5:00 PM</p>
@@ -297,7 +300,8 @@
                 <a href="#" class="text-gray-500 hover:text-talex-gold-accent transition duration-200 text-3xl" aria-label="Instagram">📸</a>
                 <a href="#" class="text-gray-500 hover:text-talex-gold-accent transition duration-200 text-3xl" aria-label="Facebook">📘</a>
             </div>
-            <p class="text-sm mt-10 text-gray-600">&copy; 2025 TALEX. All Rights Reserved.</p>
+            <!-- Copyright: Hier bleibt Marvin & Linus, wie gewünscht -->
+            <p class="text-sm mt-10 text-gray-600">&copy; 2025 Marvin & Linus. All Rights Reserved.</p>
         </div>
     </footer>
 
@@ -307,7 +311,10 @@
             const form = document.getElementById('reservation-form');
             const dateInput = document.getElementById('date');
             const timeInput = document.getElementById('time');
-            const formattedDatetimeInput = document.getElementById('formatted_datetime');
+            
+            // NEU: Separater Output für Datum und Uhrzeit
+            const formattedDateOutput = document.getElementById('formatted_date_output');
+            const formattedTimeOutput = document.getElementById('formatted_time_output');
 
             const formContainer = document.getElementById('reservation-form-container');
             const successMessage = document.getElementById('success-message');
@@ -316,23 +323,9 @@
             const buttonText = document.getElementById('button-text');
             const loadingSpinner = document.getElementById('loading-spinner');
 
-            // --- EMAILJS CONFIGURATION (Using provided keys) ---
-            const serviceID = 'service_7nxn7jw'; 
+            // --- EMAILJS CONFIGURATION ---
+            // BITTE DIESE WERTE FÜR IHR PROJEKT ANPASSEN
+            const serviceID = 'service_bk7l6sh'; 
             const templateID = 'template_2g55mg6'; 
             const publicKey = 'TfYfrsrGIHYhdVnHO'; 
-            // ---------------------------------------------------------------------
-
-            if (form) {
-                // Initialize EmailJS with the Public Key
-                emailjs.init(publicKey);
-
-                // Function to format the date and time
-                const formatDateTime = (dateStr, timeStr) => {
-                    if (!dateStr || !timeStr) return '';
-
-                    try {
-                        // Create a combined Date object
-                        const combinedDateTimeString = `${dateStr}T${timeStr}:00`;
-                        const dateObj = new Date(combinedDateTimeString);
-
-                     
+            // ----------------------------
