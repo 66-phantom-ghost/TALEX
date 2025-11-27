@@ -3,106 +3,395 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TALEX | Welcome</title>
+    <title>TALEX | Premium Café & Brunch</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 1. EmailJS Library (Required for sending emails) -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
     <style>
-        /* Defined Colors */
+        /* Defined Colors (TALEX Branding) */
         .talex-blue { background-color: #005F73; }
         .text-talex-blue { color: #005F73; }
+        .border-talex-blue { border-color: #005F73; }
+        .talex-orange { background-color: #E9D8A6; }
         
-        /* Font Styling (Consistent with previous drafts) */
-        body { font-family: 'Inter', sans-serif; }
+        /* Font Styling */
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
 
-        /* Background Image for the Hero section (Placeholder) */
+        /* Hero Background Image - Bright, inviting placeholder */
         .hero-background {
-            /* Using an atmospheric placeholder for a cafe/brunch scene */
-            background-image: url('https://placehold.co/1200x800/2A4E6C/FFFFFF/png?text=TALEX+Cafe+View');
+            background-image: url('https://placehold.co/1920x1080/4D7791/FFFFFF/png?text=Modern+Cafe+Interior+Sunlight');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; 
         }
 
-        /* Overlay for better readability */
-        .overlay {
-            background-color: rgba(0, 0, 0, 0.4); /* Dark, slightly transparent layer */
+        /* Darker, Subtler Overlay for premium feel */
+        .gradient-overlay {
+            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 100%);
+        }
+
+        /* Modal and Menu Animations */
+        .modal-overlay, .menu-overlay {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .menu-slide-enter { transform: translateX(100%); }
+        .menu-slide-enter-active { transform: translateX(0); transition: transform 300ms ease-out; }
+        .menu-slide-leave-active { transform: translateX(100%); transition: transform 300ms ease-in; }
+        
+        /* Loading Spinner Animation */
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #005F73;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-100">
 
-    <!-- Welcome Screen (Full height and width) -->
-    <div class="hero-background h-screen flex items-center justify-center">
-        <div class="overlay w-full h-full absolute"></div>
+    <!-- 1. Fixed Navigation Bar -->
+    <nav class="fixed top-0 left-0 w-full z-30 shadow-lg" style="background-color: rgba(255, 255, 255, 0.98);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo/Brand -->
+                <a href="#hero" class="text-3xl font-black tracking-tighter text-talex-blue">
+                    TALEX
+                </a>
 
-        <!-- Content Box -->
-        <div class="relative z-10 text-center p-6 sm:p-10 bg-white bg-opacity-95 rounded-xl shadow-2xl max-w-lg mx-4">
-            
-            <p class="text-lg font-medium text-talex-blue mb-2 uppercase tracking-widest">
-                Coffee, Breakfast & Brunch
-            </p>
+                <!-- Hamburger Menu Icon -->
+                <button 
+                    onclick="toggleMenu(true)" 
+                    class="p-2 rounded-lg text-talex-blue hover:bg-gray-200 transition duration-150"
+                    aria-label="Toggle main menu"
+                >
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
 
-            <h1 class="text-8xl sm:text-9xl font-black mb-6 leading-none" style="color: #005F73;">
-                TALEX
-            </h1>
+    <!-- 2. Hamburger Menu Overlay (Right-Side Slide-In) -->
+    <div id="main-menu" class="fixed inset-0 z-40 hidden justify-end menu-overlay">
+        <div 
+            id="menu-content" 
+            class="w-80 h-full bg-white shadow-2xl menu-slide-enter"
+        >
+            <div class="p-6 flex flex-col h-full">
+                <!-- Close Button -->
+                <button 
+                    onclick="toggleMenu(false)" 
+                    class="self-end p-2 rounded-lg text-gray-700 hover:bg-gray-200 transition duration-150"
+                    aria-label="Close menu"
+                >
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
 
-            <p class="text-2xl sm:text-3xl font-light text-gray-700 mb-8">
-                Your spot at Jungfernstieg.
-            </p>
+                <!-- Menu Links -->
+                <nav class="flex flex-col space-y-4 mt-8 flex-grow">
+                    <a href="#hero" onclick="toggleMenu(false)" class="text-2xl font-bold text-talex-blue hover:text-gray-800 transition duration-150 border-b pb-2">Home</a>
+                    <a href="#about" onclick="toggleMenu(false)" class="text-2xl font-bold text-gray-800 hover:text-talex-blue transition duration-150 border-b pb-2">Our Story</a>
+                    <a href="#hamburg" onclick="toggleMenu(false)" class="text-2xl font-bold text-gray-800 hover:text-talex-blue transition duration-150 border-b pb-2">Location</a>
+                </nav>
 
-            <!-- Call-to-Action Button - UPDATED LINK -->
-            <button 
-                onclick="window.location.href='menu.html';" 
-                class="inline-block py-4 px-10 rounded-full text-white font-bold text-xl uppercase tracking-wider transition duration-300 transform hover:scale-105 shadow-lg"
-                style="background-color: #005F73; border: 2px solid #005F73;"
-            >
-                Discover Menu
-            </button>
-            
-            <!-- Note on Social Media/Further Information -->
-            <div class="mt-8 text-gray-600 text-sm">
-                <p>Opening Hours: Mon-Sat 8:00 AM - 6:00 PM</p>
+                <!-- Primary Call-to-Action Buttons (Visible ONLY in Menu) -->
+                <div class="mt-auto pt-6 border-t border-gray-200 space-y-4">
+                    <!-- View Menu Button -->
+                    <a 
+                        href="menu.html" 
+                        onclick="toggleMenu(false);"
+                        class="block py-3 rounded-xl text-lg text-center font-bold uppercase tracking-wider transition duration-300 shadow-md text-talex-blue"
+                        style="background-color: #E9D8A6;"
+                    >
+                        View Menu
+                    </a>
+                    
+                    <!-- Reserve Button -->
+                    <button 
+                        onclick="toggleModal(true); toggleMenu(false);" 
+                        class="w-full py-3 rounded-xl text-lg font-bold text-white transition duration-300 shadow-md talex-blue hover:opacity-90" 
+                        aria-label="Book a table"
+                    >
+                        RESERVE NOW
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-    
-</body>
-</html>
 
+    <!-- 3. Hero Section (Full-screen welcome) - NO BUTTONS HERE -->
+    <div id="hero" class="hero-background h-screen flex items-center justify-center pt-16">
+        <div class="gradient-overlay w-full h-full absolute top-0 left-0"></div>
 
         <!-- Content Box -->
-        <div class="relative z-10 text-center p-6 sm:p-10 bg-white bg-opacity-95 rounded-xl shadow-2xl max-w-lg mx-4">
+        <div class="relative z-10 text-center p-6 sm:p-10 text-white max-w-2xl mx-4">
             
-            <p class="text-lg font-medium text-talex-blue mb-2 uppercase tracking-widest">
-                Kaffee, Frühstück & Brunch
+            <p class="text-xl font-medium mb-4 uppercase tracking-widest text-talex-orange">
+                Gourmet Breakfast & Coffee Experience
             </p>
 
-            <h1 class="text-8xl sm:text-9xl font-black mb-6 leading-none" style="color: #005F73;">
-                TALEX
+            <h1 class="text-7xl sm:text-8xl font-black mb-6 leading-tight">
+                Taste the Vibe of Hamburg.
             </h1>
 
-            <p class="text-2xl sm:text-3xl font-light text-gray-700 mb-8">
-                Ihr Ort am Jungfernstieg.
+            <p class="text-2xl font-light mb-10 text-gray-200">
+                Located right at Jungfernstieg – where tradition meets modern culinary art.
             </p>
-
-            <!-- Call-to-Action Button -->
-            <button 
-                onclick="window.location.href='#menu';" 
-                class="inline-block py-4 px-10 rounded-full text-white font-bold text-xl uppercase tracking-wider transition duration-300 transform hover:scale-105 shadow-lg"
-                style="background-color: #005F73; border: 2px solid #005F73;"
-            >
-                Menü entdecken
-            </button>
             
-            <!-- Hinweis auf Social Media/Weitere Infos -->
-            <div class="mt-8 text-gray-600 text-sm">
-                <p>Öffnungszeiten: Mo-Sa 8:00 - 18:00 Uhr</p>
+        </div>
+    </div>
+    
+    <!-- 4. Content Section 1: Our Story / About Us -->
+    <section id="about" class="py-16 sm:py-24 bg-white">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-4xl font-extrabold mb-6 text-talex-blue">
+                Our Story: Where Tradition Meets Trend
+            </h2>
+            <p class="text-xl text-gray-600 mb-8">
+                TALEX was founded with a simple vision: to bring the freshness and cosmopolitan flair of Hamburg to the breakfast table. Located on the historic Jungfernstieg, we honor the city's heritage while offering contemporary, plant-forward options.
+            </p>
+            <div class="grid md:grid-cols-3 gap-8 mt-12">
+                <div class="p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                    <p class="text-4xl font-bold text-talex-blue mb-2">10+</p>
+                    <p class="text-sm font-semibold uppercase text-gray-500">Years of Culinary Experience</p>
+                </div>
+                <div class="p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                    <p class="text-4xl font-bold text-talex-blue mb-2">95%</p>
+                    <p class="text-sm font-semibold uppercase text-gray-500">Locally Sourced Ingredients</p>
+                </div>
+                <div class="p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                    <p class="text-4xl font-bold text-talex-blue mb-2">#1</p>
+                    <p class="text-sm font-semibold uppercase text-gray-500">Rated Coffee on the Alster</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Content Section 2: Hamburg Highlights -->
+    <section id="hamburg" class="py-16 sm:py-24 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-4xl font-extrabold mb-8 text-center text-talex-blue">
+                Our Location: The Heart of Hamburg
+            </h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <img 
+                        src="https://placehold.co/600x400/005F73/FFFFFF/png?text=Binnenalster+View" 
+                        alt="View of Binnenalster from Jungfernstieg" 
+                        class="rounded-xl shadow-2xl w-full"
+                    />
+                </div>
+                <div>
+                    <h3 class="text-3xl font-bold mb-4 text-gray-800">The Jungfernstieg Vibe</h3>
+                    <p class="text-lg text-gray-600 mb-6">
+                        Jungfernstieg is the pulse of Hamburg. Enjoy your freshly made waffle or Eggs Benedict while watching the Alster fountain and the busy city life. It’s more than just breakfast—it’s an experience steeped in Hanseatic culture.
+                    </p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>Direct view of the Binnenalster.</li>
+                        <li>Minutes from Rathausmarkt and Speicherstadt.</li>
+                        <li>Perfect meeting point for locals and visitors.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 6. Modal for Reservations (EmailJS integrated) -->
+    <div id="reservation-modal" class="fixed inset-0 z-50 hidden items-center justify-center modal-overlay" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div 
+            id="modal-content" 
+            class="bg-white rounded-lg shadow-2xl overflow-hidden max-w-lg w-full m-4 relative menu-slide-enter"
+        >
+            <!-- NEW: Close Button (X icon) in the top corner -->
+            <button 
+                onclick="toggleModal(false)" 
+                class="absolute top-4 right-4 p-2 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition duration-150"
+                aria-label="Reservierung schließen"
+            >
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+
+            <div class="p-6 sm:p-8">
+                <div class="text-center">
+                    <h3 class="text-3xl leading-6 font-bold text-talex-blue" id="modal-title">
+                        Book a Table
+                    </h3>
+                    <div class="mt-4">
+                        <p class="text-sm text-gray-500">
+                            Secure your spot for the best breakfast in town.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Reservation Form: Note the ID and onsubmit handler -->
+                <form id="reservation-form" onsubmit="sendReservation(event)" class="mt-6 space-y-4">
+                    <!-- First Name -->
+                    <div>
+                        <label for="modal-first-name" class="block text-sm font-medium text-gray-700 text-left">First Name</label>
+                        <input type="text" id="modal-first-name" name="first_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
+                    </div>
+                    <!-- Last Name -->
+                    <div>
+                        <label for="modal-last-name" class="block text-sm font-medium text-gray-700 text-left">Last Name</label>
+                        <input type="text" id="modal-last-name" name="last_name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
+                    </div>
+                    <!-- Email -->
+                    <div>
+                        <label for="modal-email" class="block text-sm font-medium text-gray-700 text-left">Email Address</label>
+                        <input type="email" id="modal-email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" placeholder="e.g., john.doe@example.com" required>
+                    </div>
+                    <!-- Phone Number -->
+                    <div>
+                        <label for="modal-phone" class="block text-sm font-medium text-gray-700 text-left">Phone Number</label>
+                        <input type="tel" id="modal-phone" name="phone_number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" placeholder="e.g., +49 40 123456" required>
+                    </div>
+                    <!-- Date & Time -->
+                    <div>
+                        <label for="modal-date" class="block text-sm font-medium text-gray-700 text-left">Date & Time</label>
+                        <input type="datetime-local" id="modal-date" name="reservation_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" value="2025-12-01T10:00" required>
+                    </div>
+                    <!-- Guests -->
+                    <div>
+                        <label for="modal-guests" class="block text-sm font-medium text-gray-700 text-left">Number of Guests</label>
+                        <select id="modal-guests" name="num_guests" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
+                            <option>2 Guests</option>
+                            <option>4 Guests</option>
+                            <option>6 Guests</option>
+                        </select>
+                    </div>
+                    <!-- Submission Button -->
+                    <button 
+                        type="submit"
+                        id="submit-button"
+                        class="w-full py-3 mt-4 rounded-lg text-lg font-bold text-white transition duration-300 shadow-md talex-blue hover:opacity-90 flex items-center justify-center"
+                    >
+                        Check Availability & Book
+                    </button>
+                    <!-- Error and confirmation messages below -->
+                    <p id="reservation-message" class="text-center text-sm font-medium mt-3 hidden"></p>
+                </form>
+            </div>
+            
+            <!-- Modal Footer: Changed "Close" to "Schließen" -->
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button 
+                    onclick="toggleModal(false)" 
+                    type="button" 
+                    class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-200 text-base font-medium text-gray-700 hover:bg-gray-300 transition duration-150 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                    Schließen
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- HINWEIS: Hier müsste der eigentliche Menü-Inhalt folgen, wenn Sie die Seite scrollbar machen möchten. 
-         Der Button würde zu einem Abschnitt mit der ID "menu" springen. -->
-    
-</body>
-</html>
+    <!-- 7. Footer -->
+    <footer class="py-12 bg-gray-800 text-white">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <p class="text-2xl font-black mb-4 text-talex-orange">TALEX</p>
+            <p class="text-sm text-gray-400">Jungfernstieg 1, 20354 Hamburg, Germany</p>
+            <p class="text-sm text-gray-400 mt-2">Opening Hours: Mon - Sat, 7:00 AM - 5:00 PM</p>
+            <p class="text-xs mt-6">&copy; 2025 TALEX Café. All rights reserved.</p>
+        </div>
+    </footer>
 
+
+    <script>
+        // --- EmailJS Initialization ---
+        // These keys must match your EmailJS setup exactly.
+        const PUBLIC_KEY = 'TfYfrsrGIHYhdVnHO';
+        const SERVICE_ID = 'service_7nxn7jw';
+        const TEMPLATE_ID = 'template_2g55mg6';
+
+        window.onload = function() {
+            // Initializes EmailJS with the Public Key
+            try {
+                emailjs.init(PUBLIC_KEY);
+                console.log("EmailJS initialized successfully.");
+            } catch (error) {
+                console.error("Failed to initialize EmailJS:", error);
+            }
+        };
+
+        // --- Shared UI Elements ---
+        const mainMenu = document.getElementById('main-menu');
+        const menuContent = document.getElementById('menu-content');
+        const modal = document.getElementById('reservation-modal');
+        const modalContent = document.getElementById('modal-content');
+        const reservationMessage = document.getElementById('reservation-message');
+        const submitButton = document.getElementById('submit-button');
+
+
+        /**
+         * Toggles the side-slide-in menu.
+         * @param {boolean} show - True to show, False to hide.
+         */
+        function toggleMenu(show) {
+            if (show) {
+                mainMenu.classList.remove('hidden');
+                mainMenu.classList.add('flex');
+                setTimeout(() => {
+                    menuContent.classList.remove('menu-slide-enter');
+                    menuContent.classList.add('menu-slide-enter-active');
+                }, 10);
+            } else {
+                menuContent.classList.remove('menu-slide-enter-active');
+                menuContent.classList.add('menu-slide-leave-active');
+                setTimeout(() => {
+                    mainMenu.classList.add('hidden');
+                    mainMenu.classList.remove('flex');
+                    menuContent.classList.remove('menu-slide-leave-active');
+                    menuContent.classList.add('menu-slide-enter');
+                }, 300);
+            }
+        }
+
+        /**
+         * Shows or hides the reservation modal.
+         * @param {boolean} show - True to show, False to hide.
+         */
+        function toggleModal(show) {
+            if (show) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                setTimeout(() => {
+                    modalContent.classList.add('menu-slide-enter-active');
+                    modalContent.classList.remove('menu-slide-enter');
+                }, 10);
+                reservationMessage.classList.add('hidden'); // Reset message on open
+            } else {
+                modalContent.classList.remove('menu-slide-enter-active');
+                modalContent.classList.add('menu-slide-leave-active');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                    modalContent.classList.remove('menu-slide-leave-active');
+                    modalContent.classList.add('menu-slide-enter');
+                }, 300);
+            }
+        }
+        
+        /**
+         * Handles form submission and sends reservation data via EmailJS.
+         * @param {Event} event - The form submission event.
+         */
+        function sendReservation(event) {
+            event.preventDefault(); // Stop the default form submission
+
+            const form = document.getElementById('reservation-form');
+            
+            // 1. Show Loading State
+            reservationMessage.classList.remove('hidden', 'text-green-600', 'text-red-500');
+            reservationMessage.classList.add('flex', 'items-center', 'justify-center', 'text-gray-600');
+            reservationMessage.innerHTML = '<div cla
