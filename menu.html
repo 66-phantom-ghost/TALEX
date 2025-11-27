@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TALEX | Breakfast Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Defined Colors (Consistent with branding) */
+        .talex-blue { background-color: #005F73; }
+        .text-talex-blue { color: #005F73; }
+        .border-talex-blue { border-color: #005F73; }
+        
+        /* Font Styling */
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 p-4 sm:p-8">
+
+    <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-xl overflow-hidden p-6 sm:p-10 border-4 border-talex-blue" id="menu">
+
+        <!-- Header Section -->
+        <header class="text-center pb-4">
+            <!-- Link back to the index page -->
+            <a href="index.html" class="text-talex-blue text-sm hover:underline block mb-2">← Back to Home</a>
+            
+            <h1 class="text-6xl font-black text-talex-blue tracking-tighter">TALEX</h1>
+            <p class="text-xl mt-1 text-gray-600">The New Breakfast Menu at Jungfernstieg</p>
+        </header>
+
+        <!-- Motto and Divider -->
+        <div class="my-6">
+            <div class="h-1 talex-blue w-full"></div>
+            <p class="text-center text-xl font-bold py-3 text-talex-blue tracking-wide">
+                START YOUR DAY RIGHT.
+            </p>
+            <div class="h-1 talex-blue w-full"></div>
+        </div>
+
+        <!-- Menu Content -->
+        <div class="space-y-8">
+            
+            <!-- Section: Savory & Classic -->
+            <section>
+                <h2 class="text-3xl font-bold text-talex-blue uppercase mb-4 border-b-2 border-talex-blue pb-1">Savory & Classic</h2>
+                <div class="space-y-4">
+                    <!-- Item 1 -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-lg">Hamburg Scrambled Eggs</p>
+                            <p class="text-sm text-gray-500">Three eggs, optionally with chives and fresh herbs. Served with a slice of dark farmhouse bread.</p>
+                        </div>
+                        <span class="font-bold text-lg text-right min-w-[5rem]">9.50 €</span>
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-lg">Avocado Toast <span class="text-xs text-talex-blue">(VEGAN)</span></p>
+                            <p class="text-sm text-gray-500">Sourdough bread, mashed avocado, chili flakes, lime, and roasted pumpkin seeds.</p>
+                        </div>
+                        <span class="font-bold text-lg text-right min-w-[5rem]">12.00 €</span>
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-lg">Eggs Benedict Classic</p>
+                            <p class="text-sm text-gray-500">Two poached eggs on toasted bread with cooked ham and hollandaise sauce.</p>
+                        </div>
+                        <span class="font-bold text-lg text-right min-w-[5rem]">14.50 €</span>
+                    </div>
+                    <!-- Item 4 -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-lg">The Talex Sandwich</p>
+                            <p class="text-sm text-gray-500">Dark rye bread with house-made cream cheese, salmon (MSC), and cucumber slices.</p>
+                        </div>
+                        <span class="font-bold text-lg text-right min-w-[5rem]">11.00 €</span>
+                    </div>
+                    <!-- Item 5 -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-lg">Omelette of Choice</p>
+                            <p class="text-sm text-gray-500">Three eggs with two fillings of your choice: Cheese, Mushrooms, Spinach, Tomatoes, Onions.</p>
+                        </div>
+                        <span class="font-bold text-lg text-right min-w-[5rem]">13.00 €</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Sweet & Modern -->
+            <section>
+                <h2 class="text-3xl font-bold text-talex-blue uppercase mb-4 border-b-2 border-talex-blue pb-1">Sweet & Modern</h2>
+                <div class="space-y-4">
+                    <!-- Item 1 -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-lg">Belgian Waffle</p>
+                            <p class="text-sm text-gray-500">Freshly baked, served with maple syrup and powdered sugar.</p>
+                        </div>
+                        <span class="font-bold text-lg text-right min-w-[5rem]">8.50 €</span>
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-lg">Berry Pancakes</p>
+                            <p class="text-sm text-gray-500">Three American pancakes with seasonal berries, yogurt topping, and honey.</p>
+                        </div>
+                        <span class="font-bold text-lg text-right min-w-[5rem]">10.50 €</span>
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-lg">French Toast Deluxe</p>
+                            <p class="text-sm text-gray-500">Brioche baked in an egg-cinnamon mixture, with caramel sauce and nuts.</p>
+                        </div>
+                        <span class="font-bold text-lg text-right min-w-[5rem]">12.50 €</span>
+                    </div>
+                    <!-- Item 4 -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-lg">Chia Pudding <span class="text-xs text-talex-blue">(VEGAN)</span></p>
+                            <p class="text-sm text-gray-500">Overnight chia seeds in coconut milk with fresh fruit and mint.</p>
+                        </div>
+                        <span class="font-bold text-lg text-right min-w-[5rem]">7.50 €</span>
+                    </div>
+                    <!-- Item 5 -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-lg">House-made Granola</p>
+                            <p class="text-sm text-gray-500">Crunchy granola with natural yogurt or milk (Cow/Oat).</p>
+                        </div>
+                        <span class="font-bold text-lg text-right min-w-[5rem]">8.00 €</span>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section: Beverages (Juices & Smoothies) and Hot Beverages -->
+            <div class="grid md:grid-cols-2 gap-8">
+                
+                <!-- SUB-SECTION 1: Juices & Smoothies -->
+                <div>
+                    <h2 class="text-3xl font-bold text-talex-blue uppercase mb-4 border-b-2 border-talex-blue pb-1">Juices & Smoothies</h2>
+                    <div class="space-y-4">
+                        <!-- Juice -->
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold text-lg">Freshly Squeezed Juice</p>
+                                <p class="text-sm text-gray-500">Orange, Apple, or Carrot.</p>
+                            </div>
+                            <span class="font-bold text-lg text-right min-w-[5rem]">5.50 €</span>
+                        </div>
+                        <!-- Green Smoothie -->
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold text-lg">Green Power Smoothie</p>
+                                <p class="text-sm text-gray-500">Spinach, banana, apple, ginger, and coconut water.</p>
+                            </div>
+                            <span class="font-bold text-lg text-right min-w-[5rem]">7.50 €</span>
+                        </div>
+                        <!-- Berry Smoothie -->
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold text-lg">Berry Dream Smoothie</p>
+                                <p class="text-sm text-gray-500">Mixed forest berries, yogurt, honey.</p>
+                            </div>
+                            <span class="font-bold text-lg text-right min-w-[5rem]">7.50 €</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- SUB-SECTION 2: Hot Beverages -->
+                <div>
+                    <h2 class="text-3xl font-bold text-talex-blue uppercase mb-4 border-b-2 border-talex-blue pb-1">Hot Beverages</h2>
+                    <div class="space-y-4">
+                        <!-- Coffee -->
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold text-lg">Filter Coffee / Americano</p>
+                            </div>
+                            <span class="font-bold text-lg text-right min-w-[5rem]">3.50 €</span>
+                        </div>
+                        <!-- Espresso -->
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold text-lg">Espresso / Double Espresso</p>
+                            </div>
+                            <span class="font-bold text-lg text-right min-w-[5rem]">3.00 € / 4.50 €</span>
+                        </div>
+                        <!-- Milk Coffee -->
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold text-lg">Cappuccino / Latte Macchiato / Flat White</p>
+                                <p class="text-sm text-gray-500">Available with cow milk or oat milk (+ 0.50 €).</p>
+                            </div>
+                            <span class="font-bold text-lg text-right min-w-[5rem]">4.50 €</span>
+                        </div>
+                        <!-- Tea -->
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold text-lg">Tea (Various Types)</p>
+                            </div>
+                            <span class="font-bold text-lg text-right min-w-[5rem]">3.50 €</span>
+                        </div>
+                        <!-- Chocolate -->
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold text-lg">Hot Chocolate</p>
+                            </div>
+                            <span class="font-bold text-lg text-right min-w-[5rem]">4.50 €</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="mt-10 pt-4 text-center text-gray-500 text-sm border-t border-talex-blue">
+            All prices are in Euro and include statutory VAT.
+        </footer>
+
+    </div>
+</body>
+</html>
+
