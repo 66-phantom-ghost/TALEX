@@ -5,208 +5,238 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TALEX | Breakfast Menu</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Playfair Display (Serif) & Raleway (Sans-Serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <style>
-        /* Defined Colors (Consistent with branding) */
-        .talex-blue { background-color: #005F73; }
-        .text-talex-blue { color: #005F73; }
-        .border-talex-blue { border-color: #005F73; }
+        /* Defined Colors (TALEX Luxury Palette - Black/Gold) */
+        .bg-talex-deep-black { background-color: #000000; } /* Pure Black */
+        .bg-talex-charcoal { background-color: #1A1A1A; } /* Dark Charcoal for sections */
+        .bg-talex-dark-gray { background-color: #2C2C2C; } /* Lighter Charcoal for cards/border */
+        .talex-gold-accent { background-color: #B8860B; } /* Rich, muted gold */
+        .text-talex-gold-accent { color: #B8860B; }
+        .border-talex-gold-accent { border-color: #B8860B; }
+        .text-off-white { color: #F5F5DC; } /* Off-white / Cream for main text */
         
         /* Font Styling */
-        body { font-family: 'Inter', sans-serif; }
+        body { 
+            font-family: 'Raleway', sans-serif; /* Modern, elegant sans-serif for body */
+            background-color: #000000;
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif; /* Classic, luxurious serif for headings */
+        }
+        
+        /* Menu Item Styling */
+        .menu-item-line {
+            height: 1px;
+            background: repeating-linear-gradient(to right, #2C2C2C, #2C2C2C 3px, transparent 3px, transparent 6px);
+            flex-grow: 1;
+            margin: 0 1rem;
+        }
+
+        /* Adjusted background for contrast */
+        .menu-card {
+            background-color: #1A1A1A; 
+            border: 2px solid #2C2C2C; /* Subtle dark border */
+        }
     </style>
 </head>
-<body class="bg-gray-50 p-4 sm:p-8">
+<body class="bg-talex-deep-black p-4 sm:p-8 text-off-white">
 
-    <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-xl overflow-hidden p-6 sm:p-10 border-4 border-talex-blue" id="menu">
+    <div class="max-w-4xl mx-auto menu-card shadow-2xl rounded-xl overflow-hidden p-6 sm:p-10 border-t-8 border-talex-gold-accent" id="menu">
 
         <!-- Header Section -->
-        <header class="text-center pb-4">
+        <header class="text-center pb-8 border-b border-gray-700">
             <!-- Link back to the index page -->
-            <a href="index.html" class="text-talex-blue text-sm hover:underline block mb-2">← Back to Home</a>
+            <a href="index.html" class="text-talex-gold-accent text-sm hover:opacity-75 block mb-2 uppercase tracking-widest">← BACK TO HOMEPAGE</a>
             
-            <h1 class="text-6xl font-black text-talex-blue tracking-tighter">TALEX</h1>
-            <p class="text-xl mt-1 text-gray-600">The New Breakfast Menu at Jungfernstieg</p>
+            <h1 class="text-6xl sm:text-7xl font-black text-talex-gold-accent tracking-tight mb-2" style="font-family: 'Playfair Display', serif;">TALEX MORNING</h1>
+            <p class="text-xl mt-1 text-gray-400 font-light" style="font-family: 'Raleway', sans-serif;">The New Breakfast Menu at Jungfernstieg</p>
         </header>
 
         <!-- Motto and Divider -->
-        <div class="my-6">
-            <div class="h-1 talex-blue w-full"></div>
-            <p class="text-center text-xl font-bold py-3 text-talex-blue tracking-wide">
+        <div class="my-8">
+            <div class="h-px bg-talex-gold-accent w-full"></div>
+            <p class="text-center text-xl font-bold py-3 text-talex-gold-accent tracking-widest uppercase" style="font-family: 'Playfair Display', serif;">
                 START YOUR DAY RIGHT.
             </p>
-            <div class="h-1 talex-blue w-full"></div>
+            <div class="h-px bg-talex-gold-accent w-full"></div>
         </div>
 
         <!-- Menu Content -->
-        <div class="space-y-8">
+        <div class="space-y-12">
             
             <!-- Section: Savory & Classic -->
             <section>
-                <h2 class="text-3xl font-bold text-talex-blue uppercase mb-4 border-b-2 border-talex-blue pb-1">Savory & Classic</h2>
-                <div class="space-y-4">
+                <h2 class="text-4xl font-bold text-off-white uppercase mb-6 border-b-2 border-talex-gold-accent pb-2" style="font-family: 'Playfair Display', serif;">Savory & Classic</h2>
+                <div class="space-y-6">
                     <!-- Item 1 -->
                     <div class="flex justify-between items-start">
                         <div>
-                            <p class="font-bold text-lg">Hamburg Scrambled Eggs</p>
-                            <p class="text-sm text-gray-500">Three eggs, optionally with chives and fresh herbs. Served with a slice of dark farmhouse bread.</p>
+                            <p class="font-bold text-xl text-off-white">Hamburg Scrambled Eggs</p>
+                            <p class="text-base text-gray-500 italic mt-1">Three eggs, optionally with chives and fresh herbs. Served with a slice of dark farmhouse bread.</p>
                         </div>
-                        <span class="font-bold text-lg text-right min-w-[5rem]">9.50 €</span>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">9.50 €</span>
                     </div>
                     <!-- Item 2 -->
                     <div class="flex justify-between items-start">
                         <div>
-                            <p class="font-bold text-lg">Avocado Toast <span class="text-xs text-talex-blue">(VEGAN)</span></p>
-                            <p class="text-sm text-gray-500">Sourdough bread, mashed avocado, chili flakes, lime, and roasted pumpkin seeds.</p>
+                            <p class="font-bold text-xl text-off-white">Avocado Toast <span class="text-xs text-talex-gold-accent font-extrabold">(VEGAN)</span></p>
+                            <p class="text-base text-gray-500 italic mt-1">Sourdough bread, mashed avocado, chili flakes, lime, and roasted pumpkin seeds.</p>
                         </div>
-                        <span class="font-bold text-lg text-right min-w-[5rem]">12.00 €</span>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">12.00 €</span>
                     </div>
                     <!-- Item 3 -->
                     <div class="flex justify-between items-start">
                         <div>
-                            <p class="font-bold text-lg">Eggs Benedict Classic</p>
-                            <p class="text-sm text-gray-500">Two poached eggs on toasted bread with cooked ham and hollandaise sauce.</p>
+                            <p class="font-bold text-xl text-off-white">Eggs Benedict Classic</p>
+                            <p class="text-base text-gray-500 italic mt-1">Two poached eggs on toasted bread with cooked ham and hollandaise sauce.</p>
                         </div>
-                        <span class="font-bold text-lg text-right min-w-[5rem]">14.50 €</span>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">14.50 €</span>
                     </div>
                     <!-- Item 4 -->
                     <div class="flex justify-between items-start">
                         <div>
-                            <p class="font-bold text-lg">The Talex Sandwich</p>
-                            <p class="text-sm text-gray-500">Dark rye bread with house-made cream cheese, salmon (MSC), and cucumber slices.</p>
+                            <p class="font-bold text-xl text-off-white">The Talex Sandwich</p>
+                            <p class="text-base text-gray-500 italic mt-1">Dark rye bread with house-made cream cheese, salmon (MSC), and cucumber slices.</p>
                         </div>
-                        <span class="font-bold text-lg text-right min-w-[5rem]">11.00 €</span>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">11.00 €</span>
                     </div>
                     <!-- Item 5 -->
                     <div class="flex justify-between items-start">
                         <div>
-                            <p class="font-bold text-lg">Omelette of Choice</p>
-                            <p class="text-sm text-gray-500">Three eggs with two fillings of your choice: Cheese, Mushrooms, Spinach, Tomatoes, Onions.</p>
+                            <p class="font-bold text-xl text-off-white">Omelette of Choice</p>
+                            <p class="text-base text-gray-500 italic mt-1">Three eggs with two fillings of your choice: Cheese, Mushrooms, Spinach, Tomatoes, Onions.</p>
                         </div>
-                        <span class="font-bold text-lg text-right min-w-[5rem]">13.00 €</span>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">13.00 €</span>
                     </div>
                 </div>
             </section>
 
             <!-- Section: Sweet & Modern -->
             <section>
-                <h2 class="text-3xl font-bold text-talex-blue uppercase mb-4 border-b-2 border-talex-blue pb-1">Sweet & Modern</h2>
-                <div class="space-y-4">
+                <h2 class="text-4xl font-bold text-off-white uppercase mb-6 border-b-2 border-talex-gold-accent pb-2" style="font-family: 'Playfair Display', serif;">Sweet & Modern</h2>
+                <div class="space-y-6">
                     <!-- Item 1 -->
                     <div class="flex justify-between items-start">
                         <div>
-                            <p class="font-bold text-lg">Belgian Waffle</p>
-                            <p class="text-sm text-gray-500">Freshly baked, served with maple syrup and powdered sugar.</p>
+                            <p class="font-bold text-xl text-off-white">Belgian Waffle</p>
+                            <p class="text-base text-gray-500 italic mt-1">Freshly baked, served with maple syrup and powdered sugar.</p>
                         </div>
-                        <span class="font-bold text-lg text-right min-w-[5rem]">8.50 €</span>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">8.50 €</span>
                     </div>
                     <!-- Item 2 -->
                     <div class="flex justify-between items-start">
                         <div>
-                            <p class="font-bold text-lg">Berry Pancakes</p>
-                            <p class="text-sm text-gray-500">Three American pancakes with seasonal berries, yogurt topping, and honey.</p>
+                            <p class="font-bold text-xl text-off-white">Berry Pancakes</p>
+                            <p class="text-base text-gray-500 italic mt-1">Three American pancakes with seasonal berries, yogurt topping, and honey.</p>
                         </div>
-                        <span class="font-bold text-lg text-right min-w-[5rem]">10.50 €</span>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">10.50 €</span>
                     </div>
                     <!-- Item 3 -->
                     <div class="flex justify-between items-start">
                         <div>
-                            <p class="font-bold text-lg">French Toast Deluxe</p>
-                            <p class="text-sm text-gray-500">Brioche baked in an egg-cinnamon mixture, with caramel sauce and nuts.</p>
+                            <p class="font-bold text-xl text-off-white">French Toast Deluxe</p>
+                            <p class="text-base text-gray-500 italic mt-1">Brioche baked in an egg-cinnamon mixture, with caramel sauce and nuts.</p>
                         </div>
-                        <span class="font-bold text-lg text-right min-w-[5rem]">12.50 €</span>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">12.50 €</span>
                     </div>
                     <!-- Item 4 -->
                     <div class="flex justify-between items-start">
                         <div>
-                            <p class="font-bold text-lg">Chia Pudding <span class="text-xs text-talex-blue">(VEGAN)</span></p>
-                            <p class="text-sm text-gray-500">Overnight chia seeds in coconut milk with fresh fruit and mint.</p>
+                            <p class="font-bold text-xl text-off-white">Chia Pudding <span class="text-xs text-talex-gold-accent font-extrabold">(VEGAN)</span></p>
+                            <p class="text-base text-gray-500 italic mt-1">Overnight chia seeds in coconut milk with fresh fruit and mint.</p>
                         </div>
-                        <span class="font-bold text-lg text-right min-w-[5rem]">7.50 €</span>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">7.50 €</span>
                     </div>
                     <!-- Item 5 -->
                     <div class="flex justify-between items-start">
                         <div>
-                            <p class="font-bold text-lg">House-made Granola</p>
-                            <p class="text-sm text-gray-500">Crunchy granola with natural yogurt or milk (Cow/Oat).</p>
+                            <p class="font-bold text-xl text-off-white">House-made Granola</p>
+                            <p class="text-base text-gray-500 italic mt-1">Crunchy granola with natural yogurt or milk (Cow/Oat).</p>
                         </div>
-                        <span class="font-bold text-lg text-right min-w-[5rem]">8.00 €</span>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">8.00 €</span>
                     </div>
                 </div>
             </section>
             
             <!-- Section: Beverages (Juices & Smoothies) and Hot Beverages -->
-            <div class="grid md:grid-cols-2 gap-8">
+            <div class="grid md:grid-cols-2 gap-10">
                 
                 <!-- SUB-SECTION 1: Juices & Smoothies -->
                 <div>
-                    <h2 class="text-3xl font-bold text-talex-blue uppercase mb-4 border-b-2 border-talex-blue pb-1">Juices & Smoothies</h2>
-                    <div class="space-y-4">
+                    <h2 class="text-4xl font-bold text-off-white uppercase mb-6 border-b-2 border-talex-gold-accent pb-2" style="font-family: 'Playfair Display', serif;">Juices & Smoothies</h2>
+                    <div class="space-y-6">
                         <!-- Juice -->
                         <div class="flex justify-between items-start">
                             <div>
-                                <p class="font-bold text-lg">Freshly Squeezed Juice</p>
-                                <p class="text-sm text-gray-500">Orange, Apple, or Carrot.</p>
+                                <p class="font-bold text-xl text-off-white">Freshly Squeezed Juice</p>
+                                <p class="text-base text-gray-500 italic mt-1">Orange, Apple, or Carrot.</p>
                             </div>
-                            <span class="font-bold text-lg text-right min-w-[5rem]">5.50 €</span>
+                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">5.50 €</span>
                         </div>
                         <!-- Green Smoothie -->
                         <div class="flex justify-between items-start">
                             <div>
-                                <p class="font-bold text-lg">Green Power Smoothie</p>
-                                <p class="text-sm text-gray-500">Spinach, banana, apple, ginger, and coconut water.</p>
+                                <p class="font-bold text-xl text-off-white">Green Power Smoothie</p>
+                                <p class="text-base text-gray-500 italic mt-1">Spinach, banana, apple, ginger, and coconut water.</p>
                             </div>
-                            <span class="font-bold text-lg text-right min-w-[5rem]">7.50 €</span>
+                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">7.50 €</span>
                         </div>
                         <!-- Berry Smoothie -->
                         <div class="flex justify-between items-start">
                             <div>
-                                <p class="font-bold text-lg">Berry Dream Smoothie</p>
-                                <p class="text-sm text-gray-500">Mixed forest berries, yogurt, honey.</p>
+                                <p class="font-bold text-xl text-off-white">Berry Dream Smoothie</p>
+                                <p class="text-base text-gray-500 italic mt-1">Mixed forest berries, yogurt, honey.</p>
                             </div>
-                            <span class="font-bold text-lg text-right min-w-[5rem]">7.50 €</span>
+                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">7.50 €</span>
                         </div>
                     </div>
                 </div>
                 
                 <!-- SUB-SECTION 2: Hot Beverages -->
                 <div>
-                    <h2 class="text-3xl font-bold text-talex-blue uppercase mb-4 border-b-2 border-talex-blue pb-1">Hot Beverages</h2>
-                    <div class="space-y-4">
+                    <h2 class="text-4xl font-bold text-off-white uppercase mb-6 border-b-2 border-talex-gold-accent pb-2" style="font-family: 'Playfair Display', serif;">Hot Beverages</h2>
+                    <div class="space-y-6">
                         <!-- Coffee -->
                         <div class="flex justify-between items-start">
                             <div>
-                                <p class="font-bold text-lg">Filter Coffee / Americano</p>
+                                <p class="font-bold text-xl text-off-white">Filter Coffee / Americano</p>
                             </div>
-                            <span class="font-bold text-lg text-right min-w-[5rem]">3.50 €</span>
+                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">3.50 €</span>
                         </div>
                         <!-- Espresso -->
                         <div class="flex justify-between items-start">
                             <div>
-                                <p class="font-bold text-lg">Espresso / Double Espresso</p>
+                                <p class="font-bold text-xl text-off-white">Espresso / Double Espresso</p>
                             </div>
-                            <span class="font-bold text-lg text-right min-w-[5rem]">3.00 € / 4.50 €</span>
+                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">3.00 / 4.50 €</span>
                         </div>
                         <!-- Milk Coffee -->
                         <div class="flex justify-between items-start">
                             <div>
-                                <p class="font-bold text-lg">Cappuccino / Latte Macchiato / Flat White</p>
-                                <p class="text-sm text-gray-500">Available with cow milk or oat milk (+ 0.50 €).</p>
+                                <p class="font-bold text-xl text-off-white">Cappuccino / Latte Macchiato</p>
+                                <p class="text-base text-gray-500 italic mt-1">Available with cow milk or oat milk (+ 0.50 €).</p>
                             </div>
-                            <span class="font-bold text-lg text-right min-w-[5rem]">4.50 €</span>
+                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">4.50 €</span>
                         </div>
                         <!-- Tea -->
                         <div class="flex justify-between items-start">
                             <div>
-                                <p class="font-bold text-lg">Tea (Various Types)</p>
+                                <p class="font-bold text-xl text-off-white">Tea (Various Types)</p>
                             </div>
-                            <span class="font-bold text-lg text-right min-w-[5rem]">3.50 €</span>
+                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">3.50 €</span>
                         </div>
                         <!-- Chocolate -->
                         <div class="flex justify-between items-start">
                             <div>
-                                <p class="font-bold text-lg">Hot Chocolate</p>
+                                <p class="font-bold text-xl text-off-white">Hot Chocolate</p>
                             </div>
-                            <span class="font-bold text-lg text-right min-w-[5rem]">4.50 €</span>
+                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">4.50 €</span>
                         </div>
                     </div>
                 </div>
@@ -214,8 +244,8 @@
 
         </div>
 
-        <footer class="mt-10 pt-4 text-center text-gray-500 text-sm border-t border-talex-blue">
-            All prices are in Euro and include statutory VAT.
+        <footer class="mt-12 pt-6 text-center text-gray-600 text-sm border-t border-gray-800">
+            All prices are in Euro (€) including statutory VAT.
         </footer>
 
     </div>
