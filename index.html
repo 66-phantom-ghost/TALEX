@@ -1,39 +1,73 @@
-
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TALEX | Willkommen</title>
+    <title>TALEX | Welcome</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Definierte Farben */
+        /* Defined Colors */
         .talex-blue { background-color: #005F73; }
         .text-talex-blue { color: #005F73; }
         
-        /* Font-Styling (Konsistent mit den vorherigen Entwürfen) */
+        /* Font Styling (Consistent with previous drafts) */
         body { font-family: 'Inter', sans-serif; }
 
-        /* Hintergrundbild für den Hero-Bereich (Platzhalter) */
+        /* Background Image for the Hero section (Placeholder) */
         .hero-background {
-            /* Verwenden Sie einen atmosphärischen Placeholder für ein Café/Brunch */
+            /* Using an atmospheric placeholder for a cafe/brunch scene */
             background-image: url('https://placehold.co/1200x800/2A4E6C/FFFFFF/png?text=TALEX+Cafe+View');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Optional: Parallax-Effekt */
+            background-attachment: fixed; 
         }
 
-        /* Überlagerung für bessere Lesbarkeit */
+        /* Overlay for better readability */
         .overlay {
-            background-color: rgba(0, 0, 0, 0.4); /* Dunkle, leicht transparente Schicht */
+            background-color: rgba(0, 0, 0, 0.4); /* Dark, slightly transparent layer */
         }
     </style>
 </head>
 <body class="bg-gray-50">
 
-    <!-- Willkommensbildschirm (Volle Höhe und Breite) -->
+    <!-- Welcome Screen (Full height and width) -->
     <div class="hero-background h-screen flex items-center justify-center">
         <div class="overlay w-full h-full absolute"></div>
+
+        <!-- Content Box -->
+        <div class="relative z-10 text-center p-6 sm:p-10 bg-white bg-opacity-95 rounded-xl shadow-2xl max-w-lg mx-4">
+            
+            <p class="text-lg font-medium text-talex-blue mb-2 uppercase tracking-widest">
+                Coffee, Breakfast & Brunch
+            </p>
+
+            <h1 class="text-8xl sm:text-9xl font-black mb-6 leading-none" style="color: #005F73;">
+                TALEX
+            </h1>
+
+            <p class="text-2xl sm:text-3xl font-light text-gray-700 mb-8">
+                Your spot at Jungfernstieg.
+            </p>
+
+            <!-- Call-to-Action Button - UPDATED LINK -->
+            <button 
+                onclick="window.location.href='menu.html';" 
+                class="inline-block py-4 px-10 rounded-full text-white font-bold text-xl uppercase tracking-wider transition duration-300 transform hover:scale-105 shadow-lg"
+                style="background-color: #005F73; border: 2px solid #005F73;"
+            >
+                Discover Menu
+            </button>
+            
+            <!-- Note on Social Media/Further Information -->
+            <div class="mt-8 text-gray-600 text-sm">
+                <p>Opening Hours: Mon-Sat 8:00 AM - 6:00 PM</p>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
+
 
         <!-- Content Box -->
         <div class="relative z-10 text-center p-6 sm:p-10 bg-white bg-opacity-95 rounded-xl shadow-2xl max-w-lg mx-4">
