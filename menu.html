@@ -1,357 +1,376 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TALEX | Rustic Breakfast Menu</title>
+    <title>TALEX | Exclusive Restaurant & Bar</title>
+    
+    <!-- Tailwind CSS CDN - Wird synchron geladen, um das Layout sofort zu stylen. -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts: Playfair Display (Serif) & Raleway (Sans-Serif) -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
     
+    <!-- EmailJS SDK - Mit 'defer' geladen, da es erst beim Formular-Submit benötigt wird. -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3.12.0/dist/email.min.js" defer></script>
+
     <style>
-        /* Defined Colors (TALEX Luxury Palette - Black/Gold) */
+        /* Definierte Farben (TALEX Luxus-Palette - Schwarz/Gold) */
         .bg-talex-deep-black { background-color: #000000; } /* Pure Black */
         .bg-talex-charcoal { background-color: #1A1A1A; } /* Dark Charcoal for sections */
-        .bg-talex-dark-gray { background-color: #2C2C2C; } /* Lighter Charcoal for cards/border */
-        .talex-gold-accent { background-color: #B8860B; } /* Rich, muted gold */
+        .talex-gold-accent { background-color: #B8860B; }
         .text-talex-gold-accent { color: #B8860B; }
-        .border-talex-gold-accent { border-color: #B8860B; }
         .text-off-white { color: #F5F5DC; } /* Off-white / Cream for main text */
-        
+
         /* Font Styling */
         body { 
-            font-family: 'Raleway', sans-serif; /* Modern, elegant sans-serif for body */
-            background-color: #000000;
+            font-family: 'Raleway', sans-serif; /* Modern Sans-Serif for body text */
+            scroll-behavior: smooth; 
+            background-color: #000000; /* Global black background */
         }
         h1, h2, h3 {
-            font-family: 'Playfair Display', serif; /* Classic, luxurious serif for headings */
-        }
-        
-        /* Adjusted background for contrast */
-        .menu-card {
-            background-color: #1A1A1A; 
-            border: 2px solid #2C2C2C; /* Subtle dark border */
+            font-family: 'Playfair Display', serif; /* Classic, luxurious Serif for headings */
         }
 
-        /* Modal backdrop for the code popup */
-        .modal-backdrop {
-            background-color: rgba(0, 0, 0, 0.95); /* Dunkler für bessere Konzentration auf das Modal */
-            z-index: 1000;
+        /* Hero Background Image with dark overlay */
+        .hero-background {
+            /* Generic placeholder for hero image */
+            background-image: url('https://placehold.co/1920x1080/000000/B8860B?text=TALEX+Luxury+Restaurant+View');
+            background-size: cover;
+            background-position: center;
+            /* Dark overlay for better text readability */
+            position: relative;
+        }
+        .hero-background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6); /* 60% black overlay */
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Loading Spinner CSS */
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #B8860B;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Carousel specific styles */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 75%; /* 4:3 Aspect Ratio */
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        .carousel-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s ease-in-out;
+            opacity: 0; /* Hidden by default */
+        }
+        .carousel-image.active {
+            opacity: 1;
+        }
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 2rem;
+            line-height: 1;
+            border-radius: 4px;
+            z-index: 10;
+            transition: background 0.3s ease;
+        }
+        .carousel-button:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .carousel-button.left {
+            left: 10px;
+        }
+        .carousel-button.right {
+            right: 10px;
+        }
+
+        /* NEUE CSS-Klasse für das Verbergen des Modals (ersetzt die Tailwind 'hidden' Klasse, um diese im JS besser steuern zu können) */
+        .is-hidden {
+            display: none !important;
         }
         
-        /* Styling for the new German version button */
-        .german-button {
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(184, 134, 11, 0.4);
-            background-image: linear-gradient(145deg, #FFD700 0%, #B8860B 100%);
-        }
-        .german-button:hover {
-            box-shadow: 0 6px 20px rgba(184, 134, 11, 0.7);
-            transform: scale(1.05);
-        }
     </style>
 </head>
-<body class="bg-talex-deep-black p-4 sm:p-8 text-off-white">
+<body class="bg-talex-deep-black text-off-white">
 
-    <div class="max-w-4xl mx-auto menu-card shadow-2xl rounded-xl overflow-hidden p-6 sm:p-10 border-t-8 border-talex-gold-accent" id="menu">
-
-        <!-- Header Section -->
-        <header class="text-center pb-8 border-b border-gray-700">
-            <!-- Link back to the index page -->
-            <a href="index.html" class="text-talex-gold-accent text-sm hover:opacity-75 block mb-2 uppercase tracking-widest">← Go Back to Home</a>
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-30 shadow-2xl" style="background-color: rgba(0, 0, 0, 0.95); border-bottom: 1px solid rgba(184, 134, 11, 0.3);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4"> 
             
-            <h1 class="text-6xl sm:text-7xl font-black text-talex-gold-accent tracking-tight mb-2" style="font-family: 'Playfair Display', serif;">TALEX MORNING</h1>
-            <p class="text-xl mt-1 text-gray-400 font-light mb-4" style="font-family: 'Raleway', sans-serif;">Our Simple, Hearty Breakfast Menu</p>
-            
-            <!-- BUTTONS ROW -->
-            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mt-6">
-                 <!-- German Version Button with Pop-up Trigger -->
-                <button 
-                    onclick="showModal()" 
-                    class="german-button py-3 px-8 rounded-full text-base font-bold text-black uppercase tracking-wider">
-                    DEUTSCHE VERSION
-                </button>
-                
-                <!-- BUTTON to Lunch Menu -->
-                <a href="lunch.html" class="mt-4 inline-block py-2 px-8 rounded-full text-base font-bold text-black bg-white hover:bg-gray-200 transition duration-300 shadow-lg uppercase tracking-wider transform hover:scale-[1.03]">
-                    See Lunch Menu
+            <!-- Logo -->
+            <div class="flex flex-col sm:flex-row justify-between items-center">
+                <a href="#hero" class="text-3xl sm:text-4xl font-black tracking-widest text-talex-gold-accent mb-2 sm:mb-0" style="font-family: 'Playfair Display', serif;">
+                    TALEX
                 </a>
-            </div>
-        </header>
 
-        <!-- ... (Rest des Menü-Inhalts bleibt unverändert) ... -->
-        
-        <!-- Motto and Divider -->
-        <div class="my-8">
-            <div class="h-px bg-talex-gold-accent w-full"></div>
-            <p class="text-center text-xl font-bold py-3 text-talex-gold-accent tracking-widest uppercase" style="font-family: 'Playfair Display', serif;">
-                START YOUR DAY RIGHT.
-            </p>
-            <div class="h-px bg-talex-gold-accent w-full"></div>
-        </div>
+                <!-- Navigation Links -->
+                <div class="flex items-center space-x-4 sm:space-x-8 text-sm sm:text-lg">
+                    
+                    <!-- Link: Story -->
+                    <a href="#about" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Story</a>
+                    
+                    <!-- Link: Menu (Öffnet PIN Gate) -->
+                    <a href="#" id="menu-link" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Menu</a>
 
-        <!-- Menu Content -->
-        <div class="space-y-12">
-            
-            <!-- Section: Savory & Hearty -->
-            <section>
-                <h2 class="text-4xl font-bold text-off-white uppercase mb-6 border-b-2 border-talex-gold-accent pb-2" style="font-family: 'Playfair Display', serif;">Savory & Hearty</h2>
-                <div class="space-y-6">
-                    <!-- Item 1: Farmer's Omelette -->
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="font-bold text-xl text-off-white">Farmer's Omelette</p>
-                            <p class="text-base italic mt-1 text-gray-400">
-                                Three eggs baked with fried potatoes, bacon pieces, and fresh chives.
-                            </p>
-                        </div>
-                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">12.00 €</span>
-                    </div>
-                    <!-- Item 2: Bread & Cold Cuts Plate -->
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="font-bold text-xl text-off-white">Bread & Cold Cuts Plate</p>
-                            <p class="text-base italic mt-1 text-gray-400">
-                                Slices of rustic ham, hard cheese, butter, and a basket of dark country bread.
-                            </p>
-                        </div>
-                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">14.00 €</span>
-                    </div>
-                    <!-- Item 3: Classic Toasted Sandwich -->
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="font-bold text-xl text-off-white">Classic Toasted Sandwich</p>
-                            <p class="text-base italic mt-1 text-gray-400">
-                                Melted Gouda cheese and cooked ham on thick toast bread. Very simple and filling.
-                            </p>
-                        </div>
-                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">9.00 €</span>
-                    </div>
-                    <!-- Item 4: Soft-Boiled Eggs -->
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="font-bold text-xl text-off-white">Soft-Boiled Eggs</p>
-                            <p class="text-base italic mt-1 text-gray-400">
-                                Two eggs served in an egg cup, with salt, pepper, and buttered toast fingers.
-                            </p>
-                        </div>
-                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">7.50 €</span>
-                    </div>
-                    <!-- Item 5: Frankfurter Sausages -->
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="font-bold text-xl text-off-white">Frankfurter Sausages</p>
-                            <p class="text-base italic mt-1 text-gray-400">
-                                Two small, boiled sausages (Wiener style) served with mustard and a crusty roll.
-                            </p>
-                        </div>
-                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">8.50 €</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section: Sweet & Simple -->
-            <section>
-                <h2 class="text-4xl font-bold text-off-white uppercase mb-6 border-b-2 border-talex-gold-accent pb-2" style="font-family: 'Playfair Display', serif;">Sweet & Simple</h2>
-                <div class="space-y-6">
-                    <!-- Item 1: Rustic Apple Toast -->
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="font-bold text-xl text-off-white">Rustic Apple Toast</p>
-                            <p class="text-base italic mt-1 text-gray-400">
-                                Thick slice of toasted country bread with warm, mashed apple, sugar, and cinnamon.
-                            </p>
-                        </div>
-                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">8.00 €</span>
-                    </div>
-                    <!-- Item 2: Curd Cheese Bowl -->
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="font-bold text-xl text-off-white">Curd Cheese Bowl</p>
-                            <p class="text-base italic mt-1 text-gray-400">
-                                Creamy curd (Quark) served with a side of fruit compote (stewed fruit) and crunchy nuts.
-                            </p>
-                        </div>
-                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">9.50 €</span>
-                    </div>
-                    <!-- Item 3: Honey & Nut Waffle -->
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="font-bold text-xl text-off-white">Honey & Nut Waffle</p>
-                            <p class="text-base italic mt-1 text-gray-400">
-                                A large, warm waffle topped with local forest honey and chopped walnuts.
-                            </p>
-                        </div>
-                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">10.00 €</span>
-                    </div>
-                    <!-- Item 4: Cinnamon Sugar Pancakes -->
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="font-bold text-xl text-off-white">Cinnamon Sugar Pancakes</p>
-                            <p class="text-base italic mt-1 text-gray-400">
-                                Two thick, simple pancakes dusted with cinnamon sugar, served with butter.
-                            </p>
-                        </div>
-                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">8.50 €</span>
-                    </div>
-                    <!-- Item 5: Jam & Butter Croissant -->
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="font-bold text-xl text-off-white">Jam & Butter Croissant</p>
-                            <p class="text-base italic mt-1 text-gray-400">
-                                Freshly baked croissant served with two types of jam (strawberry and plum) and butter.
-                            </p>
-                        </div>
-                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">6.50 €</span>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Section: Beverages (Juices & Smoothies) and Hot Beverages -->
-            <div class="grid md:grid-cols-2 gap-10">
-                
-                <!-- SUB-SECTION 1: Juices & Smoothies -->
-                <div>
-                    <h2 class="text-4xl font-bold text-off-white uppercase mb-6 border-b-2 border-talex-gold-accent pb-2" style="font-family: 'Playfair Display', serif;">Fresh Drinks</h2>
-                    <div class="space-y-6">
-                        <!-- Juice -->
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="font-bold text-xl text-off-white">Fresh Juice</p>
-                                <p class="text-base italic mt-1 text-gray-400">
-                                    Orange, Apple, or Carrot, pressed fresh now.
-                                </p>
-                            </div>
-                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">5.50 €</span>
-                        </div>
-                        <!-- Green Smoothie -->
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="font-bold text-xl text-off-white">Green Energy Smoothie</p>
-                                <p class="text-base italic mt-1 text-gray-400">
-                                    Spinach, banana, apple, fresh ginger, and coconut water.
-                                </p>
-                            </div>
-                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">7.50 €</span>
-                        </div>
-                        <!-- Berry Smoothie -->
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="font-bold text-xl text-off-white">Tropical Dream Smoothie</p>
-                                <p class="text-base italic mt-1 text-gray-400">
-                                    Mango, pineapple, coconut milk, and lime juice.
-                                </p>
-                            </div>
-                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">7.50 €</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- SUB-SECTION 2: Hot Beverages -->
-                <div>
-                    <h2 class="text-4xl font-bold text-off-white uppercase mb-6 border-b-2 border-talex-gold-accent pb-2" style="font-family: 'Playfair Display', serif;">Hot Drinks</h2>
-                    <div class="space-y-6">
-                        <!-- Coffee -->
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="font-bold text-xl text-off-white">Filter Coffee / Americano</p>
-                            </div>
-                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">3.50 €</span>
-                        </div>
-                        <!-- Espresso -->
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="font-bold text-xl text-off-white">Espresso / Double Espresso</p>
-                            </div>
-                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">3.00 / 4.50 €</span>
-                        </div>
-                        <!-- Milk Coffee -->
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="font-bold text-xl text-off-white">Cappuccino / Latte Macchiato</p>
-                                <p class="text-base italic mt-1 text-gray-400">
-                                    Use cow milk or oat milk (+ 0.50 €).
-                                </p>
-                            </div>
-                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">4.50 €</span>
-                        </div>
-                        <!-- Tea -->
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="font-bold text-xl text-off-white">Tea (Different Kinds)</p>
-                            </div>
-                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">3.50 €</span>
-                        </div>
-                        <!-- Chocolate -->
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="font-bold text-xl text-off-white">Hot Chocolate</p>
-                            </div>
-                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">4.50 €</span>
-                        </div>
-                    </div>
+                    <!-- Link: Location -->
+                    <a href="#hamburg" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Location</a>
                 </div>
             </div>
-
         </div>
+    </nav>
 
-        <footer class="mt-12 pt-6 text-center text-gray-600 text-sm border-t border-gray-800">
-            All prices are in Euro (€). The tax is included.
-        </footer>
-
-    </div>
-
-    <!-- CODE ENTRY MODAL -->
-    <div id="codeModal" class="modal-backdrop fixed inset-0 hidden items-center justify-center p-4" onclick="hideModal()">
-        <div 
-            class="bg-talex-charcoal p-8 rounded-lg shadow-2xl w-full max-w-sm border-2 border-talex-gold-accent transform transition-all duration-300 scale-95"
-            onclick="event.stopPropagation()">
+    <!-- Header / Hero Section -->
+    <header id="hero" class="hero-background text-off-white flex items-center justify-center min-h-screen pt-24 sm:pt-0">
+        <div class="hero-content text-center px-6 py-16 sm:py-0">
+            <p class="text-xl sm:text-2xl text-talex-gold-accent uppercase tracking-widest mb-4">Welcome to the Exclusive</p>
             
-            <h3 class="text-2xl font-bold text-talex-gold-accent mb-4">🤫 Psst! Nur für Eingeweihte 🤫</h3>
-            
-            <!-- Text wird hier per JS gesetzt (zufällig) -->
-            <p id="modalPrompt" class="text-gray-300 mb-6 text-center">
-                ...Lade geheime Weisheit...
+            <!-- Headline -->
+            <h1 class="text-3xl sm:text-7xl font-bold mb-6 leading-tight" style="font-family: 'Playfair Display', serif;">
+                CULINARY ARTISTRY. <br class="hidden sm:block"> TIMELESS ELEGANCE.
+            </h1>
+            <p class="text-lg sm:text-xl max-w-2xl mx-auto text-gray-300">
+                Experience TALEX – the new definition of luxury gastronomy in the heart of Hamburg.
             </p>
             
-            <input 
-                type="text" 
-                id="codeInput" 
-                placeholder="Geheim-Code hier eingeben..."
-                class="w-full p-3 mb-4 text-lg bg-talex-deep-black text-off-white border border-gray-600 rounded-lg focus:outline-none focus:border-talex-gold-accent"
-                onkeypress="if(event.key === 'Enter') checkCode()">
-            
-            <!-- Dynamische Fehlermeldung kommt hier rein -->
-            <p id="errorMessage" class="text-red-500 text-sm mb-4 hidden"></p>
+            <!-- Reservation Button (Scrollt direkt zur Sektion) -->
+            <a 
+                href="#reservation-section"
+                class="mt-10 inline-block py-3 px-10 rounded-full text-base sm:text-lg font-extrabold text-black transition duration-300 shadow-xl talex-gold-accent hover:opacity-90 uppercase tracking-wider transform hover:scale-105" 
+            >
+                Book a Table
+            </a>
+        </div>
+    </header>
 
-            <div class="flex justify-between space-x-3">
-                <button 
-                    onclick="checkCode()" 
-                    id="modalActionButton"
-                    class="w-full py-3 px-4 rounded-lg font-bold text-black german-button hover:bg-yellow-600">
-                    FORTFAHREN (AUF EIGENE GEFAHR)
-                </button>
-                <button 
-                    onclick="hideModal()" 
-                    class="w-full py-3 px-4 rounded-lg font-bold text-off-white bg-gray-600 hover:bg-gray-700 transition duration-150">
-                    ABBRECHEN UND WEGSEHEN
-                </button>
+    <!-- About Section -->
+    <section id="about" class="py-20 sm:py-32 bg-talex-charcoal border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                
+                <!-- Text Content -->
+                <div class="md:order-1 order-2">
+                    <p class="text-lg text-talex-gold-accent uppercase tracking-widest mb-2">Our Philosophy</p>
+                    <h2 class="text-4xl sm:text-5xl font-bold mb-6" style="font-family: 'Playfair Display', serif;">
+                        The TALEX Story
+                    </h2>
+                    <p class="text-lg text-gray-300 mb-6">
+                        TALEX was founded with the vision of creating a venue that unites the finest European cuisine with Hanseatic elegance. Every dish is a work of art, every wine a discovery and every visit an unforgettable experience. We prioritize seasonal, local ingredients, prepared with precision and passion.
+                    </p>
+                    <p class="text-lg text-gray-400 italic">
+                        "Where classic meets modern – an experience for all senses."
+                    </p>
+                </div>
+                
+                <!-- Image (Optimiert mit lazy loading für bessere wahrgenommene Performance) -->
+                <div class="rounded-lg overflow-hidden shadow-2xl md:order-2 order-1">
+                    <img 
+                        src="https://placehold.co/800x600/1A1A1A/B8860B?text=Luxurious+Interior" 
+                        alt="Luxurious Restaurant Interior" 
+                        class="w-full h-auto object-cover rounded-lg"
+                        loading="lazy" 
+                        decoding="async"
+                    >
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <script>
-        // Der Code wird durch eine komplexe mathematische Formel berechnet,
-        // um den tatsächlichen Wert (1505) im Code zu verschleiern.
-        // Formula: (100 * 15) + (200 / 4) + 55 - 100 = 1500 + 50 + 55 - 100 = 1505
-        const CORRECT_CODE_CALC = ( (100 * 15) + (200 / 4) + 55 - 100 );
-        // Der PIN muss als String verglichen werden: "1505"
-        const CORRECT_CODE_STRING = CORRECT_CODE_CALC.toString(); 
+    <!-- Location Section (Hamburg) -->
+    <section id="hamburg" class="py-20 sm:py-32 bg-talex-deep-black border-b border-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                
+                <!-- START: Image Carousel with 4 images -->
+                <div class="rounded-lg overflow-hidden shadow-2xl relative">
+                    <div class="carousel-container">
+                        
+                        <!-- Image 1 - Jungfernstieg View 1 -->
+                        <img 
+                            src="https://i.ibb.co/0RLyRxKq/1764262874405.png" 
+                            alt="Jungfernstieg View 1" 
+                            class="carousel-image"
+                            loading="lazy" 
+                            decoding="async"
+                            onerror="this.src='https://placehold.co/800x600/101010/B8860B?text=Fehler:Bild+1+konnte+nicht+geladen+werden';"
+                        >
+                        <!-- Image 2 - Jungfernstieg View 2 -->
+                        <img 
+                            src="https://i.ibb.co/tpKsCsVX/1764262877609.png" 
+                            alt="Jungfernstieg View 2" 
+                            class="carousel-image"
+                            loading="lazy" 
+                            decoding="async"
+                            onerror="this.src='https://placehold.co/800x600/1A1A1A/B8860B?text=Fehler:Bild+2+konnte+nicht+geladen+werden';"
+                        >
+                        <!-- Image 3 - Jungfernstieg View 3 -->
+                        <img 
+                            src="https://i.ibb.co/gZYrmvvS/1764263237204.png" 
+                            alt="Jungfernstieg View 3" 
+                            class="carousel-image"
+                            loading="lazy" 
+                            decoding="async"
+                            onerror="this.src='https://placehold.co/800x600/202020/B8860B?text=Fehler:Bild+3+konnte+nicht+geladen+werden';"
+                        >
+                        <!-- Image 4 - Jungfernstieg View 4 -->
+                        <img 
+                            src="https://i.ibb.co/spXFLFtM/1764263270589.png" 
+                            alt="Jungfernstieg View 4" 
+                            class="carousel-image"
+                            loading="lazy" 
+                            decoding="async"
+                            onerror="this.src='https://placehold.co/800x600/2A2A2A/B8860B?text=Fehler:Bild+4+konnte+nicht+geladen+werden';"
+                        >
 
-        // Die Liste der frechen Sprüche bleibt erhalten.
-        const allModalMessages = [
-            "Handy weg! Wir sind hier nicht im Kino. Zurück zum Vortrag, sonst gibt's 'Kaltes Buffet'!",
-            "Ertappt! Beim Spicken erwischt zu werden, ist peinlicher als eine 'G
+                        <button id="prev-btn" class="carousel-button left">
+                            &#10094; <!-- Weißer linker Pfeil -->
+                        </button>
+                        <button id="next-btn" class="carousel-button right">
+                            &#10095; <!-- Weißer rechter Pfeil -->
+                        </button>
+                    </div>
+                </div>
+                <!-- END: Image Carousel -->
+                
+                <!-- Text Content -->
+                <div>
+                    <p class="text-lg text-talex-gold-accent uppercase tracking-widest mb-2">Hamburg's Premier Location</p>
+                    <h2 class="text-4xl sm:text-5xl font-bold mb-6" style="font-family: 'Playfair Display', serif;">
+                        The Jungfernstieg Promenade
+                    </h2>
+                    <p class="text-lg text-gray-300 mb-6">
+                        TALEX resides in an historic villa right on the Jungfernstieg, offering unparalleled views of the Inner Alster Lake. This iconic promenade is the heart of Hamburg's luxury retail and cultural scene, reflecting the city's cosmopolitan history as a gateway to the world. Our location is as exclusive as our cuisine, providing a discreet, elegant atmosphere ideal for high-profile business dinners and intimate evening celebrations.
+                    </p>
+                    <p class="text-lg text-gray-400 mb-6">
+                        **About Hamburg:** The "Pearl of the North" is renowned for its architectural grandeur, maritime charm, and exceptional quality of life. As a major European hub, Hamburg embodies a blend of classic Hanseatic tradition and modern sophistication, a spirit we proudly incorporate into the TALEX experience.
+                    </p>
+                    <div class="text-lg text-gray-400 mt-4">
+                        <p class="font-semibold text-off-white">Address:</p>
+                        <p>Jungfernstieg 1, 20354 Hamburg, Germany</p>
+                        <p class="mt-4 font-semibold text-off-white">Opening Hours:</p>
+                        <p>Mon - Sat: 7:00 AM - 5:00 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation Section -->
+    <section id="reservation-section" class="py-20 sm:py-32 bg-talex-charcoal">
+        <div class="max-w-xl mx-auto px-4 sm:px-6 text-center">
+            
+            <h2 class="text-4xl sm:text-5xl font-bold mb-4 text-talex-gold-accent" style="font-family: 'Playfair Display', serif;">
+                Reserve Your Table
+            </h2>
+            <p class="text-xl text-gray-300 mb-10">
+                Sichern Sie sich Ihr exklusives kulinarisches Erlebnis bei TALEX. Um die Buchung abzuschließen, ist ein geheimer Code erforderlich.
+            </p>
+
+            <!-- Reservation Form Wrapper (Immer sichtbar) -->
+            <div id="reservation-form-wrapper">
+
+                <!-- Reservation Form -->
+                <form id="reservation-form" class="space-y-6 text-left">
+                    
+                    <!-- Name Fields -->
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="first_name" class="block text-sm font-medium text-gray-400 mb-2">First Name</label>
+                            <input type="text" id="first_name" name="first_name" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
+                        </div>
+                        <div>
+                            <label for="last_name" class="block text-sm font-medium text-gray-400 mb-2">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
+                        </div>
+                    </div>
+
+                    <!-- Contact Fields -->
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="email_input" class="block text-sm font-medium text-gray-400 mb-2">Email Address</label>
+                            <input type="email" id="email_input" name="email" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-400 mb-2">Phone Number</label>
+                            <input type="tel" id="phone" name="phone_number" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
+                        </div>
+                    </div>
+
+                    <!-- Date & Guests Fields -->
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="date" class="block text-sm font-medium text-gray-400 mb-2">Date</label>
+                            
+                            <!-- Date Input (raw) -->
+                            <input type="date" id="date" name="raw_date_input" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150" style="color-scheme: dark;">
+                        </div>
+                        <div>
+                            <label for="guests" class="block text-sm font-medium text-gray-400 mb-2">Number of Guests</label>
+                            <input type="number" id="guests" name="num_guests" min="1" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
+                        </div>
+                    </div>
+
+                    <!-- Time Field -->
+                    <div>
+                        <label for="time" class="block text-sm font-medium text-gray-400 mb-2">Desired Time</label>
+                         
+                        <!-- Time Input (raw) -->
+                        <input type="time" id="time" name="raw_time_input" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150" style="color-scheme: dark;">
+                    </div>
+
+                    <!-- PIN Field (NEU) -->
+                    <div class="mt-8 pt-4 border-t border-gray-800">
+                        <label for="reservation_pin" class="block text-sm font-medium text-talex-gold-accent mb-2">
+                            Exklusiver Buchungs-Code
+                        </label>
+                        <input 
+                            type="password" 
+                            id="reservation_pin" 
+                            name="reservation_pin" 
+                            required 
+                            maxlength="3"
+                            placeholder="Geheimen 3-stelligen Code eingeben"
+                            class="w-full p-4 text-xl tracking-[0.2em] text-center bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150"
+                        >
+                        <!-- Meldungsfeld für falschen PIN -->
+                        <p id="pin-message" class="text-sm text-red-400 mt-2 text-center h-5 transition-all duration-300">&nbsp;</p>
+                    </div>
+
+                    <!-- Hidden Fields for Formatted Date/Time (used for EmailJS template) -->
+                    <input type="hidden" id="formatted_date_output" name="reservation_date_formatted">
+                    <input
