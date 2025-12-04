@@ -118,12 +118,6 @@
         .carousel-button.right {
             right: 10px;
         }
-
-        /* NEUE CSS-Klasse für das Verbergen des Modals (ersetzt die Tailwind 'hidden' Klasse, um diese im JS besser steuern zu können) */
-        .is-hidden {
-            display: none !important;
-        }
-        
     </style>
 </head>
 <body class="bg-talex-deep-black text-off-white">
@@ -372,4 +366,8 @@
 
                     <!-- Hidden Fields for Formatted Date/Time (used for EmailJS template) -->
                     <input type="hidden" id="formatted_date_output" name="reservation_date_formatted">
-                    <input
+                    <input type="hidden" id="formatted_time_output" name="reservation_time_formatted">
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="submit-button"
+                        class="w-ful
