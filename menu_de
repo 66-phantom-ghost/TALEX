@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TALEX | Rustic Breakfast Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Playfair Display (Serif) & Raleway (Sans-Serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Defined Colors (TALEX Luxury Palette - Black/Gold) */
+        .bg-talex-deep-black { background-color: #000000; } /* Pure Black */
+        .bg-talex-charcoal { background-color: #1A1A1A; } /* Dark Charcoal for sections */
+        .bg-talex-dark-gray { background-color: #2C2C2C; } /* Lighter Charcoal for cards/border */
+        .talex-gold-accent { background-color: #B8860B; } /* Rich, muted gold */
+        .text-talex-gold-accent { color: #B8860B; }
+        .border-talex-gold-accent { border-color: #B8860B; }
+        .text-off-white { color: #F5F5DC; } /* Off-white / Cream for main text */
+        
+        /* Font Styling */
+        body { 
+            font-family: 'Raleway', sans-serif; /* Modern, elegant sans-serif for body */
+            background-color: #000000;
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif; /* Classic, luxurious serif for headings */
+        }
+        
+        /* Menu Item Styling */
+        .menu-item-line {
+            height: 1px;
+            background: repeating-linear-gradient(to right, #2C2C2C, #2C2C2C 3px, transparent 3px, transparent 6px);
+            flex-grow: 1;
+            margin: 0 1rem;
+        }
+
+        /* Adjusted background for contrast */
+        .menu-card {
+            background-color: #1A1A1A; 
+            border: 2px solid #2C2C2C; /* Subtle dark border */
+        }
+        
+        /* German Explanation Styling */
+        .german-explanation {
+            font-style: normal; /* Removes italics for the German text */
+            font-weight: 500;
+            font-family: 'Raleway', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-talex-deep-black p-4 sm:p-8 text-off-white">
+
+    <div class="max-w-4xl mx-auto menu-card shadow-2xl rounded-xl overflow-hidden p-6 sm:p-10 border-t-8 border-talex-gold-accent" id="menu">
+
+        <!-- Header Section -->
+        <header class="text-center pb-8 border-b border-gray-700">
+            <!-- Link back to the index page -->
+            <a href="index.html" class="text-talex-gold-accent text-sm hover:opacity-75 block mb-2 uppercase tracking-widest">← Go Back to Home</a>
+            
+            <h1 class="text-6xl sm:text-7xl font-black text-talex-gold-accent tracking-tight mb-2" style="font-family: 'Playfair Display', serif;">TALEX MORNING</h1>
+            <p class="text-xl mt-1 text-gray-400 font-light mb-4" style="font-family: 'Raleway', sans-serif;">Our Simple, Hearty Breakfast Menu (Mit Deutschen Erklärungen)</p>
+            
+            <!-- BUTTON to Lunch Menu -->
+            <a href="lunch.html" class="mt-4 inline-block py-2 px-8 rounded-full text-base font-bold text-black bg-white hover:bg-gray-200 transition duration-300 shadow-lg uppercase tracking-wider transform hover:scale-[1.03]">
+                See Lunch Menu
+            </a>
+        </header>
+
+        <!-- Motto and Divider -->
+        <div class="my-8">
+            <div class="h-px bg-talex-gold-accent w-full"></div>
+            <p class="text-center text-xl font-bold py-3 text-talex-gold-accent tracking-widest uppercase" style="font-family: 'Playfair Display', serif;">
+                START YOUR DAY RIGHT.
+            </p>
+            <div class="h-px bg-talex-gold-accent w-full"></div>
+        </div>
+
+        <!-- Menu Content -->
+        <div class="space-y-12">
+            
+            <!-- Section: Savory & Hearty -->
+            <section>
+                <h2 class="text-4xl font-bold text-off-white uppercase mb-6 border-b-2 border-talex-gold-accent pb-2" style="font-family: 'Playfair Display', serif;">Savory & Hearty (Herzhaft & Deftig)</h2>
+                <div class="space-y-6">
+                    <!-- Item 1: Farmer's Omelette -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-xl text-off-white">Farmer's Omelette</p>
+                            <p class="text-base italic mt-1 text-gray-400">
+                                Three eggs baked with fried potatoes, bacon pieces, and fresh chives.
+                                <span class="german-explanation text-xs ml-2 text-talex-gold-accent block md:inline-block">
+                                    (DE: Drei Eier, gebacken mit Bratkartoffeln, Speckstücken und frischem Schnittlauch.)
+                                </span>
+                            </p>
+                        </div>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">12.00 €</span>
+                    </div>
+                    <!-- Item 2: Bread & Cold Cuts Plate -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-xl text-off-white">Bread & Cold Cuts Plate</p>
+                            <p class="text-base italic mt-1 text-gray-400">
+                                Slices of rustic ham, hard cheese, butter, and a basket of dark country bread.
+                                <span class="german-explanation text-xs ml-2 text-talex-gold-accent block md:inline-block">
+                                    (DE: Scheiben von rustikalem Schinken, Hartkäse, Butter und ein Korb dunkles Landbrot.)
+                                </span>
+                            </p>
+                        </div>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">14.00 €</span>
+                    </div>
+                    <!-- Item 3: Classic Toasted Sandwich -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-xl text-off-white">Classic Toasted Sandwich</p>
+                            <p class="text-base italic mt-1 text-gray-400">
+                                Melted Gouda cheese and cooked ham on thick toast bread. Very simple and filling.
+                                <span class="german-explanation text-xs ml-2 text-talex-gold-accent block md:inline-block">
+                                    (DE: Geschmolzener Gouda und gekochter Schinken auf dickem Toastbrot. Sehr einfach und sättigend.)
+                                </span>
+                            </p>
+                        </div>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">9.00 €</span>
+                    </div>
+                    <!-- Item 4: Soft-Boiled Eggs -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-xl text-off-white">Soft-Boiled Eggs</p>
+                            <p class="text-base italic mt-1 text-gray-400">
+                                Two eggs served in an egg cup, with salt, pepper, and buttered toast fingers.
+                                <span class="german-explanation text-xs ml-2 text-talex-gold-accent block md:inline-block">
+                                    (DE: Zwei Eier im Eierbecher serviert, mit Salz, Pfeffer und gebutterten Toaststreifen.)
+                                </span>
+                            </p>
+                        </div>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">7.50 €</span>
+                    </div>
+                    <!-- Item 5: Frankfurter Sausages -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-xl text-off-white">Frankfurter Sausages</p>
+                            <p class="text-base italic mt-1 text-gray-400">
+                                Two small, boiled sausages (Wiener style) served with mustard and a crusty roll.
+                                <span class="german-explanation text-xs ml-2 text-talex-gold-accent block md:inline-block">
+                                    (DE: Zwei kleine, gekochte Würstchen (Wiener Art) mit Senf und einem knackigen Brötchen.)
+                                </span>
+                            </p>
+                        </div>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">8.50 €</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Sweet & Simple -->
+            <section>
+                <h2 class="text-4xl font-bold text-off-white uppercase mb-6 border-b-2 border-talex-gold-accent pb-2" style="font-family: 'Playfair Display', serif;">Sweet & Simple (Süß & Einfach)</h2>
+                <div class="space-y-6">
+                    <!-- Item 1: Rustic Apple Toast -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-xl text-off-white">Rustic Apple Toast</p>
+                            <p class="text-base italic mt-1 text-gray-400">
+                                Thick slice of toasted country bread with warm, mashed apple, sugar, and cinnamon.
+                                <span class="german-explanation text-xs ml-2 text-talex-gold-accent block md:inline-block">
+                                    (DE: Dicke Scheibe geröstetes Landbrot mit warmem, püriertem Apfel, Zucker und Zimt.)
+                                </span>
+                            </p>
+                        </div>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">8.00 €</span>
+                    </div>
+                    <!-- Item 2: Curd Cheese Bowl -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-xl text-off-white">Curd Cheese Bowl</p>
+                            <p class="text-base italic mt-1 text-gray-400">
+                                Creamy curd (Quark) served with a side of fruit compote (stewed fruit) and crunchy nuts.
+                                <span class="german-explanation text-xs ml-2 text-talex-gold-accent block md:inline-block">
+                                    (DE: Cremiger Quark serviert mit etwas Kompott (eingekochte Früchte) und knackigen Nüssen.)
+                                </span>
+                            </p>
+                        </div>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">9.50 €</span>
+                    </div>
+                    <!-- Item 3: Honey & Nut Waffle -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-xl text-off-white">Honey & Nut Waffle</p>
+                            <p class="text-base italic mt-1 text-gray-400">
+                                A large, warm waffle topped with local forest honey and chopped walnuts.
+                                <span class="german-explanation text-xs ml-2 text-talex-gold-accent block md:inline-block">
+                                    (DE: Eine große, warme Waffel mit lokalem Waldhonig und gehackten Walnüssen.)
+                                </span>
+                            </p>
+                        </div>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">10.00 €</span>
+                    </div>
+                    <!-- Item 4: Cinnamon Sugar Pancakes -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-xl text-off-white">Cinnamon Sugar Pancakes</p>
+                            <p class="text-base italic mt-1 text-gray-400">
+                                Two thick, simple pancakes dusted with cinnamon sugar, served with butter.
+                                <span class="german-explanation text-xs ml-2 text-talex-gold-accent block md:inline-block">
+                                    (DE: Zwei dicke, einfache Pfannkuchen, bestreut mit Zimtzucker, serviert mit Butter.)
+                                </span>
+                            </p>
+                        </div>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">8.50 €</span>
+                    </div>
+                    <!-- Item 5: Jam & Butter Croissant -->
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-xl text-off-white">Jam & Butter Croissant</p>
+                            <p class="text-base italic mt-1 text-gray-400">
+                                Freshly baked croissant served with two types of jam (strawberry and plum) and butter.
+                                <span class="german-explanation text-xs ml-2 text-talex-gold-accent block md:inline-block">
+                                    (DE: Frisch gebackenes Croissant mit zwei Sorten Marmelade (Erdbeere und Pflaume) und Butter.)
+                                </span>
+                            </p>
+                        </div>
+                        <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">6.50 €</span>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section: Beverages (Juices & Smoothies) and Hot Beverages -->
+            <div class="grid md:grid-cols-2 gap-10">
+                
+                <!-- SUB-SECTION 1: Juices & Smoothies -->
+                <div>
+                    <h2 class="text-4xl font-bold text-off-white uppercase mb-6 border-b-2 border-talex-gold-accent pb-2" style="font-family: 'Playfair Display', serif;">Fresh Drinks (Frische Getränke)</h2>
+                    <div class="space-y-6">
+                        <!-- Juice -->
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold text-xl text-off-white">Fresh Juice</p>
+                                <p class="text-base italic mt-1 text-gray-400">
+                                    Orange, Apple, or Carrot, pressed fresh now.
+                                    <span class="german-explanation text-xs ml-2 text-talex-gold-accent block md:inline-block">
+                                        (DE: Orange, Apfel oder Karotte, jetzt frisch gepresst.)
+                                    </span>
+                                </p>
+                            </div>
+                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">5.50 €</span>
+                        </div>
+                        <!-- Green Smoothie -->
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold text-xl text-off-white">Green Energy Smoothie</p>
+                                <p class="text-base italic mt-1 text-gray-400">
+                                    Spinach, banana, apple, fresh ginger, and coconut water.
+                                    <span class="german-explanation text-xs ml-2 text-talex-gold-accent block md:inline-block">
+                                        (DE: Spinat, Banane, Apfel, frischer Ingwer und Kokoswasser.)
+                                    </span>
+                                </p>
+                            </div>
+                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">7.50 €</span>
+                        </div>
+                        <!-- Berry Smoothie -->
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold text-xl text-off-white">Tropical Dream Smoothie</p>
+                                <p class="text-base italic mt-1 text-gray-400">
+                                    Mango, pineapple, coconut milk, and lime juice.
+                                    <span class="german-explanation text-xs ml-2 text-talex-gold-accent block md:inline-block">
+                                        (DE: Mango, Ananas, Kokosmilch und Limettensaft.)
+                                    </span>
+                                </p>
+                            </div>
+                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">7.50 €</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- SUB-SECTION 2: Hot Beverages -->
+                <div>
+                    <h2 class="text-4xl font-bold text-off-white uppercase mb-6 border-b-2 border-talex-gold-accent pb-2" style="font-family: 'Playfair Display', serif;">Hot Drinks (Heiße Getränke)</h2>
+                    <div class="space-y-6">
+                        <!-- Coffee -->
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold text-xl text-off-white">Filter Coffee / Americano</p>
+                            </div>
+                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">3.50 €</span>
+                        </div>
+                        <!-- Espresso -->
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold text-xl text-off-white">Espresso / Double Espresso</p>
+                            </div>
+                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">3.00 / 4.50 €</span>
+                        </div>
+                        <!-- Milk Coffee -->
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold text-xl text-off-white">Cappuccino / Latte Macchiato</p>
+                                <p class="text-base italic mt-1 text-gray-400">
+                                    Use cow milk or oat milk (+ 0.50 €).
+                                    <span class="german-explanation text-xs ml-2 text-talex-gold-accent block md:inline-block">
+                                        (DE: Kuhmilch oder Hafermilch verwenden (+ 0,50 €).)
+                                    </span>
+                                </p>
+                            </div>
+                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">4.50 €</span>
+                        </div>
+                        <!-- Tea -->
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold text-xl text-off-white">Tea (Different Kinds)</p>
+                            </div>
+                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">3.50 €</span>
+                        </div>
+                        <!-- Chocolate -->
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold text-xl text-off-white">Hot Chocolate</p>
+                            </div>
+                            <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">4.50 €</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="mt-12 pt-6 text-center text-gray-600 text-sm border-t border-gray-800">
+            All prices are in Euro (€). The tax is included.
+        </footer>
+
+    </div>
+</body>
+</html>
