@@ -30,8 +30,6 @@
             font-family: 'Playfair Display', serif; /* Classic, luxurious serif for headings */
         }
         
-        /* Menu Item Styling - Line removed as it's no longer used in the items */
-        
         /* Adjusted background for contrast */
         .menu-card {
             background-color: #1A1A1A; 
@@ -40,7 +38,7 @@
 
         /* Modal backdrop for the code popup */
         .modal-backdrop {
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.95); /* Dunkler für bessere Konzentration auf das Modal */
             z-index: 1000;
         }
         
@@ -84,6 +82,8 @@
             </div>
         </header>
 
+        <!-- ... (Rest des Menü-Inhalts bleibt unverändert) ... -->
+        
         <!-- Motto and Divider -->
         <div class="my-8">
             <div class="h-px bg-talex-gold-accent w-full"></div>
@@ -311,9 +311,10 @@
             onclick="event.stopPropagation()">
             
             <h3 class="text-2xl font-bold text-talex-gold-accent mb-4">🤫 Psst! Nur für Eingeweihte 🤫</h3>
-            <!-- Dieser Text wird jetzt bei jedem Öffnen zufällig neu gesetzt -->
-            <p id="modalPrompt" class="text-gray-300 mb-6">
-                <!-- Initialer Platzhaltertext, wird in JS gesetzt -->
+            
+            <!-- Text wird hier per JS gesetzt (zufällig) -->
+            <p id="modalPrompt" class="text-gray-300 mb-6 text-center">
+                ...Lade geheime Weisheit...
             </p>
             
             <input 
@@ -329,6 +330,7 @@
             <div class="flex justify-between space-x-3">
                 <button 
                     onclick="checkCode()" 
+                    id="modalActionButton"
                     class="w-full py-3 px-4 rounded-lg font-bold text-black german-button hover:bg-yellow-600">
                     FORTFAHREN (AUF EIGENE GEFAHR)
                 </button>
@@ -342,69 +344,14 @@
     </div>
 
     <script>
-        // Der Code ist nur hier definiert.
-        const CORRECT_CODE = "1809";
+        // Der Code wird durch eine komplexe mathematische Formel berechnet,
+        // um den tatsächlichen Wert (1505) im Code zu verschleiern.
+        // Formula: (100 * 15) + (200 / 4) + 55 - 100 = 1500 + 50 + 55 - 100 = 1505
+        const CORRECT_CODE_CALC = ( (100 * 15) + (200 / 4) + 55 - 100 );
+        // Der PIN muss als String verglichen werden: "1505"
+        const CORRECT_CODE_STRING = CORRECT_CODE_CALC.toString(); 
 
-        // Array mit lustigen "Erwischt"-Sprüchen, die beim ÖFFNEN des Modals gezeigt werden.
-        const modalOpenMessages = [
-            "ACHTUNG! Dies ist der Bereich, den Sie WÄHREND der Präsentation ABSOLUT NICHT anklicken sollen. Wir schauen nicht hin. Versprochen.",
-            "Bist du dir sicher, dass du jetzt schon spicken willst? Der Vortragende schaut bestimmt gleich rüber!",
-            "Dieser Knopf ist noch gesperrt. Schau lieber auf die Leinwand, da steht bestimmt was Wichtiges!",
-            "Ein bisschen Geduld, bitte! Das Menü ist erst nach der Show freigeschaltet. Jetzt zuhören!",
-            "Wir sehen, dass du versuchst, das System zu umgehen. Das ist nicht die Zeit für Geheimnisse!",
-            "Ehrlich gesagt, das englische Menü ist eh viel cooler. Klick da wieder drauf, und gib Ruhe!",
-            "Versuchst du etwa, den Vortragenden zu ignorieren? Das gibt Ärger mit der Chefin!",
-            "Hallo? Konzentration! Du bist hier, um zu lernen, nicht um Codes einzugeben. Mach zu!",
-            "Hier gibt es noch nichts zu sehen. Das ist der langweiligste Teil des Internets. Geh weg!"
-        ];
-        
-        // Statische Fehlermeldung bei falscher PIN-Eingabe
-        const staticErrorMessage = "Falscher Code! Hast wohl nicht zugehört.";
-
-
-        function showModal() {
-            const modal = document.getElementById('codeModal');
-            const input = document.getElementById('codeInput');
-            const error = document.getElementById('errorMessage');
-            const promptElement = document.getElementById('modalPrompt'); 
-            
-            // 1. Zufällige Nachricht für das Öffnen auswählen und setzen
-            const randomIndex = Math.floor(Math.random() * modalOpenMessages.length);
-            promptElement.textContent = modalOpenMessages[randomIndex];
-
-            // 2. Input und Fehlermeldung leeren/verstecken
-            input.value = '';
-            error.classList.add('hidden');
-            
-            // 3. Modal anzeigen
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            input.focus();
-        }
-
-        function hideModal() {
-            const modal = document.getElementById('codeModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
-
-        function checkCode() {
-            const inputElement = document.getElementById('codeInput');
-            const code = inputElement.value.trim();
-            const error = document.getElementById('errorMessage');
-
-            if (code === CORRECT_CODE) {
-                // Richtig: Weiterleitung zur deutschen Version
-                window.location.href = 'menu_de.html';
-                
-            } else {
-                // Falsch: Statische Fehlermeldung zeigen
-                error.textContent = staticErrorMessage;
-                error.classList.remove('hidden');
-                inputElement.value = ''; // Eingabe leeren
-                inputElement.focus();
-            }
-        }
-    </script>
-</body>
-</html>
+        // Die Liste der frechen Sprüche bleibt erhalten.
+        const allModalMessages = [
+            "Handy weg! Wir sind hier nicht im Kino. Zurück zum Vortrag, sonst gibt's 'Kaltes Buffet'!",
+            "Ertappt! Beim Spicken erwischt zu werden, ist peinlicher als eine 'G
