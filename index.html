@@ -138,7 +138,7 @@
                     <!-- Link: Story -->
                     <a href="#about" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Story</a>
                     
-                    <!-- Link: Menu (Öffnet PIN Gate) -->
+                    <!-- Link: Menu (Öffnet das Menü direkt) -->
                     <a href="#" id="menu-link" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Menu</a>
 
                     <!-- Link: Location -->
@@ -290,14 +290,16 @@
             <h2 class="text-4xl sm:text-5xl font-bold mb-4 text-talex-gold-accent" style="font-family: 'Playfair Display', serif;">
                 Reserve Your Table
             </h2>
+            <!-- Geänderter Text: Kein Code mehr erforderlich -->
             <p class="text-xl text-gray-300 mb-10">
-                Sichern Sie sich Ihr exklusives kulinarisches Erlebnis bei TALEX. Um die Buchung abzuschließen, ist ein geheimer Code erforderlich.
+                Sichern Sie sich Ihr exklusives kulinarisches Erlebnis bei TALEX. Wir freuen uns auf Ihre Buchung!
             </p>
 
             <!-- Reservation Form Wrapper (Immer sichtbar) -->
             <div id="reservation-form-wrapper">
 
                 <!-- Reservation Form -->
+                <!-- Die Formularfelder für den PIN wurden entfernt -->
                 <form id="reservation-form" class="space-y-6 text-left">
                     
                     <!-- Name Fields -->
@@ -345,23 +347,10 @@
                         <!-- Time Input (raw) -->
                         <input type="time" id="time" name="raw_time_input" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150" style="color-scheme: dark;">
                     </div>
-
-                    <!-- PIN Field (NEU) -->
-                    <div class="mt-8 pt-4 border-t border-gray-800">
-                        <label for="reservation_pin" class="block text-sm font-medium text-talex-gold-accent mb-2">
-                            Exklusiver Buchungs-Code
-                        </label>
-                        <input 
-                            type="password" 
-                            id="reservation_pin" 
-                            name="reservation_pin" 
-                            required 
-                            maxlength="3"
-                            placeholder="Geheimen 3-stelligen Code eingeben"
-                            class="w-full p-4 text-xl tracking-[0.2em] text-center bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150"
-                        >
-                        <!-- Meldungsfeld für falschen PIN -->
-                        <p id="pin-message" class="text-sm text-red-400 mt-2 text-center h-5 transition-all duration-300">&nbsp;</p>
+                    
+                    <!-- HINWEIS-TEXT, da PIN-Feld entfernt wurde -->
+                    <div class="mt-8 pt-4 border-t border-gray-800 text-center">
+                        <p class="text-sm text-gray-500 italic">Die Buchung wird direkt nach dem Absenden bestätigt.</p>
                     </div>
 
                     <!-- Hidden Fields for Formatted Date/Time (used for EmailJS template) -->
@@ -370,4 +359,14 @@
 
                     <!-- Submit Button -->
                     <button type="submit" id="submit-button"
-                        class="w-ful
+                        class="w-full py-3 px-4 rounded-md text-lg font-extrabold text-black transition duration-300 shadow-xl talex-gold-accent hover:opacity-90 uppercase tracking-wider transform hover:scale-[1.01] flex items-center justify-center space-x-2"
+                    >
+                        <span id="button-text">Confirm Reservation</span>
+                        <div id="loading-spinner" class="spinner hidden"></div>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Success Message -->
+            <div id="success-message" class="hidden mt-10 p-8 rounded-xl border-4 border-talex-gold-accent bg-talex-deep-black shadow-lg">
+                <h3 class="text-3xl font-bold text-talex-
