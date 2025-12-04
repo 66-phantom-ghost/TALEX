@@ -139,8 +139,8 @@
                     <!-- Link: Story -->
                     <a href="#about" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Story</a>
                     
-                    <!-- Link: Menu (Kein Modal mehr, geht auf Platzhalter) -->
-                    <a href="menu.html" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Menu</a>
+                    <!-- Link: Menu (NEU: Öffnet PIN Gate) -->
+                    <a href="#" id="menu-link" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Menu</a>
 
                     <!-- Link: Location -->
                     <a href="#hamburg" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Location</a>
@@ -402,6 +402,40 @@
         </div>
     </section>
 
+    <!-- START: Menu PIN Gate Modal (NEU) -->
+    <div id="menu-pin-gate" class="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center hidden">
+        <div class="bg-talex-charcoal p-8 rounded-lg shadow-2xl w-full max-w-sm transform transition-all duration-300" id="menu-pin-content">
+            <h3 class="text-3xl font-bold text-talex-gold-accent mb-4 text-center" style="font-family: 'Playfair Display', serif;">
+                Exklusiver Zugang
+            </h3>
+            <p class="text-gray-300 mb-6 text-center">Um unsere aktuelle Menükarte einzusehen, geben Sie bitte den privaten Code ein.</p>
+            
+            <div class="space-y-4">
+                <input 
+                    type="password" 
+                    id="menu_pin_input" 
+                    maxlength="3"
+                    placeholder="3-stelliger Code"
+                    class="w-full p-4 text-xl tracking-[0.2em] text-center bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150"
+                >
+                <!-- Meldungsfeld für falschen PIN -->
+                <p id="menu-pin-message" class="text-sm text-red-400 mt-2 text-center h-5 transition-all duration-300">&nbsp;</p>
+
+                <button id="menu-pin-submit"
+                    class="w-full py-3 px-4 rounded-md text-lg font-extrabold text-black transition duration-300 shadow-xl talex-gold-accent hover:opacity-90 uppercase tracking-wider"
+                >
+                    Menü Freischalten
+                </button>
+                <button id="menu-pin-cancel"
+                    class="w-full py-2 px-4 rounded-md text-base font-semibold text-gray-400 bg-talex-deep-black border border-gray-700 hover:text-off-white transition duration-200"
+                >
+                    Abbrechen
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- END: Menu PIN Gate Modal -->
+
     <!-- Footer -->
     <footer class="py-16 bg-talex-deep-black text-off-white border-t border-gray-900">
         <div class="max-w-4xl mx-auto px-4 text-center">
@@ -426,24 +460,7 @@
     <!-- JavaScript Block - Adding PIN check before submit -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('reservation-form');
-            const dateInput = document.getElementById('date');
-            const timeInput = document.getElementById('time');
-            const pinInput = document.getElementById('reservation_pin'); // NEU: PIN Eingabefeld
-            const pinMessage = document.getElementById('pin-message');   // NEU: PIN Meldungsfeld
-
-            // Output fields for formatted date/time
-            const formattedDateOutput = document.getElementById('formatted_date_output');
-            const formattedTimeOutput = document.getElementById('formatted_time_output');
-
-            const reservationFormWrapper = document.getElementById('reservation-form-wrapper');
-            const successMessage = document.getElementById('success-message');
-            const errorMessage = document.getElementById('error-message');
-            const errorDetails = document.getElementById('error-details'); 
-            const submitButton = document.getElementById('submit-button');
-            const buttonText = document.getElementById('button-text');
-            const loadingSpinner = document.getElementById('loading-spinner');
-
+            // Globale Konfiguration
             const CORRECT_PIN = "187"; // Der geheime PIN
             const JOKES = [
                 "Falsch! Sie haben den falschen Knopf gedrückt, genau wie bei der Mikrowelle.",
@@ -454,6 +471,31 @@
                 "Versuchen Sie es noch einmal. Das ist nicht die Lottozahl."
             ];
 
+            // --- RESERVATION FORM ELEMENTS ---
+            const form = document.getElementById('reservation-form');
+            const dateInput = document.getElementById('date');
+            const timeInput = document.getElementById('time');
+            const pinInput = document.getElementById('reservation_pin'); // PIN Eingabefeld Formular
+            const pinMessage = document.getElementById('pin-message');   // PIN Meldungsfeld Formular
+            const formattedDateOutput = document.getElementById('formatted_date_output');
+            const formattedTimeOutput = document.getElementById('formatted_time_output');
+            const reservationFormWrapper = document.getElementById('reservation-form-wrapper');
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+            const errorDetails = document.getElementById('error-details'); 
+            const submitButton = document.getElementById('submit-button');
+            const buttonText = document.getElementById('button-text');
+            const loadingSpinner = document.getElementById('loading-spinner');
+
+            // --- MENU PIN GATE ELEMENTS (NEU) ---
+            const menuLink = document.getElementById('menu-link');
+            const menuPinGate = document.getElementById('menu-pin-gate');
+            const menuPinContent = document.getElementById('menu-pin-content');
+            const menuPinInput = document.getElementById('menu_pin_input');
+            const menuPinMessage = document.getElementById('menu-pin-message');
+            const menuPinSubmit = document.getElementById('menu-pin-submit');
+            const menuPinCancel = document.getElementById('menu-pin-cancel');
+            
             // --- EMAILJS CONFIGURATION (Unverändert) ---
             const serviceID = 'service_bk7l6sh'; 
             const templateID = 'template_2g55mg6'; // Customer confirmation
@@ -463,36 +505,58 @@
             const internalRecipientEmail = 'Marvin@salomon-prym.de';
             // -----------------------------
 
-            if (form) {
-                // Initialize EmailJS with the Public Key
-                if (typeof emailjs !== 'undefined') {
-                    emailjs.init(publicKey);
-                } else {
-                    console.error("EmailJS SDK was not loaded. Cannot initialize.");
+            if (typeof emailjs !== 'undefined') {
+                emailjs.init(publicKey);
+            } else {
+                console.error("EmailJS SDK was not loaded. Cannot initialize.");
+            }
+
+            // --- Helper Funktionen ---
+
+            // Funktion zur Formatierung des Datums (z.B. "30. November 2025")
+            const formatDateOnly = (dateStr) => {
+                if (!dateStr) return '';
+                try {
+                    const dateObj = new Date(dateStr + 'T00:00:00'); 
+                    const formatter = new Intl.DateTimeFormat('de-DE', { 
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                        timeZone: 'Europe/Berlin' 
+                    });
+                    return formatter.format(dateObj); 
+                } catch (e) {
+                    return dateStr;
                 }
+            };
 
-                // Funktion zur Formatierung des Datums (z.B. "30. November 2025")
-                const formatDateOnly = (dateStr) => {
-                    if (!dateStr) return '';
-                    try {
-                        const dateObj = new Date(dateStr + 'T00:00:00'); 
-                        const formatter = new Intl.DateTimeFormat('de-DE', { 
-                            day: 'numeric',
-                            month: 'long',
-                            year: 'numeric',
-                            timeZone: 'Europe/Berlin' 
-                        });
-                        return formatter.format(dateObj); 
-                    } catch (e) {
-                        return dateStr;
-                    }
-                };
+            // Funktion zur Formatierung der Zeit (z.B. "17:30")
+            const formatTimeOnly = (timeStr) => {
+                return timeStr || ''; 
+            };
+            
+            // Funktion zum Anzeigen des Menu PIN Gates
+            const showMenuPinGate = () => {
+                menuPinGate.classList.remove('hidden');
+                setTimeout(() => {
+                    menuPinContent.classList.remove('scale-95', 'opacity-0');
+                    menuPinInput.focus();
+                }, 10); 
+            };
 
-                // Funktion zur Formatierung der Zeit (z.B. "17:30")
-                const formatTimeOnly = (timeStr) => {
-                    return timeStr || ''; 
-                };
-                
+            // Funktion zum Verstecken des Menu PIN Gates
+            const hideMenuPinGate = () => {
+                menuPinContent.classList.add('scale-95', 'opacity-0');
+                menuPinMessage.textContent = '\u00a0'; // Meldung zurücksetzen
+                menuPinInput.value = ''; // Eingabe leeren
+                setTimeout(() => {
+                    menuPinGate.classList.add('hidden');
+                }, 300);
+            };
+
+            // --- EVENT LISTENER: RESERVIERUNGSFORMULAR ---
+
+            if (form) {
                 form.addEventListener('submit', function(e) {
                     e.preventDefault(); 
                     
@@ -581,6 +645,44 @@
                     } else {
                         // Zeigt Standard HTML5 Validierungsfehler an
                         this.reportValidity();
+                    }
+                });
+            }
+
+            // --- EVENT LISTENER: MENÜ ZUGANG (NEU) ---
+
+            if (menuLink && menuPinGate) {
+                // Klick auf Menü-Link: Zeigt PIN Gate Modal an
+                menuLink.addEventListener('click', (e) => {
+                    e.preventDefault(); 
+                    showMenuPinGate();
+                });
+
+                // Klick auf Abbrechen-Button im Modal
+                menuPinCancel.addEventListener('click', hideMenuPinGate);
+
+                // Klick auf Menü Freischalten Button
+                menuPinSubmit.addEventListener('click', () => {
+                    const enteredPin = menuPinInput.value.trim();
+                    menuPinMessage.textContent = '\u00a0'; // Meldung zurücksetzen
+
+                    if (enteredPin === CORRECT_PIN) {
+                        // Erfolgreich: Weiterleitung und Modal verstecken
+                        hideMenuPinGate(); 
+                        window.location.href = 'menu.html';
+                    } else {
+                        // Falscher PIN: Witziger Spruch anzeigen
+                        const randomJoke = JOKES[Math.floor(Math.random() * JOKES.length)];
+                        menuPinMessage.textContent = randomJoke;
+                        menuPinInput.value = ''; // Eingabe leeren
+                        menuPinInput.focus();
+                    }
+                });
+
+                // Schließt Modal, wenn außerhalb geklickt wird
+                menuPinGate.addEventListener('click', (e) => {
+                    if (e.target === menuPinGate) {
+                        hideMenuPinGate();
                     }
                 });
             }
