@@ -20,7 +20,7 @@
         /* Definierte Farben (TALEX Luxus-Palette - Schwarz/Gold) */
         .bg-talex-deep-black { background-color: #000000; } /* Pure Black */
         .bg-talex-charcoal { background-color: #1A1A1A; } /* Dark Charcoal for sections */
-        .talex-gold-accent { background-color: #B8860B; } /* Rich, muted gold */
+        .talex-gold-accent { background-color: #B8860B; }
         .text-talex-gold-accent { color: #B8860B; }
         .text-off-white { color: #F5F5DC; } /* Off-white / Cream for main text */
 
@@ -117,6 +117,11 @@
         }
         .carousel-button.right {
             right: 10px;
+        }
+
+        /* NEUE CSS-Klasse für das Verbergen des Modals (ersetzt die Tailwind 'hidden' Klasse, um diese im JS besser steuern zu können) */
+        .is-hidden {
+            display: none !important;
         }
         
     </style>
@@ -367,8 +372,4 @@
 
                     <!-- Hidden Fields for Formatted Date/Time (used for EmailJS template) -->
                     <input type="hidden" id="formatted_date_output" name="reservation_date_formatted">
-                    <input type="hidden" id="formatted_time_output" name="reservation_time_formatted">
-
-                    <!-- Submit Button -->
-                    <button type="submit" id="submit-button"
-    
+                    <input
