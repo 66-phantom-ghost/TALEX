@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,7 +70,7 @@
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mt-6">
                  <!-- German Version Button with Pop-up Trigger -->
                 <button 
-                    id="germanVersionButton" 
+                    onclick="showModal()" 
                     class="german-button py-3 px-8 rounded-full text-base font-bold text-black uppercase tracking-wider">
                     DEUTSCHE VERSION
                 </button>
@@ -83,8 +82,6 @@
             </div>
         </header>
 
-        <!-- ... (Rest des Menü-Inhalts bleibt unverändert) ... -->
-        
         <!-- Motto and Divider -->
         <div class="my-8">
             <div class="h-px bg-talex-gold-accent w-full"></div>
@@ -345,14 +342,14 @@
     </div>
 
     <script>
-        // Der Code wird durch eine komplexe mathematische Formel berechnet,
-        // um den tatsächlichen Wert (1505) im Code zu verschleiern.
-        // Formula: (100 * 15) + (200 / 4) + 55 - 100 = 1500 + 50 + 55 - 100 = 1505
-        const CORRECT_CODE_CALC = ( (100 * 15) + (200 / 4) + 55 - 100 );
-        // Der PIN muss als String verglichen werden: "1505"
-        const CORRECT_CODE_STRING = CORRECT_CODE_CALC.toString(); 
-
-        // Die Liste der frechen Sprüche bleibt erhalten.
-        const allModalMessages = [
+        // Setze den korrekten PIN direkt als String auf den gewünschten Wert (1505)
+        const CORRECT_CODE = "1505";
+        
+        // Die Liste der frechen Sprüche, wenn das Modal geöffnet wird.
+        const modalOpenMessages = [
             "Handy weg! Wir sind hier nicht im Kino. Zurück zum Vortrag, sonst gibt's 'Kaltes Buffet'!",
-            "Ertappt! Beim Spicken erwischt zu werden, ist peinlicher als eine
+            "Ertappt! Beim Spicken erwischt zu werden, ist peinlicher als eine 'Group-Reply-All' E-Mail.",
+            "Achtung, Code-Alarm! Wenn du das Menü sehen willst, musst du in 5 Minuten 5 Buzzwords nennen.",
+            "Dies ist kein Notausgang. Es ist nur das Menü. Aber Spicken ist verboten! Konzentration!",
+            "Wir sehen alles. Wirklich. Sogar, dass du heimlich unter den Tisch guckst. Hör auf!",
+            "Hoppla! Der 
