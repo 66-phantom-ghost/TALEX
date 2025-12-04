@@ -1,4 +1,3 @@
-l
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -119,6 +118,7 @@ l
         .carousel-button.right {
             right: 10px;
         }
+        
     </style>
 </head>
 <body class="bg-talex-deep-black text-off-white">
@@ -138,7 +138,11 @@ l
                     
                     <!-- Link: Story -->
                     <a href="#about" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Story</a>
+                    
+                    <!-- Link: Menu (Kein Modal mehr, geht auf Platzhalter) -->
                     <a href="menu.html" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Menu</a>
+
+                    <!-- Link: Location -->
                     <a href="#hamburg" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Location</a>
                 </div>
             </div>
@@ -157,8 +161,10 @@ l
             <p class="text-lg sm:text-xl max-w-2xl mx-auto text-gray-300">
                 Experience TALEX – the new definition of luxury gastronomy in the heart of Hamburg.
             </p>
+            
+            <!-- Reservation Button (Scrollt direkt zur Sektion) -->
             <a 
-                href="#reservation-section" 
+                href="#reservation-section"
                 class="mt-10 inline-block py-3 px-10 rounded-full text-base sm:text-lg font-extrabold text-black transition duration-300 shadow-xl talex-gold-accent hover:opacity-90 uppercase tracking-wider transform hover:scale-105" 
             >
                 Book a Table
@@ -285,12 +291,12 @@ l
             <h2 class="text-4xl sm:text-5xl font-bold mb-4 text-talex-gold-accent" style="font-family: 'Playfair Display', serif;">
                 Reserve Your Table
             </h2>
-            
-            <!-- Reservation Form Container -->
-            <div id="reservation-form-container">
-                <p class="text-xl text-gray-300 mb-10">
-                    Secure your exclusive dining experience at TALEX.
-                </p>
+            <p class="text-xl text-gray-300 mb-10">
+                Sichern Sie sich Ihr exklusives kulinarisches Erlebnis bei TALEX. Um die Buchung abzuschließen, ist ein geheimer Code erforderlich.
+            </p>
+
+            <!-- Reservation Form Wrapper (Immer sichtbar) -->
+            <div id="reservation-form-wrapper">
 
                 <!-- Reservation Form -->
                 <form id="reservation-form" class="space-y-6 text-left">
@@ -341,17 +347,27 @@ l
                         <input type="time" id="time" name="raw_time_input" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150" style="color-scheme: dark;">
                     </div>
 
+                    <!-- PIN Field (NEU) -->
+                    <div class="mt-8 pt-4 border-t border-gray-800">
+                        <label for="reservation_pin" class="block text-sm font-medium text-talex-gold-accent mb-2">
+                            Exklusiver Buchungs-Code
+                        </label>
+                        <input 
+                            type="password" 
+                            id="reservation_pin" 
+                            name="reservation_pin" 
+                            required 
+                            maxlength="3"
+                            placeholder="Geheimen 3-stelligen Code eingeben"
+                            class="w-full p-4 text-xl tracking-[0.2em] text-center bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150"
+                        >
+                        <!-- Meldungsfeld für falschen PIN -->
+                        <p id="pin-message" class="text-sm text-red-400 mt-2 text-center h-5 transition-all duration-300">&nbsp;</p>
+                    </div>
+
                     <!-- Hidden Fields for Formatted Date/Time (used for EmailJS template) -->
                     <input type="hidden" id="formatted_date_output" name="reservation_date_formatted">
-                    
                     <input type="hidden" id="formatted_time_output" name="reservation_time_formatted">
-
-
-                    <!-- Notes Field -->
-                    <div>
-                        <label for="notes" class="block text-sm font-medium text-gray-400 mb-2">Special Requests/Notes</label>
-                        <textarea id="notes" name="message" rows="3" class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150"></textarea>
-                    </div>
 
                     <!-- Submit Button -->
                     <button type="submit" id="submit-button"
@@ -406,18 +422,21 @@ l
         </div>
     </footer>
 
-    <!-- JavaScript Block - Using EmailJS -->
+
+    <!-- JavaScript Block - Adding PIN check before submit -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('reservation-form');
             const dateInput = document.getElementById('date');
             const timeInput = document.getElementById('time');
-            
+            const pinInput = document.getElementById('reservation_pin'); // NEU: PIN Eingabefeld
+            const pinMessage = document.getElementById('pin-message');   // NEU: PIN Meldungsfeld
+
             // Output fields for formatted date/time
             const formattedDateOutput = document.getElementById('formatted_date_output');
             const formattedTimeOutput = document.getElementById('formatted_time_output');
 
-            const formContainer = document.getElementById('reservation-form-container');
+            const reservationFormWrapper = document.getElementById('reservation-form-wrapper');
             const successMessage = document.getElementById('success-message');
             const errorMessage = document.getElementById('error-message');
             const errorDetails = document.getElementById('error-details'); 
@@ -425,7 +444,17 @@ l
             const buttonText = document.getElementById('button-text');
             const loadingSpinner = document.getElementById('loading-spinner');
 
-            // --- EMAILJS CONFIGURATION ---
+            const CORRECT_PIN = "187"; // Der geheime PIN
+            const JOKES = [
+                "Falsch! Sie haben den falschen Knopf gedrückt, genau wie bei der Mikrowelle.",
+                "Fast! Der Code ist nicht so einfach wie die 1+1.",
+                "Leider daneben. Das ist ein Geheimnis, das nur die Küche kennt!",
+                "Der PIN ist nicht 'Käsekuchen'!",
+                "Das war der Code für den W-LAN Router vom Nachbarn.",
+                "Versuchen Sie es noch einmal. Das ist nicht die Lottozahl."
+            ];
+
+            // --- EMAILJS CONFIGURATION (Unverändert) ---
             const serviceID = 'service_bk7l6sh'; 
             const templateID = 'template_2g55mg6'; // Customer confirmation
             const publicKey = 'TfYfrsrGIHYhdVnHO'; 
@@ -442,11 +471,10 @@ l
                     console.error("EmailJS SDK was not loaded. Cannot initialize.");
                 }
 
-                // Function to format the date (e.g., "30. November 2025")
+                // Funktion zur Formatierung des Datums (z.B. "30. November 2025")
                 const formatDateOnly = (dateStr) => {
                     if (!dateStr) return '';
                     try {
-                        // Append time to ensure correct parsing in all browsers
                         const dateObj = new Date(dateStr + 'T00:00:00'); 
                         const formatter = new Intl.DateTimeFormat('de-DE', { 
                             day: 'numeric',
@@ -460,7 +488,7 @@ l
                     }
                 };
 
-                // Function to format the time (e.g., "17:30")
+                // Funktion zur Formatierung der Zeit (z.B. "17:30")
                 const formatTimeOnly = (timeStr) => {
                     return timeStr || ''; 
                 };
@@ -468,30 +496,45 @@ l
                 form.addEventListener('submit', function(e) {
                     e.preventDefault(); 
                     
-                    // 1. Set formatted values in Hidden fields
+                    // PIN-Eingabe überprüfen
+                    const enteredPin = pinInput.value.trim();
+                    pinMessage.textContent = '\u00a0'; // Meldung zurücksetzen
+                    
+                    if (enteredPin !== CORRECT_PIN) {
+                        // Falscher PIN: Witziger Spruch anzeigen und Submit stoppen
+                        const randomJoke = JOKES[Math.floor(Math.random() * JOKES.length)];
+                        pinMessage.textContent = randomJoke;
+                        pinInput.value = ''; // Eingabe leeren
+                        pinInput.focus();
+                        return; // Stoppt den weiteren Submit-Prozess
+                    }
+
+                    // --- PIN KORREKT: Weiter mit Reservierung ---
+                    
+                    // 1. Setze formatierte Werte in Hidden fields
                     formattedDateOutput.value = formatDateOnly(dateInput.value);
                     formattedTimeOutput.value = formatTimeOnly(timeInput.value);
 
-                    // Reset messages
+                    // Setze Nachrichten zurück
                     successMessage.classList.add('hidden');
                     errorMessage.classList.add('hidden');
                     errorDetails.textContent = ''; 
                     
                     if (typeof emailjs === 'undefined') {
-                         const details = `EmailJS SDK wurde nicht geladen (wahrscheinlich durch einen Blocker). Bitte Seite neu laden oder den Blocker auf dem Gerät deaktivieren.`;
+                         const details = `EmailJS SDK wurde nicht geladen. Buchung abgebrochen.`;
                          errorDetails.textContent = details;
                          errorMessage.classList.remove('hidden');
                          errorMessage.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                         return; // Wichtig: Beendet die Funktion hier, wenn EmailJS nicht geladen ist
+                         return; 
                     }
 
                     if (form.checkValidity()) {
-                        // Show loading state
+                        // Lade-Status anzeigen
                         submitButton.disabled = true;
                         buttonText.textContent = 'Sending...';
                         loadingSpinner.classList.remove('hidden');
 
-                        // 2. Extract template parameters for the internal email
+                        // 2. Extrahiere Template-Parameter für die interne E-Mail
                         const formData = new FormData(this);
                         const templateParams = {};
                         for (let [key, value] of formData.entries()) {
@@ -499,49 +542,50 @@ l
                         }
                         templateParams['admin_email_recipient'] = internalRecipientEmail; 
 
-                        // Start the Promise chain: 1. Send customer email
+                        // Starte die Promise-Kette: 1. Sende Kunden-E-Mail
                         emailjs.sendForm(serviceID, templateID, this)
                             .then((clientResponse) => {
                                 console.log('Client EmailJS SUCCESS!', clientResponse.status, clientResponse.text);
 
-                                // 2. Send the internal notification (Marvin)
+                                // 2. Sende die interne Benachrichtigung (Marvin)
                                 return emailjs.send(serviceID, internalTemplateID, templateParams);
                             })
                             .then((internalResponse) => {
                                 console.log('Internal EmailJS SUCCESS!', internalResponse.status, internalResponse.text);
                                 
-                                // Final success
-                                formContainer.classList.add('hidden');
-                                successMessage.classList.remove('hidden');
+                                // Endgültiger Erfolg
+                                reservationFormWrapper.classList.add('hidden'); // Formular verstecken
+                                successMessage.classList.remove('hidden'); // Erfolgsmeldung anzeigen
                                 form.reset();
+                                pinInput.value = ''; // Wichtig: PIN-Feld zurücksetzen
 
                                 successMessage.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             }, (error) => {
-                                // Handles errors from both email attempts
+                                // Fehler bei beiden E-Mail-Versuchen
                                 console.error('EmailJS FAILED:', error);
                                 
-                                // Display error details on the page
-                                const details = `Status: ${error.status}\nText: ${error.text || 'No response text available.'}\n\nURSACHE:\nWenn Status: 0 oder Text: Failed to fetch angezeigt wird, blockiert ein System-Ad-Blocker, VPN oder eine Sicherheits-App auf dem Handy die Verbindung zu api.emailjs.com. Dies kann nur durch Deaktivieren der Blocker-App auf dem Handy behoben werden.`;
+                                // Zeige Fehlerdetails auf der Seite an
+                                const details = `Status: ${error.status}\nText: ${error.text || 'No response text available.'}\n\nURSACHE:\nBitte überprüfen Sie Ihre E-Mail-Adresse und versuchen Sie es erneut.`;
                                 errorDetails.textContent = details;
                                 
                                 errorMessage.classList.remove('hidden');
                                 errorMessage.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             })
                             .finally(() => {
-                                // Reset loading state
+                                // Lade-Status zurücksetzen
                                 submitButton.disabled = false;
                                 buttonText.textContent = 'Confirm Reservation';
                                 loadingSpinner.classList.add('hidden');
                             });
                         
                     } else {
-                        // Display standard HTML5 validation errors
+                        // Zeigt Standard HTML5 Validierungsfehler an
                         this.reportValidity();
                     }
                 });
             }
 
-            // --- Carousel JavaScript ---
+            // --- Carousel JavaScript (Unverändert) ---
             const carouselImages = document.querySelectorAll('.carousel-image');
             const prevBtn = document.getElementById('prev-btn');
             const nextBtn = document.getElementById('next-btn');
@@ -593,4 +637,3 @@ l
     </script>
 </body>
 </html>
-
