@@ -499,22 +499,25 @@
             openModal('pin-modal-container');
         }
 
-        function processActionWithPin() {
-            const pinInput = document.getElementById('pin-input');
-            const pin = pinInput.value.trim();
-
-            Passe if (pin === PIN) {
-closeModal('pin-modal-container');
-if (currentModalAction === 'Reservierung') {
-submitReservationForm();
-} else if (currentModalAction === 'Menü') {
-// Beispiel-Aktion: Umleitung zu einer Menüseite
-showMessageModal("Erfolg", "Zugriff gewährt! (Würde jetzt zur Menüseite weiterleiten)", true);
-// window.location.href = 'menu.html';
-}
-} else {
-showMessageModal("Fehler", "Falsche PIN. Bitte versuchen Sie es erneut.", false);
-}
+        function processActionWithPin(){
+    const pinInput=document.getElementById('pin-input');
+    const pin=pinInput.value.trim();
+    
+    // 1. PIN-Prüfung: Ist die eingegebene PIN korrekt?
+    if(pin===PIN){
+        closeModal('pin-modal-container'); // Modal schließen
+        
+        // 2. Aktions-Ausführung basierend auf currentModalAction
+        if(currentModalAction==='Reservierung'){
+            submitReservationForm(); // Führt die Formularverarbeitung durch
+        }else if(currentModalAction==='Menü'){
+            // AKTION AKTIVIERT: Leitet direkt zur Menüseite weiter
+            window.location.href='menu.html';
+        }
+    }else{
+        // PIN ist falsch
+        showMessageModal("Fehler","Falsche PIN. Bitte versuchen Sie es erneut.",false);
+    }
         }
         /**
          * Sendet die Reservierungsanfrage über EmailJS
