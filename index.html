@@ -504,19 +504,18 @@
             const pin = pinInput.value.trim();
 
             if (pin === PIN) {
-                closeModal('pin-modal-container');
-                if (currentModalAction === 'Reservierung') {
-                    submitReservationForm();
-                } else if (currentModalAction === 'Menü') {
-                    // Beispiel-Aktion: Umleitung zu einer Menüseite
-                    showMessageModal("Erfolg", "Zugriff gewährt! (Würde jetzt zur Menüseite weiterleiten)", true);
-                    // window.location.href = 'menu.html';
-                }
-            } else {
-                showMessageModal("Fehler", "Falsche PIN. Bitte versuchen Sie es erneut.", false);
+    closeModal('pin-modal-container');
+    if (currentModalAction === 'Reservierung') {
+        submitReservationForm();
+    } else if (currentModalAction === 'Menü') {
+        // Weiterleitung zur Menüseite nach korrekter PIN
+        window.location.href = 'menu.html';
+        // Optional: noch eine Erfolgsmeldung anzeigen, falls gewünscht
+        // showMessageModal("Erfolg", "Zugriff gewährt! Weiterleitung zur Menüseite...", true);
+    }
+} else {
+    showMessageModal("Fehler", "Falsche PIN. Bitte versuchen Sie es erneut.", false);
             }
-        }
-
         /**
          * Sendet die Reservierungsanfrage über EmailJS
          */
