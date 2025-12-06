@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAO: Weihnachts-Gruß</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        
+        /* SAO Core Colors & Variables */
+        :root {
+            --sao-bg: rgba(10, 10, 20, 0.95);
+            --sao-neon-cyan: #00FFFF;
+            --sao-text: #E0FFFF;
+            --sao-dark: #050510;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--sao-dark);
+            color: var(--sao-text);
+            /* Subtiles Hintergrundmuster */
+            background-image: radial-gradient(circle at center, rgba(0, 255, 255, 0.05) 1px, transparent 10%), radial-gradient(circle at center, rgba(0, 0, 0, 0.8) 1px, transparent 10%);
+            background-size: 20px 20px;
+        }
+
+        /* Hauptpanel-Stil (Nur zur Zentrierung des Buttons beibehalten) */
+        .sao-panel {
+            background-color: var(--sao-bg);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.5), inset 0 0 5px rgba(56, 189, 248, 0.3);
+            border-radius: 0.5rem;
+            backdrop-filter: blur(3px);
+        }
+
+        /* Überschriften mit Neon-Glow */
+        .sao-title {
+            color: var(--sao-neon-cyan);
+            text-shadow: 0 0 5px var(--sao-neon-cyan), 0 0 10px rgba(0, 255, 255, 0.5);
+            font-weight: 900;
+        }
+
+        /* Spezieller Stil für den Weihnachts-Button */
+        .sao-christmas-button {
+            background: linear-gradient(135deg, #FF0000 0%, #B80000 50%, #FFD700 100%); /* Rot-Gold-Farbverlauf */
+            border: 2px solid #FFD700; /* Goldener Rand */
+            color: white;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.7), 0 0 10px #FFD700;
+            font-weight: 700;
+            animation: pulse-glow 1.5s infinite alternate;
+        }
+        .sao-christmas-button:hover {
+            background: linear-gradient(135deg, #FF3333 0%, #C90000 50%, #FFEC80 100%);
+            box-shadow: 0 0 12px #FFD700;
+        }
+
+        @keyframes pulse-glow {
+            from { box-shadow: 0 0 5px #FFD700; }
+            to { box-shadow: 0 0 15px #FFD700, 0 0 20px rgba(255, 0, 0, 0.5); }
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 sm:p-8 flex justify-center items-center">
+
+    <div class="sao-panel p-6 sm:p-8 text-center max-w-lg">
+        <header class="mb-8">
+            <h1 class="text-3xl sao-title mb-2">SAO: Gedenk-Log</h1>
+            <p class="text-gray-300 italic">// Drücken Sie den Knopf für Sachi's Gruß</p>
+        </header>
+
+        <!-- AUDIO ELEMENT FÜR LOKALE MP3-WIEDERGABE -->
+        <!-- WICHTIG: Die Datei "Sachi s Gift to Kirito.mp3" muss sich im selben Ordner wie diese HTML-Datei befinden. -->
+        <audio id="christmasAudioElement" src="./Sachi s Gift to Kirito.mp3" preload="auto" class="hidden"></audio>
+
+        <!-- WEIHNACHTS-BUTTON (Spielt die lokale MP3) -->
+        <div class="flex justify-center">
+            <button id="christmasBtn" class="sao-christmas-button font-semibold py-3 px-8 rounded-lg shadow-xl transition duration-200 focus:outline-none text-lg">
+                ▶️ XMAS LOG-IN (Sachi's Gruß - MP3)
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const christmasBtn = document.getElementById('christmasBtn');
+        const christmasAudioElement = document.getElementById('christmasAudioElement');
+
+        /**
+         * Schaltet die Wiedergabe der lokalen MP3-Datei um.
+         * Stoppt und setzt das Audio zurück, wenn es bereits läuft.
+         */
+        function playChristmasMessage() {
+            const playingText = '⏸️ WIEDERGABE LÄUFT...';
+            const defaultText = '▶️ XMAS LOG-IN (Sachi\'s Gruß - MP3)';
+
+            if (christmasAudioElement.paused || christmasAudioElement.currentTime === 0) {
+                // Versuche, Audio abzuspielen
+                christmasAudioElement.play().then(() => {
+                    christmasBtn.textContent = playingText;
+                }).catch(e => {
+                    // Fehlerbehandlung, falls die Datei nicht geladen werden kann
+                    console.error("Audio playback failed (MP3 not found/allowed):", e);
+                    christmasBtn.textContent = '// ERROR (MP3 NICHT GEFUNDEN).';
+                    setTimeout(() => {
+                        christmasBtn.textContent = defaultText;
+                    }, 3000);
+                });
+            } else {
+                // Pausieren und zurücksetzen
+                christmasAudioElement.pause();
+                christmasAudioElement.currentTime = 0;
+                christmasBtn.textContent = defaultText;
+            }
+        }
+
+        // Event Listener für den Button
+        christmasBtn.addEventListener('click', playChristmasMessage);
+
+        // Setzt den Button-Text zurück, wenn die MP3 zu Ende ist.
+        christmasAudioElement.addEventListener('ended', () => {
+             christmasBtn.textContent = '▶️ XMAS LOG-IN (Sachi\'s Gruß - MP3)';
+        });
+    </script>
+</body>
+</html>
