@@ -52,6 +52,11 @@
             box-shadow: 0 6px 20px rgba(184, 134, 11, 0.7);
             transform: scale(1.05);
         }
+        
+        /* Stil für die PIN-Meldungen */
+        #errorMessage, #modalPrompt {
+            min-height: 2.5rem; /* Stellt sicher, dass das Modal nicht springt, wenn der Text kurz ist */
+        }
     </style>
 </head>
 <body class="bg-talex-deep-black p-4 sm:p-8 text-off-white">
@@ -82,8 +87,6 @@
             </div>
         </header>
 
-        <!-- ... (Rest des Menü-Inhalts bleibt unverändert) ... -->
-        
         <!-- Motto and Divider -->
         <div class="my-8">
             <div class="h-px bg-talex-gold-accent w-full"></div>
@@ -93,7 +96,7 @@
             <div class="h-px bg-talex-gold-accent w-full"></div>
         </div>
 
-        <!-- Menu Content -->
+        <!-- Menu Content (Bleibt unverändert) -->
         <div class="space-y-12">
             
             <!-- Section: Savory & Hearty -->
@@ -173,6 +176,7 @@
                             <p class="font-bold text-xl text-off-white">Curd Cheese Bowl</p>
                             <p class="text-base italic mt-1 text-gray-400">
                                 Creamy curd (Quark) served with a side of fruit compote (stewed fruit) and crunchy nuts.
+                            </p>
                             </p>
                         </div>
                         <span class="font-extrabold text-2xl text-right min-w-[5rem] text-talex-gold-accent">9.50 €</span>
@@ -310,7 +314,7 @@
             class="bg-talex-charcoal p-8 rounded-lg shadow-2xl w-full max-w-sm border-2 border-talex-gold-accent transform transition-all duration-300 scale-95"
             onclick="event.stopPropagation()">
             
-            <h3 class="text-2xl font-bold text-talex-gold-accent mb-4">🤫 Psst! Nur für Eingeweihte 🤫</h3>
+            <h3 class="text-2xl font-bold text-talex-gold-accent mb-4 text-center">🤫 Psst! Nur für Eingeweihte 🤫</h3>
             
             <!-- Text wird hier per JS gesetzt (zufällig) -->
             <p id="modalPrompt" class="text-gray-300 mb-6 text-center">
@@ -324,7 +328,7 @@
                 class="w-full p-3 mb-4 text-lg bg-talex-deep-black text-off-white border border-gray-600 rounded-lg focus:outline-none focus:border-talex-gold-accent"
                 onkeypress="if(event.key === 'Enter') checkCode()">
             
-            <!-- Dynamische Fehlermeldung kommt hier rein -->
+            <!-- Dynamische Fehlermeldung kommt hier rein (für witzige Sprüche bei falscher Eingabe) -->
             <p id="errorMessage" class="text-red-500 text-sm mb-4 hidden"></p>
 
             <div class="flex justify-between space-x-3">
@@ -344,13 +348,86 @@
     </div>
 
     <script>
-        // Der Code ist nur hier definiert.
-        const CORRECT_CODE = "1809";
+        // Der Code ist nur hier definiert. NEUER PIN: 187
+        const CORRECT_CODE = "187";
 
-        // Alle Sprüche wurden zu einer einzigen Liste zusammengeführt, da der Ladebalken entfällt.
-        const allModalMessages = [
-            "Handy weg! Wir sind hier nicht im Kino. Zurück zum Vortrag, sonst gibt's 'Kaltes Buffet'!",
+        // Kombinierte Liste der Sprüche für den Start und bei falscher Eingabe
+        const ALL_JOKES_AND_PROMPTS = [
+            "Handy weg! Wir sind hier nicht im Kino. Das Menü bleibt verschlossen!",
             "Ertappt! Beim Spicken erwischt zu werden, ist peinlicher als eine 'Group-Reply-All' E-Mail.",
-            "Achtung, Code-Alarm! Wenn du das Menü sehen willst, musst du in 5 Minuten 5 Buzzwords nennen.",
-            "Dies ist kein Notausgang. Es ist nur das Menü. Aber Spicken ist verboten! Konzentration!",
-            "Wir sehen alles. Wirklich. Sogar, dass du heimlich unter
+            "Falscher Code! Probier's mal mit deiner PIN für den Kühlschrank. Der ist spannender.",
+            "Dies ist kein Notausgang. Es ist nur das Menü. Spicken ist verboten! Konzentration!",
+            "Wir sehen alles. Wirklich. Sogar, dass du heimlich unter dem Tisch snackst. Richtiger Code, bitte!",
+            "Tipp: Die Antwort ist nicht '42'. Leider ist dies nicht das Universum des Menüs.",
+            "Dein eingegebener Code ist so richtig wie ein Toast Hawaii auf dem Oktoberfest.",
+            "Access Denied. Versuchs nochmal, aber diesmal mit mehr Stil und Geheimhaltung.",
+            "Die NSA hat gerade angerufen. Sie wollen ihren 'Spickschutz' zurück. Nochmal probieren.",
+            "Du hast 3 Versuche frei. Das war Nummer 1. Oder 4? Ich hab vergessen zu zählen. Falsch jedenfalls!",
+            "🤫 Psst! Nur für Eingeweihte. Bitte den Geheim-Code eingeben.",
+            "Achtung, Code-Alarm! Wenn du die deutsche Version sehen willst, brauchst du den geheimen PIN.",
+            "Warte, du brauchst den Key! Tipp: Es ist eine Zahl, die man sich gut merken kann.",
+            "Nur für die Elite: Der richtige Code öffnet die Tür zur deutschen Speisekarte."
+        ];
+        
+        // Wählt einen zufälligen Spruch aus der Liste aus
+        function getRandomJoke() {
+            const randomIndex = Math.floor(Math.random() * ALL_JOKES_AND_PROMPTS.length);
+            return ALL_JOKES_AND_PROMPTS[randomIndex];
+        }
+
+        // Zeigt das Modal an und wählt einen Startspruch (wird jetzt bei jedem Klick zufällig gewählt)
+        function showModal() {
+            const modal = document.getElementById('codeModal');
+            const prompt = document.getElementById('modalPrompt');
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Setzt den Start-Text ZUFÄLLIG aus der gesamten Liste
+            prompt.textContent = getRandomJoke();
+
+            // Setzt Fehlermeldung und Eingabefeld zurück
+            document.getElementById('codeInput').value = '';
+            errorMessage.classList.add('hidden');
+            errorMessage.textContent = '';
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.getElementById('codeInput').focus();
+        }
+
+        // Versteckt das Modal
+        function hideModal() {
+            const modal = document.getElementById('codeModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Überprüft den eingegebenen Code und reagiert entsprechend
+        function checkCode() {
+            const input = document.getElementById('codeInput');
+            const errorMessage = document.getElementById('errorMessage');
+            const code = input.value.trim();
+
+            if (code === CORRECT_CODE) {
+                // Richtig: Weiterleitung zur deutschen Version
+                // HINWEIS: Hier wird zu einer angenommenen "german_menu.html" weitergeleitet.
+                window.location.href = 'german_menu.html';
+            } else {
+                // Falsch: Witzigen Spruch anzeigen
+                
+                // 1. Eingabe leeren
+                input.value = '';
+
+                // 2. Zufälligen witzigen Spruch auswählen
+                const joke = getRandomJoke(); // Nutzt die gleiche Liste für falsche Eingaben
+
+                // 3. Spruch als "Fehlermeldung" anzeigen (mit roter Farbe, für mehr Drama!)
+                errorMessage.textContent = `Falscher Code! 🚨 ${joke}`;
+                errorMessage.classList.remove('hidden');
+
+                // 4. Den Prompt-Text zurücksetzen oder neu laden (optional)
+                document.getElementById('modalPrompt').textContent = "Na los, versuch es nochmal! Der Code ist der Schlüssel.";
+            }
+        }
+    </script>
+</body>
+</html>
