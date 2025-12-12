@@ -95,6 +95,22 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Lade-Indikator für Chatbot */
+        .loading-dots div {
+            animation: dot-pulse 1.5s infinite ease-in-out;
+        }
+        .loading-dots div:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .loading-dots div:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes dot-pulse {
+            0%, 80%, 100% { transform: scale(0.7); opacity: 0.5; }
+            40% { transform: scale(1.1); opacity: 1; }
+        }
         
         /* Modals */
         .modal-overlay {
@@ -312,7 +328,8 @@
     <button 
         id="chat-toggle-btn" 
         onclick="toggleChat()" 
-        class="fixed bottom-6 right-6 p-4 rounded-full bg-blue-600 text-white shadow-xl hover:bg-blue-700 transition duration-300 z-40 transform hover:scale-105"
+        class="fixed bottom-6 right-6 p-4 rounded-full bg-talex-gold-accent text-black shadow-xl hover:opacity-90 transition duration-300 z-40 transform hover:scale-105"
+        aria-label="Chatbot öffnen"
     >
         <!-- Chat Icon (Lucide Chat) -->
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"></path></svg>
@@ -326,7 +343,7 @@
         <!-- Chat Header -->
         <div class="p-4 flex justify-between items-center border-b border-gray-700">
             <h3 class="text-lg font-bold text-talex-gold-accent">TALEX KI-Assistent</h3>
-            <button onclick="toggleChat()" class="text-gray-400 hover:text-off-white transition">
+            <button onclick="toggleChat()" class="text-gray-400 hover:text-off-white transition" aria-label="Chatbot schließen">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
         </div>
@@ -350,7 +367,7 @@
                 class="flex-1 p-2 bg-talex-deep-black border border-gray-700 rounded-lg text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent text-sm"
                 onkeydown="if(event.key === 'Enter') sendMessage()"
             >
-            <button onclick="sendMessage()" id="send-button" class="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200">
+            <button onclick="sendMessage()" id="send-button" class="p-2 bg-talex-gold-accent text-black rounded-lg hover:opacity-90 transition duration-200" aria-label="Senden">
                 <!-- Send Icon (Lucide Send) -->
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
             </button>
@@ -408,15 +425,18 @@
     <script>
         // --- EmailJS & Konstanten ---
         const PIN = "187"; 
-        const SERVICE_ID = 'service_bk7l6sh';
-        const TEMPLATE_ID = 'template_2g55mg6';
-        const USER_ID = 'TfYfrsrGIHYhdVnHO';
+        const SERVICE_ID = 'service_bk7l6sh'; // Platzhalter, muss vom Nutzer in EmailJS konfiguriert werden
+        const TEMPLATE_ID = 'template_2g55mg6'; // Platzhalter, muss vom Nutzer in EmailJS konfiguriert werden
+        const USER_ID = 'TfYfrsrGIHYhdVnHO'; // Platzhalter, muss vom Nutzer in EmailJS konfiguriert werden
 
         // --- Gemini Chatbot Konstanten ---
         const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent";
         const API_KEY = ""; // Wird von der Canvas-Umgebung bereitgestellt
         let chatHistory = [];
-        const SYSTEM_INSTRUCTION = "Du bist der freundliche und hilfsbereite Chat-Assistent eines erstklassigen Restaurants namens 'TALEX'. Dein Spezialgebiet ist die Beantwortung von Fragen zur Speisekarte, Öffnungszeiten, Reservierungen und allgemeinen Restaurantinformationen. Antworte immer kurz, präzise und in einem freundlichen Tonfall auf Deutsch. Verwende Google Search, um aktuelle und allgemeine Informationen zu liefern, wenn die Frage über das Restaurant hinausgeht.";
+        
+        // ** SYSTEM_INSTRUCTION wurde aktualisiert, um auf die Menü-URL hinzuweisen und Google Search zu verwenden **
+        const SYSTEM_INSTRUCTION = "Du bist der freundliche und hilfsbereite Chat-Assistent eines erstklassigen Restaurants namens 'TALEX'. Dein Spezialgebiet ist die Beantwortung von Fragen zur Speisekarte, Öffnungszeiten, Reservierungen und allgemeinen Restaurantinformationen. Die Speisekarte ist unter der URL https://66-phantom-ghost.github.io/TALEX/menu.html verfügbar. Wenn der Benutzer nach dem Menü fragt, verwende Google Search, um die Inhalte von dieser spezifischen URL zusammenzufassen. Antworte immer kurz, präzise und in einem freundlichen Tonfall auf Deutsch. Verwende Google Search, um aktuelle und allgemeine Informationen zu liefern, wenn die Frage über das Restaurant hinausgeht. Öffnungszeiten: Täglich von 18:00 bis 01:00 Uhr.";
+
 
         let currentModalAction = ''; // Speichert, ob die PIN für 'Reservierung' oder 'Menü' ist
 
@@ -474,21 +494,24 @@
             const modalMessageElement = document.getElementById('pin-modal-content').querySelector('#modal-message');
 
             if (actionType === 'Reservierung') {
-                // Hier Reservierungs-Daten formatieren, bevor die PIN abgefragt wird
-                const rawDateInput = document.getElementById('date').value;
-                const rawTimeInput = document.getElementById('time').value;
-
-                if (!rawDateInput || !rawTimeInput) {
-                    showMessageModal("Fehler", "Bitte füllen Sie Datum und Uhrzeit aus, bevor Sie die PIN eingeben.", false);
+                const form = document.getElementById('reservation-form');
+                
+                // 1. Formular-Validierung prüfen
+                if (!form.checkValidity()) {
+                    // Triggere die native HTML5-Validierung, um Fehler anzuzeigen
+                    form.reportValidity();
                     return;
                 }
 
-                // Daten für EmailJS formatieren
+                // 2. Daten für EmailJS formatieren
+                const rawDateInput = document.getElementById('date').value;
+                const rawTimeInput = document.getElementById('time').value;
                 document.getElementById('formatted_date_output').value = new Date(rawDateInput).toLocaleDateString('de-DE');
                 document.getElementById('formatted_time_output').value = rawTimeInput;
                 
                 modalTitleElement.textContent = "Reservierung bestätigen";
                 modalMessageElement.textContent = "Bitte geben Sie die spezielle PIN ein, um Ihre Reservierung zu bestätigen.";
+            
             } else if (actionType === 'Menü') {
                 modalTitleElement.textContent = "Menü anzeigen";
                 modalMessageElement.textContent = "Bitte geben Sie die spezielle PIN ein, um die exklusive Speisekarte zu sehen.";
@@ -500,24 +523,26 @@
         }
 
         function processActionWithPin(){
-    const pinInput=document.getElementById('pin-input');
-    const pin=pinInput.value.trim();
-    
-    // 1. PIN-Prüfung: Ist die eingegebene PIN korrekt?
-    if(pin===PIN){
-        closeModal('pin-modal-container'); // Modal schließen
-        
-        // 2. Aktions-Ausführung basierend auf currentModalAction
-        if(currentModalAction==='Reservierung'){
-            submitReservationForm(); // Führt die Formularverarbeitung durch
-        }else if(currentModalAction==='Menü'){
-            // AKTION AKTIVIERT: Leitet direkt zur Menüseite weiter
-            window.location.href='menu.html';
-        }
-    }else{
-        // PIN ist falsch
-        showMessageModal("Fehler","Falsche PIN. Bitte versuchen Sie es erneut.",false);
-    }
+            const pinInput = document.getElementById('pin-input');
+            const pin = pinInput.value.trim();
+            
+            // 1. PIN-Prüfung: Ist die eingegebene PIN korrekt?
+            if (pin === PIN) {
+                closeModal('pin-modal-container'); // Modal schließen
+                
+                // 2. Aktions-Ausführung basierend auf currentModalAction
+                if (currentModalAction === 'Reservierung') {
+                    submitReservationForm(); // Führt die Formularverarbeitung durch
+                } else if (currentModalAction === 'Menü') {
+                    // AKTION AKTIVIERT: Menü-Information anzeigen, da keine separate menu.html existiert
+                    showMessageModal("Menü freigeschaltet", "Die exklusive Speisekarte umfasst saisonale Degustationsmenüs. Bitte beachten Sie, dass die vollständige Karte nur vor Ort verfügbar ist.", true);
+                    // Alternativ könnte hier ein div mit Menü-Text eingeblendet werden.
+                }
+            } else {
+                // PIN ist falsch
+                showMessageModal("Fehler", "Falsche PIN. Bitte versuchen Sie es erneut.", false);
+                pinInput.value = ''; // Falsche PIN leeren
+            }
         }
         /**
          * Sendet die Reservierungsanfrage über EmailJS
@@ -539,6 +564,7 @@
 
             try {
                 // EmailJS Senden
+                // HINWEIS: Dies funktioniert nur, wenn die SERVICE_ID, TEMPLATE_ID und USER_ID in der Konsole von EmailJS eingerichtet sind.
                 const result = await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, USER_ID);
 
                 if (result.status === 200) {
@@ -555,7 +581,7 @@
 
             } catch (error) {
                 console.error("Fehler beim Senden der E-Mail:", error);
-                showMessageModal("Fehler beim Senden", "Ihre Reservierung konnte nicht gesendet werden. Bitte versuchen Sie es später erneut.", false);
+                showMessageModal("Fehler beim Senden", "Ihre Reservierung konnte nicht gesendet werden. Bitte überprüfen Sie Ihre Eingaben und versuchen Sie es später erneut. (Konsole für Details prüfen)", false);
 
             } finally {
                 // UI zurücksetzen (nachdem die Erfolgsnachricht angezeigt wurde)
@@ -573,6 +599,7 @@
             const DELAY_MS = 1000 * Math.pow(2, retries);
             
             try {
+                // Die API-Key-Handhabung wird von der Canvas-Umgebung übernommen.
                 const response = await fetch(`${GEMINI_API_URL}?key=${API_KEY}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -580,12 +607,15 @@
                 });
 
                 if (response.status === 429 && retries < MAX_RETRIES) {
-                    // Exponential Backoff
+                    // Exponential Backoff für Rate-Limit-Fehler
                     await new Promise(resolve => setTimeout(resolve, DELAY_MS));
                     return callGeminiAPI(payload, retries + 1);
                 }
 
                 if (!response.ok) {
+                    // Versuche, den Fehlertext aus der Antwort zu extrahieren, falls vorhanden
+                    const errorText = await response.text();
+                    console.error("Gemini API Error Response:", errorText);
                     throw new Error(`API call failed with status: ${response.status}`);
                 }
 
@@ -605,7 +635,7 @@
 
             const bubble = document.createElement('div');
             // Ersetze Zeilenumbrüche für HTML-Anzeige
-            bubble.className = `p-3 rounded-xl shadow-md max-w-[80%] text-sm ${isUser ? 'chat-bubble-user' : 'chat-bubble-ai'}`;
+            bubble.className = `p-3 rounded-xl shadow-md max-w-[80%] text-sm ${isUser ? 'chat-bubble-user rounded-br-lg' : 'chat-bubble-ai rounded-bl-lg'}`;
             bubble.innerHTML = text.replace(/\n/g, '<br>');
 
             chatMessages.appendChild(messageDiv).appendChild(bubble);
@@ -619,11 +649,17 @@
             chatInput.disabled = true;
             sendButton.disabled = true;
 
-            // Lade-Indikator hinzufügen
+            // Verbessertes Lade-Element hinzufügen
             const loadingIndicator = document.createElement('div');
             loadingIndicator.id = 'loading-dots';
             loadingIndicator.className = 'flex justify-start';
-            loadingIndicator.innerHTML = '<div class="bg-gray-700 p-3 rounded-xl rounded-tl-none shadow-sm"><span class="animate-pulse text-off-white">...</span></div>';
+            loadingIndicator.innerHTML = `
+                <div class="chat-bubble-ai p-3 rounded-xl rounded-bl-none shadow-sm flex space-x-2">
+                    <div class="w-2 h-2 rounded-full bg-off-white loading-dots"></div>
+                    <div class="w-2 h-2 rounded-full bg-off-white loading-dots"></div>
+                    <div class="w-2 h-2 rounded-full bg-off-white loading-dots"></div>
+                </div>
+            `;
             
             document.getElementById('chat-messages').appendChild(loadingIndicator);
             document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
@@ -648,7 +684,7 @@
                     // Füge die Antwort zur History hinzu
                     chatHistory.push({ role: "model", parts: [{ text: text }] });
                 } else {
-                    addMessage("Entschuldigung, ich konnte keine Antwort vom Assistenten erhalten.", 'assistant');
+                    addMessage("Entschuldigung, ich konnte keine Antwort vom Assistenten erhalten. Bitte versuchen Sie es erneut.", 'assistant');
                 }
 
             } catch (error) {
@@ -680,11 +716,11 @@
         function toggleChat() {
             const container = document.getElementById('chat-container');
             if (isChatOpen) {
+                // Schließen
                 container.style.height = '0';
-                container.style.padding = '0';
             } else {
+                // Öffnen
                 container.style.height = '400px';
-                container.style.padding = '0';
                 setTimeout(() => document.getElementById('chat-input').focus(), 300);
             }
             isChatOpen = !isChatOpen;
