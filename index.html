@@ -254,8 +254,8 @@
                     if (currentAction === 'Reservierung') {
                         submitReservation();
                     } else {
-                        // ÖFFNET DIE DATEI menu.index (bzw. menu.html)
-                        window.open('menu.index', '_blank');
+                        // WECHSELT ZUR DATEI menu.html IM GLEICHEN TAB
+                        window.location.href = 'menu.html';
                     }
                 } else {
                     document.getElementById('message-text').textContent = "Falscher Zugangscode.";
