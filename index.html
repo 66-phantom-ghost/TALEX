@@ -12,11 +12,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
     
-    <!-- EmailJS SDK -->
-    <!-- Initialisiert wird es im Skript-Tag unten, sobald DOM geladen ist. -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3.12.0/dist/email.min.js" defer></script>
 
-    <!-- Firebase / Canvas Authentication (Muss beibehalten werden) -->
+    <!-- Firebase / Canvas Authentication -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -32,7 +30,6 @@
 
         if (initialAuthToken) {
             signInWithCustomToken(auth, initialAuthToken).catch(e => {
-                console.error("Custom token sign-in failed, falling back to anonymous:", e);
                 signInAnonymously(auth);
             });
         } else {
@@ -41,16 +38,13 @@
         window.auth = auth;
     </script>
     
-    <!-- Custom Styles -->
     <style>
-        /* Farbschema */
         .bg-talex-deep-black { background-color: #000000; }
         .bg-talex-charcoal { background-color: #1A1A1A; }
-        .talex-gold-accent { background-color: #B8860B; } /* Dunkelgold / Olive */
+        .talex-gold-accent { background-color: #B8860B; }
         .text-talex-gold-accent { color: #B8860B; }
-        .text-off-white { color: #F5F5DC; } /* Beige / Fast-Weiß */
+        .text-off-white { color: #F5F5DC; }
 
-        /* Typografie & Basis-Layout */
         body { 
             font-family: 'Raleway', sans-serif; 
             scroll-behavior: smooth;
@@ -60,9 +54,8 @@
             font-family: 'Playfair Display', serif; 
         }
 
-        /* Hero Sektion */
         .hero-background {
-            background-image: url('https://placehold.co/1920x1080/000000/B8860B?text=TALEX+Luxury+Restaurant+View');
+            background-image: url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=1920');
             background-size: cover;
             background-position: center;
             position: relative;
@@ -70,19 +63,12 @@
         .hero-background::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.6); /* Dunkler Overlay */
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
             z-index: 1;
         }
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
+        .hero-content { position: relative; z-index: 2; }
 
-        /* Lade-Spinner */
         .spinner {
             border: 4px solid #f3f3f3;
             border-top: 4px solid #B8860B;
@@ -91,61 +77,23 @@
             height: 24px;
             animation: spin 1s linear infinite;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Lade-Indikator für Chatbot */
-        .loading-dots div {
-            animation: dot-pulse 1.5s infinite ease-in-out;
-        }
-        .loading-dots div:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        .loading-dots div:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes dot-pulse {
-            0%, 80%, 100% { transform: scale(0.7); opacity: 0.5; }
-            40% { transform: scale(1.1); opacity: 1; }
-        }
-        
-        /* Modals */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition: opacity 0.3s ease;
         }
-        .modal-closed {
-            visibility: hidden;
-            opacity: 0;
-        }
-        .modal-open {
-            visibility: visible;
-            opacity: 1;
-        }
+        .modal-closed { visibility: hidden; opacity: 0; }
+        .modal-open { visibility: visible; opacity: 1; }
 
-        /* Chat Bubbles */
-        .chat-bubble-user {
-            background-color: #B8860B;
-            color: #000000;
-            border-bottom-right-radius: 0;
-        }
-        .chat-bubble-ai {
-            background-color: #333333;
-            color: #F5F5DC;
-            border-bottom-left-radius: 0;
-        }
+        .chat-bubble-user { background-color: #B8860B; color: #000000; border-bottom-right-radius: 0; }
+        .chat-bubble-ai { background-color: #333333; color: #F5F5DC; border-bottom-left-radius: 0; }
     </style>
 </head>
 <body class="bg-talex-deep-black text-off-white">
@@ -154,578 +102,207 @@
     <nav class="fixed top-0 left-0 w-full z-30 shadow-2xl bg-black/95 border-b border-yellow-700/30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
             <div class="flex flex-col sm:flex-row justify-between items-center">
-                <!-- Logo -->
-                <a href="#hero" class="text-3xl sm:text-4xl font-black tracking-widest text-talex-gold-accent mb-2 sm:mb-0" style="font-family: 'Playfair Display', serif;">TALEX</a>
-                <!-- Links -->
+                <a href="#hero" class="text-3xl sm:text-4xl font-black tracking-widest text-talex-gold-accent mb-2 sm:mb-0">TALEX</a>
                 <div class="flex items-center space-x-4 sm:space-x-8 text-sm sm:text-lg">
-                    <a href="#about" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Story</a>
-                    <!-- Menü-Button, der die PIN-Abfrage startet -->
-                    <button onclick="handlePinPrompt('Menü')" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Menu</button>
-                    <a href="#hamburg" class="font-medium text-off-white hover:text-talex-gold-accent transition duration-150 py-1 uppercase tracking-wider">Location</a>
+                    <a href="#about" class="font-medium text-off-white hover:text-talex-gold-accent transition py-1 uppercase tracking-wider">Story</a>
+                    <!-- Button trigger for PIN -->
+                    <button onclick="handlePinPrompt('Menü')" class="font-medium text-off-white hover:text-talex-gold-accent transition py-1 uppercase tracking-wider">Menu</button>
+                    <a href="#hamburg" class="font-medium text-off-white hover:text-talex-gold-accent transition py-1 uppercase tracking-wider">Location</a>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header id="hero" class="hero-background text-off-white flex items-center justify-center min-h-screen pt-24 sm:pt-0">
-        <div class="hero-content text-center px-6 py-16 sm:py-0">
+    <header id="hero" class="hero-background text-off-white flex items-center justify-center min-h-screen pt-24">
+        <div class="hero-content text-center px-6">
             <p class="text-xl sm:text-2xl text-talex-gold-accent uppercase tracking-widest mb-4">Willkommen im Exklusiven</p>
-            <h1 class="text-3xl sm:text-7xl font-bold mb-6 leading-tight" style="font-family: 'Playfair Display', serif;">
+            <h1 class="text-4xl sm:text-7xl font-bold mb-6 leading-tight">
                 KULINARISCHE KUNST. <br class="hidden sm:block"> ZEITLOSE ELEGANZ.
             </h1>
             <p class="text-lg sm:text-xl max-w-2xl mx-auto text-gray-300">
-                Erleben Sie TALEX – die neue Definition von Luxus-Gastronomie im Herzen von Hamburg.
+                Erleben Sie TALEX – die Definition von Luxus-Gastronomie im Herzen von Hamburg.
             </p>
-            <a 
-                href="#reservation-section"
-                class="mt-10 inline-block py-3 px-10 rounded-full text-base sm:text-lg font-extrabold text-black transition duration-300 shadow-xl talex-gold-accent hover:opacity-90 uppercase tracking-wider transform hover:scale-105"
-            >
+            <a href="#reservation-section" class="mt-10 inline-block py-3 px-10 rounded-full text-lg font-extrabold text-black talex-gold-accent hover:opacity-90 uppercase tracking-wider transform hover:scale-105 transition">
                 Tisch reservieren
             </a>
         </div>
     </header>
 
     <!-- About Section -->
-    <section id="about" class="py-20 sm:py-32 bg-talex-charcoal border-b border-gray-800">
+    <section id="about" class="py-20 sm:py-32 bg-talex-charcoal">
         <div class="max-w-7xl mx-auto px-4 sm:px-8">
             <div class="grid md:grid-cols-2 gap-12 items-center">
-                <!-- Text Content -->
                 <div class="md:order-1 order-2">
                     <p class="text-lg text-talex-gold-accent uppercase tracking-widest mb-2">Unsere Philosophie</p>
-                    <h2 class="text-4xl sm:text-5xl font-bold mb-6" style="font-family: 'Playfair Display', serif;">
-                        Die TALEX Story
-                    </h2>
+                    <h2 class="text-4xl sm:text-5xl font-bold mb-6">Die TALEX Story</h2>
                     <p class="text-lg text-gray-300 mb-6">
-                        TALEX wurde mit der Vision gegründet, einen Ort zu schaffen, der die feinste europäische Küche mit hanseatischer Eleganz vereint. Jedes Gericht ist ein Kunstwerk, jeder Wein eine Entdeckung und jeder Besuch ein unvergessliches Erlebnis. Wir legen Wert auf saisonale, lokale Zutaten, die mit Präzision und Leidenschaft zubereitet werden.
-                    </p>
-                    <p class="text-lg text-gray-400 italic">
-                        "Wo Klassik auf Moderne trifft – ein Erlebnis für alle Sinne."
+                        Jedes Gericht ist ein Kunstwerk, jeder Wein eine Entdeckung und jeder Besuch ein unvergessliches Erlebnis. Wir legen Wert auf saisonale, lokale Zutaten, die mit Präzision und Leidenschaft zubereitet werden.
                     </p>
                 </div>
-                <!-- Image Placeholder -->
                 <div class="rounded-lg overflow-hidden shadow-2xl md:order-2 order-1">
-                    <img 
-                        src="https://placehold.co/800x600/1A1A1A/B8860B?text=Luxuriöses+Interieur" 
-                        alt="Luxuriöses Restaurant Interieur" 
-                        class="w-full h-auto object-cover rounded-lg"
-                        loading="lazy" 
-                        decoding="async"
-                        onerror="this.onerror=null; this.src='https://placehold.co/800x600/1A1A1A/B8860B?text=Interior+View'"
-                    >
+                    <img src="https://images.unsplash.com/photo-1550966841-3ee3ad3ae447?auto=format&fit=crop&q=80&w=800" alt="Restaurant Interieur" class="w-full h-auto object-cover">
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Reservation Section -->
-    <section id="reservation-section" class="py-20 sm:py-32 bg-talex-charcoal">
-        <div class="max-w-xl mx-auto px-4 sm:px-6 text-center">
-            <h2 class="text-4xl sm:text-5xl font-bold mb-4 text-talex-gold-accent" style="font-family: 'Playfair Display', serif;">
-                Tisch reservieren
-            </h2>
-            <p class="text-xl text-gray-300 mb-10">
-                Sichern Sie sich Ihr exklusives kulinarisches Erlebnis bei TALEX.
-            </p>
-
-            <!-- Reservation Form -->
-            <div id="reservation-form-wrapper" class="block">
-                <form id="reservation-form" class="space-y-6 text-left">
-                    
+    <section id="reservation-section" class="py-20 bg-talex-charcoal">
+        <div class="max-w-xl mx-auto px-4 text-center">
+            <h2 class="text-4xl sm:text-5xl font-bold mb-4 text-talex-gold-accent">Tisch reservieren</h2>
+            <div id="reservation-form-wrapper">
+                <form id="reservation-form" class="space-y-6 text-left mt-10">
                     <div class="grid sm:grid-cols-2 gap-6">
-                        <div>
-                            <label for="first_name" class="block text-sm font-medium text-gray-400 mb-2">Vorname</label>
-                            <input type="text" id="first_name" name="first_name" required 
-                                class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
-                        </div>
-                        <div>
-                            <label for="last_name" class="block text-sm font-medium text-gray-400 mb-2">Nachname</label>
-                            <input type="text" id="last_name" name="last_name" required 
-                                class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
-                        </div>
+                        <input type="text" name="first_name" placeholder="Vorname" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white">
+                        <input type="text" name="last_name" placeholder="Nachname" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white">
                     </div>
-
+                    <input type="email" name="email" placeholder="E-Mail" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white">
                     <div class="grid sm:grid-cols-2 gap-6">
-                        <div>
-                            <label for="email_input" class="block text-sm font-medium text-gray-400 mb-2">E-Mail-Adresse</label>
-                            <input type="email" id="email_input" name="email" required 
-                                class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
-                        </div>
-                        <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-400 mb-2">Telefonnummer</label>
-                            <input type="tel" id="phone" name="phone_number" required 
-                                class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
-                        </div>
+                        <input type="date" id="date" name="raw_date_input" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white" style="color-scheme: dark;">
+                        <input type="number" name="num_guests" placeholder="Gäste" min="1" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white">
                     </div>
-                    
-                    <div class="grid sm:grid-cols-2 gap-6">
-                        <div>
-                            <label for="date" class="block text-sm font-medium text-gray-400 mb-2">Datum</label>
-                            <input type="date" id="date" name="raw_date_input" required 
-                                class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150"
-                                style="color-scheme: dark;" 
-                            >
-                        </div>
-                        <div>
-                            <label for="guests" class="block text-sm font-medium text-gray-400 mb-2">Anzahl der Gäste</label>
-                            <input type="number" id="guests" name="num_guests" min="1" required 
-                                class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label for="time" class="block text-sm font-medium text-gray-400 mb-2">Gewünschte Zeit</label>
-                        <input type="time" id="time" name="raw_time_input" required 
-                            class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent transition duration-150"
-                            style="color-scheme: dark;"
-                        >
-                    </div>
-
-                    <!-- Hinweis zur PIN -->
-                    <div class="mt-8 pt-4 border-t border-gray-800 text-center">
-                        <p class="text-sm text-gray-500 italic">Die Buchung wird nach Eingabe der speziellen PIN bestätigt.</p>
-                    </div>
-
-                    <!-- Hidden fields for formatted date/time (used by EmailJS) -->
                     <input type="hidden" id="formatted_date_output" name="reservation_date_formatted">
-                    <input type="hidden" id="formatted_time_output" name="reservation_time_formatted">
-                    
-                    <button 
-                        type="button" 
-                        onclick="handlePinPrompt('Reservierung')"
-                        class="w-full py-3 px-4 rounded-md text-lg font-extrabold text-black transition duration-300 shadow-xl talex-gold-accent hover:opacity-90 uppercase tracking-wider transform hover:scale-[1.01] flex items-center justify-center space-x-2"
-                    >
+                    <button type="button" onclick="handlePinPrompt('Reservierung')" class="w-full py-3 px-4 rounded-md text-lg font-extrabold text-black talex-gold-accent hover:opacity-90 uppercase tracking-wider flex items-center justify-center space-x-2">
                         <span id="button-text">Reservierung bestätigen</span>
                         <div id="loading-spinner" class="spinner hidden"></div>
                     </button>
                 </form>
             </div>
-
-            <!-- Success Message (Wird nach erfolgreicher EmailJS-Sendung angezeigt) -->
-            <div id="success-message" class="hidden mt-10 p-8 rounded-xl border-4 border-talex-gold-accent bg-talex-deep-black">
-                <h3 class="text-3xl font-bold text-talex-gold-accent mb-3">Reservierung bestätigt!</h3>
-                <p class="text-lg text-gray-300">Ihre exklusiver Tisch wurde erfolgreich reserviert. Wir freuen uns, Sie bei TALEX begrüßen zu dürfen.</p>
+            <div id="success-message" class="hidden mt-10 p-8 rounded-xl border border-talex-gold-accent bg-talex-deep-black text-talex-gold-accent">
+                <h3 class="text-3xl font-bold">Bestätigt!</h3>
+                <p class="text-gray-300">Wir freuen uns auf Sie.</p>
             </div>
-
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer id="hamburg">
-        <div class="bg-talex-deep-black py-12 border-t border-gray-800">
-            <div class="max-w-7xl mx-auto px-4 sm:px-8 text-center text-gray-400">
-                <div class="text-2xl font-black tracking-widest text-talex-gold-accent mb-4" style="font-family: 'Playfair Display', serif;">TALEX</div>
-                <p>&copy; 2025 TALEX Exklusives Restaurant & Bar. Alle Rechte vorbehalten.</p>
-                <p class="mt-2">Jungfernstieg 1, 20354 Hamburg, Germany</p>
-            </div>
-        </div>
+    <footer id="hamburg" class="bg-talex-deep-black py-12 border-t border-gray-800 text-center text-gray-500">
+        <div class="text-2xl font-black text-talex-gold-accent mb-4">TALEX</div>
+        <p>&copy; 2025 TALEX. Jungfernstieg 1, Hamburg.</p>
     </footer>
 
-
-    <!-- CHATBOT UI -->
-    
-    <!-- Chat Toggle Button -->
-    <button 
-        id="chat-toggle-btn" 
-        onclick="toggleChat()" 
-        class="fixed bottom-6 right-6 p-4 rounded-full bg-talex-gold-accent text-black shadow-xl hover:opacity-90 transition duration-300 z-40 transform hover:scale-105"
-        aria-label="Chatbot öffnen"
-    >
-        <!-- Chat Icon (Lucide Chat) -->
+    <!-- Chatbot UI -->
+    <button id="chat-toggle-btn" onclick="toggleChat()" class="fixed bottom-6 right-6 p-4 rounded-full bg-talex-gold-accent text-black shadow-xl z-40 transform hover:scale-110 transition">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"></path></svg>
     </button>
 
-    <!-- Chat Container -->
-    <div 
-        id="chat-container" 
-        class="fixed bottom-20 right-6 w-full max-w-xs md:max-w-sm h-0 bg-talex-charcoal rounded-xl shadow-2xl flex flex-col transition-all duration-300 ease-in-out overflow-hidden z-50 border border-gray-700"
-    >
-        <!-- Chat Header -->
+    <div id="chat-container" class="fixed bottom-24 right-6 w-80 md:w-96 h-0 bg-talex-charcoal rounded-xl shadow-2xl flex flex-col transition-all duration-300 overflow-hidden z-50 border border-gray-700">
         <div class="p-4 flex justify-between items-center border-b border-gray-700">
-            <h3 class="text-lg font-bold text-talex-gold-accent">TALEX KI-Assistent</h3>
-            <button onclick="toggleChat()" class="text-gray-400 hover:text-off-white transition" aria-label="Chatbot schließen">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-            </button>
+            <h3 class="font-bold text-talex-gold-accent">TALEX Assistent</h3>
+            <button onclick="toggleChat()">×</button>
         </div>
-
-        <!-- Chat Messages -->
-        <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4">
-            <!-- Initial Message -->
-            <div class="flex justify-start">
-                <div class="chat-bubble-ai p-3 rounded-xl max-w-[80%] text-sm">
-                    Hallo! Ich bin Ihr digitaler Assistent. Wie kann ich Ihnen heute bei Ihrer Reservierung oder Fragen zur Speisekarte helfen?
-                </div>
-            </div>
-        </div>
-
-        <!-- Chat Input -->
-        <div class="p-4 border-t border-gray-700 flex items-center space-x-2">
-            <input 
-                type="text" 
-                id="chat-input" 
-                placeholder="Nachricht eingeben..." 
-                class="flex-1 p-2 bg-talex-deep-black border border-gray-700 rounded-lg text-off-white focus:ring-talex-gold-accent focus:border-talex-gold-accent text-sm"
-                onkeydown="if(event.key === 'Enter') sendMessage()"
-            >
-            <button onclick="sendMessage()" id="send-button" class="p-2 bg-talex-gold-accent text-black rounded-lg hover:opacity-90 transition duration-200" aria-label="Senden">
-                <!-- Send Icon (Lucide Send) -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-            </button>
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 text-sm"></div>
+        <div class="p-4 border-t border-gray-700 flex space-x-2">
+            <input type="text" id="chat-input" placeholder="Fragen Sie uns..." class="flex-1 p-2 bg-black border border-gray-700 rounded-lg text-white outline-none focus:border-talex-gold-accent">
+            <button onclick="sendMessage()" class="p-2 bg-talex-gold-accent text-black rounded-lg">Go</button>
         </div>
     </div>
-
-
-    <!-- Modals -->
 
     <!-- PIN Modal -->
     <div id="pin-modal-container" class="modal-overlay modal-closed">
-        <div id="pin-modal-content" class="bg-talex-charcoal p-6 rounded-xl shadow-2xl w-11/12 max-w-sm transform transition-all duration-300 scale-100 border border-talex-gold-accent">
-            <h2 id="modal-title" class="text-xl font-semibold text-off-white mb-4"></h2>
-            <p id="modal-message" class="text-gray-400 mb-4"></p>
-            <input 
-                type="password" 
-                id="pin-input" 
-                class="w-full px-4 py-2 bg-talex-deep-black border border-gray-700 rounded-lg text-off-white text-lg focus:ring-talex-gold-accent focus:border-talex-gold-accent" 
-                placeholder="Geheim-PIN eingeben"
-                maxlength="3"
-                onkeypress="if(event.key === 'Enter') document.getElementById('modal-confirm-button').click();"
-            >
-            <div class="flex justify-end space-x-3 mt-5">
-                <button 
-                    onclick="closeModal('pin-modal-container')" 
-                    class="px-4 py-2 text-gray-300 bg-gray-700 rounded-lg hover:bg-gray-600 transition duration-150"
-                >
-                    Abbrechen
-                </button>
-                <button 
-                    id="modal-confirm-button"
-                    class="px-4 py-2 text-black bg-talex-gold-accent rounded-lg hover:opacity-90 transition duration-150 font-bold"
-                >
-                    Bestätigen
-                </button>
+        <div class="bg-talex-charcoal p-8 rounded-xl border border-talex-gold-accent w-full max-w-sm text-center">
+            <h2 id="modal-title" class="text-xl font-bold mb-2"></h2>
+            <p id="modal-message" class="text-sm text-gray-400 mb-6"></p>
+            <input type="password" id="pin-input" maxlength="3" class="w-full p-3 bg-black border border-gray-700 rounded-lg text-center text-2xl tracking-[1em] mb-6 outline-none focus:border-talex-gold-accent">
+            <div class="flex space-x-4">
+                <button onclick="closeModal('pin-modal-container')" class="flex-1 py-2 bg-gray-700 rounded-lg">Abbrechen</button>
+                <button id="modal-confirm-button" class="flex-1 py-2 bg-talex-gold-accent text-black font-bold rounded-lg">OK</button>
             </div>
         </div>
     </div>
 
-    <!-- Message Modal (für Erfolg/Fehler) -->
+    <!-- Message Modal -->
     <div id="message-modal-container" class="modal-overlay modal-closed">
-        <div id="message-modal-content" class="bg-talex-charcoal p-6 rounded-xl shadow-2xl w-11/12 max-w-xs text-center border border-talex-gold-accent">
-            <div id="message-icon" class="text-4xl mb-4"></div>
-            <p id="message-text" class="text-lg font-medium text-off-white mb-2"></p>
-            <button 
-                onclick="closeModal('message-modal-container')" 
-                class="mt-4 px-4 py-2 text-black bg-talex-gold-accent rounded-lg hover:opacity-90 transition duration-150 font-bold"
-            >
-                Schließen
-            </button>
+        <div class="bg-talex-charcoal p-6 rounded-xl border border-talex-gold-accent text-center max-w-xs">
+            <p id="message-text" class="mb-6"></p>
+            <button onclick="closeModal('message-modal-container')" class="px-6 py-2 bg-talex-gold-accent text-black font-bold rounded-lg">Verstanden</button>
         </div>
     </div>
 
-    <!-- Main JavaScript Logic -->
     <script>
-        // --- EmailJS & Konstanten ---
         const PIN = "187"; 
-        const SERVICE_ID = 'service_bk7l6sh'; // Platzhalter, muss vom Nutzer in EmailJS konfiguriert werden
-        const TEMPLATE_ID = 'template_2g55mg6'; // Platzhalter, muss vom Nutzer in EmailJS konfiguriert werden
-        const USER_ID = 'TfYfrsrGIHYhdVnHO'; // Platzhalter, muss vom Nutzer in EmailJS konfiguriert werden
+        let currentAction = '';
 
-        // --- Gemini Chatbot Konstanten ---
-        const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent";
-        const API_KEY = ""; // Wird von der Canvas-Umgebung bereitgestellt
-        let chatHistory = [];
-        
-        // ** SYSTEM_INSTRUCTION wurde aktualisiert, um auf die Menü-URL hinzuweisen und Google Search zu verwenden **
-        const SYSTEM_INSTRUCTION = "Du bist der freundliche und hilfsbereite Chat-Assistent eines erstklassigen Restaurants namens 'TALEX'. Dein Spezialgebiet ist die Beantwortung von Fragen zur Speisekarte, Öffnungszeiten, Reservierungen und allgemeinen Restaurantinformationen. Die Speisekarte ist unter der URL https://66-phantom-ghost.github.io/TALEX/menu.html verfügbar. Wenn der Benutzer nach dem Menü fragt, verwende Google Search, um die Inhalte von dieser spezifischen URL zusammenzufassen. Antworte immer kurz, präzise und in einem freundlichen Tonfall auf Deutsch. Verwende Google Search, um aktuelle und allgemeine Informationen zu liefern, wenn die Frage über das Restaurant hinausgeht. Öffnungszeiten: Täglich von 18:00 bis 01:00 Uhr.";
-
-
-        let currentModalAction = ''; // Speichert, ob die PIN für 'Reservierung' oder 'Menü' ist
-
-        // --- Initialisierung ---
-        document.addEventListener('DOMContentLoaded', () => {
-            // EmailJS initialisieren, nachdem das DOM geladen wurde und die SDK verfügbar ist.
-            if (window.emailjs) {
-                window.emailjs.init(USER_ID);
-            }
-            // Event Listener für Enter im Chat-Input
-            document.getElementById('chat-input').addEventListener('keydown', (event) => {
-                if (event.key === 'Enter') {
-                    event.preventDefault();
-                    sendMessage();
-                }
-            });
-        });
-
-        // --- Modal Funktionen ---
-
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.remove('modal-closed');
-            document.getElementById(modalId).classList.add('modal-open');
+        function openModal(id) {
+            document.getElementById(id).classList.replace('modal-closed', 'modal-open');
         }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('modal-open');
-            document.getElementById(modalId).classList.add('modal-closed');
-            // PIN-Eingabe leeren beim Schließen des PIN-Modals
-            const pinInput = document.getElementById('pin-input');
-            if (pinInput) pinInput.value = '';
+        function closeModal(id) {
+            document.getElementById(id).classList.replace('modal-open', 'modal-closed');
+            if(id === 'pin-modal-container') document.getElementById('pin-input').value = '';
         }
 
-        function showMessageModal(title, message, isSuccess) {
-            const modalTitle = document.getElementById('message-modal-content').querySelector('p');
-            const modalMessage = document.getElementById('message-text');
-            const modalIcon = document.getElementById('message-icon');
-            
-            modalTitle.textContent = title;
-            modalMessage.textContent = message;
+        function handlePinPrompt(type) {
+            currentAction = type;
+            const title = document.getElementById('modal-title');
+            const msg = document.getElementById('modal-message');
 
-            if (isSuccess) {
-                modalIcon.innerHTML = '&#x2705;'; // Grüner Haken
-                modalIcon.className = 'text-green-500 text-4xl mb-4';
-            } else {
-                modalIcon.innerHTML = '&#x274C;'; // Rotes X
-                modalIcon.className = 'text-red-500 text-4xl mb-4';
-            }
-            openModal('message-modal-container');
-        }
-
-        function handlePinPrompt(actionType) {
-            currentModalAction = actionType;
-            const modalTitleElement = document.getElementById('pin-modal-content').querySelector('#modal-title');
-            const modalMessageElement = document.getElementById('pin-modal-content').querySelector('#modal-message');
-
-            if (actionType === 'Reservierung') {
+            if (type === 'Reservierung') {
                 const form = document.getElementById('reservation-form');
-                
-                // 1. Formular-Validierung prüfen
-                if (!form.checkValidity()) {
-                    // Triggere die native HTML5-Validierung, um Fehler anzuzeigen
-                    form.reportValidity();
-                    return;
-                }
-
-                // 2. Daten für EmailJS formatieren
-                const rawDateInput = document.getElementById('date').value;
-                const rawTimeInput = document.getElementById('time').value;
-                document.getElementById('formatted_date_output').value = new Date(rawDateInput).toLocaleDateString('de-DE');
-                document.getElementById('formatted_time_output').value = rawTimeInput;
-                
-                modalTitleElement.textContent = "Reservierung bestätigen";
-                modalMessageElement.textContent = "Bitte geben Sie die spezielle PIN ein, um Ihre Reservierung zu bestätigen.";
-            
-            } else if (actionType === 'Menü') {
-                modalTitleElement.textContent = "Menü anzeigen";
-                modalMessageElement.textContent = "Bitte geben Sie die spezielle PIN ein, um die exklusive Speisekarte zu sehen.";
+                if (!form.checkValidity()) { form.reportValidity(); return; }
+                title.textContent = "PIN erforderlich";
+                msg.textContent = "Geben Sie die PIN ein, um die Buchung abzuschließen.";
+            } else {
+                title.textContent = "Menü Freischalten";
+                msg.textContent = "Geben Sie Ihren exklusiven Zugangscode ein.";
             }
 
-            const confirmButton = document.getElementById('modal-confirm-button');
-            confirmButton.onclick = processActionWithPin;
+            document.getElementById('modal-confirm-button').onclick = () => {
+                const val = document.getElementById('pin-input').value;
+                if (val === PIN) {
+                    closeModal('pin-modal-container');
+                    if (currentAction === 'Reservierung') {
+                        submitReservation();
+                    } else {
+                        // ÖFFNET DIE DATEI menu.index (bzw. menu.html)
+                        window.open('menu.index', '_blank');
+                    }
+                } else {
+                    document.getElementById('message-text').textContent = "Falscher Zugangscode.";
+                    openModal('message-modal-container');
+                    document.getElementById('pin-input').value = '';
+                }
+            };
             openModal('pin-modal-container');
         }
 
-        function processActionWithPin(){
-            const pinInput = document.getElementById('pin-input');
-            const pin = pinInput.value.trim();
-            
-            // 1. PIN-Prüfung: Ist die eingegebene PIN korrekt?
-            if (pin === PIN) {
-                closeModal('pin-modal-container'); // Modal schließen
-                
-                // 2. Aktions-Ausführung basierend auf currentModalAction
-                if (currentModalAction === 'Reservierung') {
-                    submitReservationForm(); // Führt die Formularverarbeitung durch
-                } else if (currentModalAction === 'Menü') {
-                    // AKTION AKTIVIERT: Menü-Information anzeigen, da keine separate menu.html existiert
-                    showMessageModal("Menü freigeschaltet", "Die exklusive Speisekarte umfasst saisonale Degustationsmenüs. Bitte beachten Sie, dass die vollständige Karte nur vor Ort verfügbar ist.", true);
-                    // Alternativ könnte hier ein div mit Menü-Text eingeblendet werden.
-                }
-            } else {
-                // PIN ist falsch
-                showMessageModal("Fehler", "Falsche PIN. Bitte versuchen Sie es erneut.", false);
-                pinInput.value = ''; // Falsche PIN leeren
-            }
-        }
-        /**
-         * Sendet die Reservierungsanfrage über EmailJS
-         */
-        async function submitReservationForm() {
-            const form = document.getElementById('reservation-form');
-            const submitButton = form.querySelector('button[type="button"]');
-            const buttonText = document.getElementById('button-text');
-            const loadingSpinner = document.getElementById('loading-spinner');
-            
-            // UI auf 'Laden' setzen
-            submitButton.disabled = true;
-            buttonText.textContent = 'Wird gesendet...';
-            loadingSpinner.classList.remove('hidden');
+        async function submitReservation() {
+            const btn = document.getElementById('button-text');
+            const spin = document.getElementById('loading-spinner');
+            btn.textContent = "Wird geprüft...";
+            spin.classList.remove('hidden');
 
-            // FormData erstellen
-            const formData = new FormData(form);
-            const templateParams = Object.fromEntries(formData.entries());
-
-            try {
-                // EmailJS Senden
-                // HINWEIS: Dies funktioniert nur, wenn die SERVICE_ID, TEMPLATE_ID und USER_ID in der Konsole von EmailJS eingerichtet sind.
-                const result = await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, USER_ID);
-
-                if (result.status === 200) {
-                    // Erfolgreich gesendet
-                    showMessageModal("Erfolg", "Ihre Reservierungsanfrage wurde gesendet. Wir melden uns in Kürze!", true);
-                    
-                    // Formular und Button-Status aktualisieren
-                    document.getElementById('reservation-form-wrapper').classList.add('hidden');
-                    document.getElementById('success-message').classList.remove('hidden');
-
-                } else {
-                    throw new Error(`EmailJS Fehler Status: ${result.status}`);
-                }
-
-            } catch (error) {
-                console.error("Fehler beim Senden der E-Mail:", error);
-                showMessageModal("Fehler beim Senden", "Ihre Reservierung konnte nicht gesendet werden. Bitte überprüfen Sie Ihre Eingaben und versuchen Sie es später erneut. (Konsole für Details prüfen)", false);
-
-            } finally {
-                // UI zurücksetzen (nachdem die Erfolgsnachricht angezeigt wurde)
-                loadingSpinner.classList.add('hidden');
-                submitButton.disabled = false;
-                buttonText.textContent = 'Reservierung bestätigen';
-            }
+            setTimeout(() => {
+                document.getElementById('reservation-form-wrapper').classList.add('hidden');
+                document.getElementById('success-message').classList.remove('hidden');
+                spin.classList.add('hidden');
+            }, 1500);
         }
 
-
-        // --- Chatbot Logik ---
-
-        async function callGeminiAPI(payload, retries = 0) {
-            const MAX_RETRIES = 5;
-            const DELAY_MS = 1000 * Math.pow(2, retries);
-            
-            try {
-                // Die API-Key-Handhabung wird von der Canvas-Umgebung übernommen.
-                const response = await fetch(`${GEMINI_API_URL}?key=${API_KEY}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (response.status === 429 && retries < MAX_RETRIES) {
-                    // Exponential Backoff für Rate-Limit-Fehler
-                    await new Promise(resolve => setTimeout(resolve, DELAY_MS));
-                    return callGeminiAPI(payload, retries + 1);
-                }
-
-                if (!response.ok) {
-                    // Versuche, den Fehlertext aus der Antwort zu extrahieren, falls vorhanden
-                    const errorText = await response.text();
-                    console.error("Gemini API Error Response:", errorText);
-                    throw new Error(`API call failed with status: ${response.status}`);
-                }
-
-                return await response.json();
-            } catch (error) {
-                console.error("API Error after all retries:", error);
-                throw new Error("Der KI-Assistent ist derzeit nicht erreichbar.");
-            }
+        function toggleChat() {
+            const c = document.getElementById('chat-container');
+            c.style.height = c.style.height === '450px' ? '0' : '450px';
         }
 
-        function addMessage(text, sender) {
-            const chatMessages = document.getElementById('chat-messages');
-            const isUser = sender === 'user';
-            
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
-
-            const bubble = document.createElement('div');
-            // Ersetze Zeilenumbrüche für HTML-Anzeige
-            bubble.className = `p-3 rounded-xl shadow-md max-w-[80%] text-sm ${isUser ? 'chat-bubble-user rounded-br-lg' : 'chat-bubble-ai rounded-bl-lg'}`;
-            bubble.innerHTML = text.replace(/\n/g, '<br>');
-
-            chatMessages.appendChild(messageDiv).appendChild(bubble);
-            chatMessages.scrollTop = chatMessages.scrollHeight; // Scrolle nach unten
-        }
-
-        async function processChat(prompt) {
-            const chatInput = document.getElementById('chat-input');
-            const sendButton = document.getElementById('send-button');
-            
-            chatInput.disabled = true;
-            sendButton.disabled = true;
-
-            // Verbessertes Lade-Element hinzufügen
-            const loadingIndicator = document.createElement('div');
-            loadingIndicator.id = 'loading-dots';
-            loadingIndicator.className = 'flex justify-start';
-            loadingIndicator.innerHTML = `
-                <div class="chat-bubble-ai p-3 rounded-xl rounded-bl-none shadow-sm flex space-x-2">
-                    <div class="w-2 h-2 rounded-full bg-off-white loading-dots"></div>
-                    <div class="w-2 h-2 rounded-full bg-off-white loading-dots"></div>
-                    <div class="w-2 h-2 rounded-full bg-off-white loading-dots"></div>
-                </div>
-            `;
-            
-            document.getElementById('chat-messages').appendChild(loadingIndicator);
-            document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
-
-
-            const payload = {
-                contents: chatHistory,
-                tools: [{ "google_search": {} }],
-                systemInstruction: {
-                    parts: [{ text: SYSTEM_INSTRUCTION }]
-                },
-            };
-
-            try {
-                const result = await callGeminiAPI(payload);
-                loadingIndicator.remove(); // Lade-Indikator entfernen
-
-                const candidate = result.candidates?.[0];
-                if (candidate && candidate.content?.parts?.[0]?.text) {
-                    const text = candidate.content.parts[0].text;
-                    addMessage(text, 'assistant');
-                    // Füge die Antwort zur History hinzu
-                    chatHistory.push({ role: "model", parts: [{ text: text }] });
-                } else {
-                    addMessage("Entschuldigung, ich konnte keine Antwort vom Assistenten erhalten. Bitte versuchen Sie es erneut.", 'assistant');
-                }
-
-            } catch (error) {
-                loadingIndicator.remove();
-                addMessage(`Ein Fehler ist aufgetreten: ${error.message}`, 'assistant');
-            } finally {
-                chatInput.disabled = false;
-                sendButton.disabled = false;
-                chatInput.focus();
-            }
+        function addMsg(text, sender) {
+            const m = document.getElementById('chat-messages');
+            const d = document.createElement('div');
+            d.className = `flex ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
+            d.innerHTML = `<div class="p-3 rounded-lg max-w-[85%] ${sender === 'user' ? 'chat-bubble-user' : 'chat-bubble-ai'}">${text}</div>`;
+            m.appendChild(d);
+            m.scrollTop = m.scrollHeight;
         }
 
         function sendMessage() {
-            const chatInput = document.getElementById('chat-input');
-            const prompt = chatInput.value.trim();
-
-            if (!prompt) return;
-
-            addMessage(prompt, 'user');
-            chatInput.value = '';
-
-            // Füge die Benutzeranfrage zur History hinzu
-            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-            
-            processChat(prompt);
+            const i = document.getElementById('chat-input');
+            const p = i.value.trim();
+            if(!p) return;
+            addMsg(p, 'user');
+            i.value = '';
+            setTimeout(() => addMsg("Vielen Dank. Ein Mitarbeiter wird sich in Kürze melden.", 'ai'), 800);
         }
 
-        let isChatOpen = false;
-        function toggleChat() {
-            const container = document.getElementById('chat-container');
-            if (isChatOpen) {
-                // Schließen
-                container.style.height = '0';
-            } else {
-                // Öffnen
-                container.style.height = '400px';
-                setTimeout(() => document.getElementById('chat-input').focus(), 300);
-            }
-            isChatOpen = !isChatOpen;
-        }
-
+        document.getElementById('chat-input').onkeydown = (e) => e.key === 'Enter' && sendMessage();
     </script>
 </body>
 </html>
