@@ -105,8 +105,8 @@
                 <a href="#hero" class="text-3xl sm:text-4xl font-black tracking-widest text-talex-gold-accent mb-2 sm:mb-0">TALEX</a>
                 <div class="flex items-center space-x-4 sm:space-x-8 text-sm sm:text-lg">
                     <a href="#about" class="font-medium text-off-white hover:text-talex-gold-accent transition py-1 uppercase tracking-wider">Story</a>
-                    <!-- Button trigger for PIN -->
-                    <button onclick="handlePinPrompt('Menü')" class="font-medium text-off-white hover:text-talex-gold-accent transition py-1 uppercase tracking-wider">Menu</button>
+                    <!-- Direkter Link zum Menü ohne PIN -->
+                    <a href="menu.html" class="font-medium text-off-white hover:text-talex-gold-accent transition py-1 uppercase tracking-wider">Menu</a>
                     <a href="#hamburg" class="font-medium text-off-white hover:text-talex-gold-accent transition py-1 uppercase tracking-wider">Location</a>
                 </div>
             </div>
@@ -198,7 +198,7 @@
         </div>
     </div>
 
-    <!-- PIN Modal -->
+    <!-- PIN Modal (Nur noch für Reservierungen genutzt) -->
     <div id="pin-modal-container" class="modal-overlay modal-closed">
         <div class="bg-talex-charcoal p-8 rounded-xl border border-talex-gold-accent w-full max-w-sm text-center">
             <h2 id="modal-title" class="text-xl font-bold mb-2"></h2>
@@ -242,9 +242,6 @@
                 if (!form.checkValidity()) { form.reportValidity(); return; }
                 title.textContent = "PIN erforderlich";
                 msg.textContent = "Geben Sie die PIN ein, um die Buchung abzuschließen.";
-            } else {
-                title.textContent = "Menü Freischalten";
-                msg.textContent = "Geben Sie Ihren exklusiven Zugangscode ein.";
             }
 
             document.getElementById('modal-confirm-button').onclick = () => {
@@ -253,9 +250,6 @@
                     closeModal('pin-modal-container');
                     if (currentAction === 'Reservierung') {
                         submitReservation();
-                    } else {
-                        // WECHSELT ZUR DATEI menu.html IM GLEICHEN TAB
-                        window.location.href = 'menu.html';
                     }
                 } else {
                     document.getElementById('message-text').textContent = "Falscher Zugangscode.";
