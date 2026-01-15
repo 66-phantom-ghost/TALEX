@@ -16,7 +16,6 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3.12.0/dist/email.min.js"></script>
     <script type="text/javascript">
         (function() {
-            // Initialisierung mit deinem Public Key
             emailjs.init("TfYfrsrGIHYhdVnHO");
         })();
     </script>
@@ -62,6 +61,7 @@
         }
 
         .hero-background {
+            /*  */
             background-image: url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=1920');
             background-size: cover;
             background-position: center;
@@ -71,7 +71,7 @@
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.7);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.4), rgba(0,0,0,0.9));
             z-index: 1;
         }
         .hero-content { position: relative; z-index: 2; }
@@ -102,28 +102,52 @@
         .chat-bubble-user { background-color: #B8860B; color: #000000; border-bottom-right-radius: 0; }
         .chat-bubble-ai { background-color: #333333; color: #F5F5DC; border-bottom-left-radius: 0; }
         
-        /* Badge für Präsentations-Modus */
         .presentation-badge {
             background-color: #B8860B;
             color: black;
-            padding: 2px 10px;
+            padding: 4px 12px;
             border-radius: 4px;
-            font-weight: bold;
-            font-size: 0.7rem;
+            font-weight: 800;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
+            box-shadow: 0 0 15px rgba(184, 134, 11, 0.4);
+            border: 1px solid black;
+        }
+
+        .presentation-banner {
+            background: linear-gradient(90deg, #B8860B 0%, #daa520 100%);
+            color: black;
+            text-align: center;
+            padding: 5px 0;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .img-zoom {
+            transition: transform 0.5s ease;
+        }
+        .img-container:hover .img-zoom {
+            transform: scale(1.05);
         }
     </style>
 </head>
 <body class="bg-talex-deep-black text-off-white">
 
+    <!-- Top Info Bar -->
+    <div class="presentation-banner fixed top-0 left-0 w-full z-50">
+        Demo-Projekt für Präsentationszwecke • Keine reale Website
+    </div>
+
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full z-30 shadow-2xl bg-black/95 border-b border-yellow-700/30">
+    <nav class="fixed top-6 left-0 w-full z-30 shadow-2xl bg-black/95 border-b border-yellow-700/30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
             <div class="flex flex-col sm:flex-row justify-between items-center">
                 <div class="flex flex-col items-center sm:items-start mb-2 sm:mb-0">
                     <a href="#hero" class="text-3xl sm:text-4xl font-black tracking-widest text-talex-gold-accent">TALEX</a>
-                    <span class="presentation-badge mt-1">Website für Präsentationszwecke</span>
+                    <span class="presentation-badge mt-1">PRÄSENTATIONS-MODUS</span>
                 </div>
                 <div class="flex items-center space-x-4 sm:space-x-8 text-sm sm:text-lg">
                     <a href="#about" class="font-medium text-off-white hover:text-talex-gold-accent transition py-1 uppercase tracking-wider">Story</a>
@@ -144,7 +168,8 @@
             <p class="text-lg sm:text-xl max-w-2xl mx-auto text-gray-300">
                 Erleben Sie TALEX – die Definition von Luxus-Gastronomie im Herzen von Hamburg.
             </p>
-            <a href="#reservation-section" class="mt-10 inline-block py-3 px-10 rounded-full text-lg font-extrabold text-black talex-gold-accent hover:opacity-90 uppercase tracking-wider transform hover:scale-105 transition">
+            <div class="mt-4 text-sm text-talex-gold-accent/60 italic">Dies ist eine interaktive Design-Studie für eine Schul-Präsentation.</div>
+            <a href="#reservation-section" class="mt-8 inline-block py-3 px-10 rounded-full text-lg font-extrabold text-black talex-gold-accent hover:opacity-90 uppercase tracking-wider transform hover:scale-105 transition">
                 Tisch reservieren
             </a>
         </div>
@@ -157,33 +182,72 @@
                 <div class="md:order-1 order-2">
                     <p class="text-lg text-talex-gold-accent uppercase tracking-widest mb-2">Unsere Philosophie</p>
                     <h2 class="text-4xl sm:text-5xl font-bold mb-6">Die TALEX Story</h2>
+                    <p class="text-lg text-gray-300 mb-6 italic border-l-2 border-talex-gold-accent pl-4">
+                        "Essen ist ein Bedürfnis, Genießen ist eine Kunst."
+                    </p>
                     <p class="text-lg text-gray-300 mb-6">
                         Jedes Gericht ist ein Kunstwerk, jeder Wein eine Entdeckung und jeder Besuch ein unvergessliches Erlebnis. Wir legen Wert auf saisonale, lokale Zutaten, die mit Präzision und Leidenschaft zubereitet werden.
                     </p>
                 </div>
-                <div class="rounded-lg overflow-hidden shadow-2xl md:order-2 order-1">
-                    <img src="https://images.unsplash.com/photo-1550966841-3ee3ad3ae447?auto=format&fit=crop&q=80&w=800" alt="Restaurant Interieur" class="w-full h-auto object-cover">
+                <div class="rounded-lg overflow-hidden shadow-2xl md:order-2 order-1 img-container border border-yellow-700/20">
+                    <!--  -->
+                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&q=80&w=1000" alt="Restaurant Interieur" class="w-full h-auto object-cover img-zoom">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Section (Speisen) -->
+    <section class="py-20 bg-talex-deep-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 text-center mb-16">
+            <h2 class="text-4xl font-bold mb-4">Exquisite Impressionen</h2>
+            <div class="h-1 w-24 bg-talex-gold-accent mx-auto"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="group overflow-hidden rounded-lg shadow-xl relative">
+                <!--  -->
+                <img src="https://images.unsplash.com/photo-1546039907-7fa05f864c02?auto=format&fit=crop&q=80&w=800" alt="Vorspeise" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                    <span class="text-talex-gold-accent font-bold tracking-widest">FINE DINING</span>
+                </div>
+            </div>
+            <div class="group overflow-hidden rounded-lg shadow-xl relative">
+                <!--  -->
+                <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=800" alt="Cocktail" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                    <span class="text-talex-gold-accent font-bold tracking-widest">BAR KULTUR</span>
+                </div>
+            </div>
+            <div class="group overflow-hidden rounded-lg shadow-xl relative">
+                <!--  -->
+                <img src="https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&q=80&w=800" alt="Hauptgericht" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                    <span class="text-talex-gold-accent font-bold tracking-widest">MEISTERWERKE</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Reservation Section -->
-    <section id="reservation-section" class="py-20 bg-talex-charcoal">
-        <div class="max-w-xl mx-auto px-4 text-center">
+    <section id="reservation-section" class="py-20 bg-talex-charcoal relative overflow-hidden">
+        <!-- Background Decor -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-talex-gold-accent/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
+        
+        <div class="max-w-xl mx-auto px-4 text-center relative z-10">
             <h2 class="text-4xl sm:text-5xl font-bold mb-4 text-talex-gold-accent">Tisch reservieren</h2>
+            <p class="text-sm text-gray-400 mb-6 italic">(Funktionstüchtige Demo: Senden erfordert PIN "187")</p>
             <div id="reservation-form-wrapper">
                 <form id="reservation-form" class="space-y-6 text-left mt-10">
                     <div class="grid sm:grid-cols-2 gap-6">
-                        <input type="text" name="first_name" id="first_name" placeholder="Vorname" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white outline-none focus:border-talex-gold-accent">
-                        <input type="text" name="last_name" id="last_name" placeholder="Nachname" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white outline-none focus:border-talex-gold-accent">
+                        <input type="text" name="first_name" id="first_name" placeholder="Vorname" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white outline-none focus:border-talex-gold-accent transition">
+                        <input type="text" name="last_name" id="last_name" placeholder="Nachname" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white outline-none focus:border-talex-gold-accent transition">
                     </div>
-                    <input type="email" name="email" id="email" placeholder="E-Mail" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white outline-none focus:border-talex-gold-accent">
+                    <input type="email" name="email" id="email" placeholder="E-Mail" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white outline-none focus:border-talex-gold-accent transition">
                     <div class="grid sm:grid-cols-2 gap-6">
-                        <input type="date" id="date" name="raw_date_input" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white outline-none focus:border-talex-gold-accent" style="color-scheme: dark;">
-                        <input type="number" name="num_guests" id="num_guests" placeholder="Gäste" min="1" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white outline-none focus:border-talex-gold-accent">
+                        <input type="date" id="date" name="raw_date_input" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white outline-none focus:border-talex-gold-accent transition" style="color-scheme: dark;">
+                        <input type="number" name="num_guests" id="num_guests" placeholder="Gäste" min="1" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white outline-none focus:border-talex-gold-accent transition">
                     </div>
-                    <button type="button" onclick="handlePinPrompt('Reservierung')" class="w-full py-3 px-4 rounded-md text-lg font-extrabold text-black talex-gold-accent hover:opacity-90 uppercase tracking-wider flex items-center justify-center space-x-2">
+                    <button type="button" onclick="handlePinPrompt('Reservierung')" class="w-full py-4 px-4 rounded-md text-lg font-extrabold text-black talex-gold-accent hover:opacity-90 uppercase tracking-wider flex items-center justify-center space-x-2 shadow-lg shadow-yellow-700/20">
                         <span id="button-text">Reservierung bestätigen</span>
                         <div id="loading-spinner" class="spinner hidden"></div>
                     </button>
@@ -196,10 +260,16 @@
         </div>
     </section>
 
-    <footer id="hamburg" class="bg-talex-deep-black py-12 border-t border-gray-800 text-center text-gray-500">
-        <div class="text-2xl font-black text-talex-gold-accent mb-2">TALEX</div>
-        <p class="text-xs uppercase tracking-widest text-yellow-700 mb-4">Wird präsentiert im Rahmen eines Web-Projekts</p>
-        <p>&copy; 2025 TALEX. Jungfernstieg 1, Hamburg.</p>
+    <footer id="hamburg" class="bg-talex-deep-black py-16 border-t border-gray-800 text-center text-gray-500">
+        <div class="max-w-2xl mx-auto px-4">
+            <div class="text-2xl font-black text-talex-gold-accent mb-4 tracking-tighter">TALEX</div>
+            <div class="bg-gray-900/50 border border-gray-800 p-6 rounded-lg mb-8 text-sm">
+                <p class="text-talex-gold-accent font-bold uppercase mb-2">Projekt-Hinweis</p>
+                <p>Diese Website wurde exklusiv für eine Präsentation erstellt. Alle Inhalte, Menüangebote und Preise sind fiktiv. Es findet kein realer Geschäftsbetrieb statt.</p>
+            </div>
+            <p class="text-xs uppercase tracking-widest text-yellow-700 mb-4 italic">Design & Konzept im Rahmen eines Web-Projekts</p>
+            <p>&copy; 2025 TALEX. Jungfernstieg 1, Hamburg.</p>
+        </div>
     </footer>
 
     <!-- Chatbot UI -->
@@ -208,35 +278,35 @@
     </button>
 
     <div id="chat-container" class="fixed bottom-24 right-6 w-80 md:w-96 h-0 bg-talex-charcoal rounded-xl shadow-2xl flex flex-col transition-all duration-300 overflow-hidden z-50 border border-gray-700">
-        <div class="p-4 flex justify-between items-center border-b border-gray-700">
-            <h3 class="font-bold text-talex-gold-accent">TALEX Assistent</h3>
-            <button onclick="toggleChat()">×</button>
+        <div class="p-4 flex justify-between items-center border-b border-gray-700 bg-black/40">
+            <h3 class="font-bold text-talex-gold-accent uppercase tracking-widest text-xs">TALEX Assistent (Demo)</h3>
+            <button onclick="toggleChat()" class="text-gray-400 hover:text-white">×</button>
         </div>
-        <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 text-sm"></div>
-        <div class="p-4 border-t border-gray-700 flex space-x-2">
-            <input type="text" id="chat-input" placeholder="Fragen Sie uns..." class="flex-1 p-2 bg-black border border-gray-700 rounded-lg text-white outline-none focus:border-talex-gold-accent">
-            <button onclick="sendMessage()" class="p-2 bg-talex-gold-accent text-black rounded-lg">Go</button>
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 text-sm bg-talex-deep-black/30"></div>
+        <div class="p-4 border-t border-gray-700 flex space-x-2 bg-talex-charcoal">
+            <input type="text" id="chat-input" placeholder="Fragen Sie uns..." class="flex-1 p-2 bg-black border border-gray-700 rounded-lg text-white outline-none focus:border-talex-gold-accent transition text-sm">
+            <button onclick="sendMessage()" class="p-2 bg-talex-gold-accent text-black rounded-lg font-bold px-4 hover:opacity-80">GO</button>
         </div>
     </div>
 
     <!-- PIN Modal -->
     <div id="pin-modal-container" class="modal-overlay modal-closed">
-        <div class="bg-talex-charcoal p-8 rounded-xl border border-talex-gold-accent w-full max-w-sm text-center">
-            <h2 id="modal-title" class="text-xl font-bold mb-2"></h2>
+        <div class="bg-talex-charcoal p-8 rounded-xl border border-talex-gold-accent w-full max-w-sm text-center shadow-2xl">
+            <h2 id="modal-title" class="text-xl font-bold mb-2 uppercase tracking-widest"></h2>
             <p id="modal-message" class="text-sm text-gray-400 mb-6"></p>
-            <input type="password" id="pin-input" maxlength="3" class="w-full p-3 bg-black border border-gray-700 rounded-lg text-center text-2xl tracking-[1em] mb-6 outline-none focus:border-talex-gold-accent">
+            <input type="password" id="pin-input" maxlength="3" class="w-full p-4 bg-black border border-gray-700 rounded-lg text-center text-3xl tracking-[0.5em] mb-6 outline-none focus:border-talex-gold-accent font-mono">
             <div class="flex space-x-4">
-                <button onclick="closeModal('pin-modal-container')" class="flex-1 py-2 bg-gray-700 rounded-lg">Abbrechen</button>
-                <button id="modal-confirm-button" class="flex-1 py-2 bg-talex-gold-accent text-black font-bold rounded-lg">OK</button>
+                <button onclick="closeModal('pin-modal-container')" class="flex-1 py-3 bg-gray-800 hover:bg-gray-700 rounded-lg transition uppercase text-xs font-bold tracking-widest">Abbrechen</button>
+                <button id="modal-confirm-button" class="flex-1 py-3 bg-talex-gold-accent text-black font-bold rounded-lg hover:opacity-80 transition uppercase text-xs tracking-widest">Bestätigen</button>
             </div>
         </div>
     </div>
 
     <!-- Message Modal -->
     <div id="message-modal-container" class="modal-overlay modal-closed">
-        <div class="bg-talex-charcoal p-6 rounded-xl border border-talex-gold-accent text-center max-w-xs">
-            <p id="message-text" class="mb-6"></p>
-            <button onclick="closeModal('message-modal-container')" class="px-6 py-2 bg-talex-gold-accent text-black font-bold rounded-lg">Verstanden</button>
+        <div class="bg-talex-charcoal p-6 rounded-xl border border-talex-gold-accent text-center max-w-xs shadow-2xl">
+            <p id="message-text" class="mb-6 font-medium"></p>
+            <button onclick="closeModal('message-modal-container')" class="px-8 py-2 bg-talex-gold-accent text-black font-bold rounded-lg uppercase tracking-widest text-xs">OK</button>
         </div>
     </div>
 
@@ -261,8 +331,8 @@
             if (type === 'Reservierung') {
                 const form = document.getElementById('reservation-form');
                 if (!form.checkValidity()) { form.reportValidity(); return; }
-                title.textContent = "PIN erforderlich";
-                msg.textContent = "Geben Sie die PIN ein, um die Buchung abzuschließen.";
+                title.textContent = "Sicherheitscode";
+                msg.textContent = "Geben Sie die 3-stellige PIN ein, um die Buchung zu autorisieren.";
             }
 
             document.getElementById('modal-confirm-button').onclick = () => {
@@ -273,7 +343,7 @@
                         submitReservation();
                     }
                 } else {
-                    document.getElementById('message-text').textContent = "Falscher Zugangscode.";
+                    document.getElementById('message-text').textContent = "Zugriff verweigert: PIN ungültig.";
                     openModal('message-modal-container');
                     document.getElementById('pin-input').value = '';
                 }
@@ -285,11 +355,9 @@
             const btnText = document.getElementById('button-text');
             const spin = document.getElementById('loading-spinner');
             
-            // UI Feedback
-            btnText.textContent = "Wird gesendet...";
+            btnText.textContent = "Übermittlung läuft...";
             spin.classList.remove('hidden');
 
-            // Formulardaten sammeln
             const templateParams = {
                 first_name: document.getElementById('first_name').value,
                 last_name: document.getElementById('last_name').value,
@@ -298,31 +366,33 @@
                 num_guests: document.getElementById('num_guests').value
             };
 
-            // EmailJS Senden
             emailjs.send("service_bk7l6sh", "template_2g55mg6", templateParams)
                 .then(function(response) {
-                    console.log('SUCCESS!', response.status, response.text);
                     document.getElementById('reservation-form-wrapper').classList.add('hidden');
                     document.getElementById('success-message').classList.remove('hidden');
+                    document.getElementById('success-message').scrollIntoView({ behavior: 'smooth' });
                 }, function(error) {
-                    console.log('FAILED...', error);
                     btnText.textContent = "Reservierung bestätigen";
                     spin.classList.add('hidden');
-                    document.getElementById('message-text').textContent = "Fehler beim Senden. Bitte versuchen Sie es später erneut.";
+                    document.getElementById('message-text').textContent = "Verbindungsfehler. Bitte erneut versuchen.";
                     openModal('message-modal-container');
                 });
         }
 
         function toggleChat() {
             const c = document.getElementById('chat-container');
-            c.style.height = c.style.height === '450px' ? '0' : '450px';
+            const isOpen = c.style.height === '450px';
+            c.style.height = isOpen ? '0' : '450px';
+            if(!isOpen && document.getElementById('chat-messages').children.length === 0) {
+                setTimeout(() => addMsg("Willkommen bei TALEX. Wie kann ich Ihnen bei Ihrer heutigen Planung behilflich sein?", 'ai'), 300);
+            }
         }
 
         function addMsg(text, sender) {
             const m = document.getElementById('chat-messages');
             const d = document.createElement('div');
             d.className = `flex ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
-            d.innerHTML = `<div class="p-3 rounded-lg max-w-[85%] ${sender === 'user' ? 'chat-bubble-user' : 'chat-bubble-ai'}">${text}</div>`;
+            d.innerHTML = `<div class="p-3 rounded-xl max-w-[85%] shadow-sm ${sender === 'user' ? 'chat-bubble-user font-bold' : 'chat-bubble-ai border border-gray-700'}">${text}</div>`;
             m.appendChild(d);
             m.scrollTop = m.scrollHeight;
         }
@@ -333,7 +403,7 @@
             if(!p) return;
             addMsg(p, 'user');
             i.value = '';
-            setTimeout(() => addMsg("Vielen Dank. Ein Mitarbeiter wird sich in Kürze melden.", 'ai'), 800);
+            setTimeout(() => addMsg("Dies ist eine Demo-Antwort. In der realen Version würde unser Concierge-Team nun mit Ihnen kommunizieren.", 'ai'), 800);
         }
 
         document.getElementById('chat-input').onkeydown = (e) => e.key === 'Enter' && sendMessage();
