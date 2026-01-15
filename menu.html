@@ -12,6 +12,16 @@
         .gold-text { color: #B8860B; }
         .menu-card { background-color: #1A1A1A; border-top: 4px solid #B8860B; }
         .modal-backdrop { background-color: rgba(0, 0, 0, 0.9); z-index: 1000; }
+        .special-badge { 
+            font-size: 0.65rem; 
+            background: #B8860B; 
+            color: black; 
+            padding: 1px 6px; 
+            border-radius: 2px; 
+            margin-left: 8px;
+            vertical-align: middle;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body class="p-6">
@@ -25,7 +35,7 @@
             
             <div class="flex justify-center gap-4 mt-6">
                 <button onclick="showModal()" class="text-xs font-bold border border-[#B8860B] text-[#B8860B] px-4 py-2 rounded hover:bg-white hover:text-black transition uppercase">German Version</button>
-                <a href="lunch.html" class="text-xs font-bold bg-white text-black px-4 py-2 rounded hover:bg-gray-200 transition uppercase">Lunch Menu</a>
+                <a href="#" class="text-xs font-bold bg-white text-black px-4 py-2 rounded hover:bg-gray-200 transition uppercase">Lunch Menu</a>
             </div>
         </header>
 
@@ -35,6 +45,11 @@
             <section>
                 <h2 class="text-2xl gold-text border-b border-gray-800 mb-4 pb-1">Salty Food</h2>
                 <div class="space-y-4">
+                    <!-- Grand Plate for 2-3 Persons -->
+                    <div class="flex justify-between">
+                        <span>TALEX Grand Breakfast Tower <span class="special-badge">FOR 2-3 PERS.</span><small class="block text-gray-500 italic font-light">Assorted eggs, premium cold cuts, cheeses, avocado, fruits & bread basket</small></span>
+                        <span class="font-bold">38€</span>
+                    </div>
                     <div class="flex justify-between">
                         <span>Big Omelette <small class="block text-gray-500 italic font-light">Eggs, fried potatoes and bacon</small></span>
                         <span class="font-bold">12€</span>
@@ -141,7 +156,6 @@
         function checkCode() {
             const val = document.getElementById('codeInput').value;
             if(val === PIN) { 
-                // Redirecting to German menu file
                 window.location.href = "menu_de.html";
             }
             else { 
@@ -151,7 +165,6 @@
             }
         }
 
-        // Add event listener for 'Enter' key
         document.getElementById('codeInput').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 checkCode();
