@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TALEX | Exklusives Restaurant & Bar</title>
+    <title>TALEX | Präsentations-Projekt</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -12,7 +12,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
     
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3.12.0/dist/email.min.js" defer></script>
+    <!-- EmailJS Integration -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3.12.0/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // Initialisierung mit deinem Public Key
+            emailjs.init("TfYfrsrGIHYhdVnHO");
+        })();
+    </script>
 
     <!-- Firebase / Canvas Authentication -->
     <script type="module">
@@ -94,6 +101,18 @@
 
         .chat-bubble-user { background-color: #B8860B; color: #000000; border-bottom-right-radius: 0; }
         .chat-bubble-ai { background-color: #333333; color: #F5F5DC; border-bottom-left-radius: 0; }
+        
+        /* Badge für Präsentations-Modus */
+        .presentation-badge {
+            background-color: #B8860B;
+            color: black;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
     </style>
 </head>
 <body class="bg-talex-deep-black text-off-white">
@@ -102,10 +121,12 @@
     <nav class="fixed top-0 left-0 w-full z-30 shadow-2xl bg-black/95 border-b border-yellow-700/30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
             <div class="flex flex-col sm:flex-row justify-between items-center">
-                <a href="#hero" class="text-3xl sm:text-4xl font-black tracking-widest text-talex-gold-accent mb-2 sm:mb-0">TALEX</a>
+                <div class="flex flex-col items-center sm:items-start mb-2 sm:mb-0">
+                    <a href="#hero" class="text-3xl sm:text-4xl font-black tracking-widest text-talex-gold-accent">TALEX</a>
+                    <span class="presentation-badge mt-1">Website für Präsentationszwecke</span>
+                </div>
                 <div class="flex items-center space-x-4 sm:space-x-8 text-sm sm:text-lg">
                     <a href="#about" class="font-medium text-off-white hover:text-talex-gold-accent transition py-1 uppercase tracking-wider">Story</a>
-                    <!-- Direkter Link zum Menü ohne PIN -->
                     <a href="menu.html" class="font-medium text-off-white hover:text-talex-gold-accent transition py-1 uppercase tracking-wider">Menu</a>
                     <a href="#hamburg" class="font-medium text-off-white hover:text-talex-gold-accent transition py-1 uppercase tracking-wider">Location</a>
                 </div>
@@ -154,15 +175,14 @@
             <div id="reservation-form-wrapper">
                 <form id="reservation-form" class="space-y-6 text-left mt-10">
                     <div class="grid sm:grid-cols-2 gap-6">
-                        <input type="text" name="first_name" placeholder="Vorname" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white">
-                        <input type="text" name="last_name" placeholder="Nachname" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white">
+                        <input type="text" name="first_name" id="first_name" placeholder="Vorname" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white outline-none focus:border-talex-gold-accent">
+                        <input type="text" name="last_name" id="last_name" placeholder="Nachname" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white outline-none focus:border-talex-gold-accent">
                     </div>
-                    <input type="email" name="email" placeholder="E-Mail" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white">
+                    <input type="email" name="email" id="email" placeholder="E-Mail" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white outline-none focus:border-talex-gold-accent">
                     <div class="grid sm:grid-cols-2 gap-6">
-                        <input type="date" id="date" name="raw_date_input" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white" style="color-scheme: dark;">
-                        <input type="number" name="num_guests" placeholder="Gäste" min="1" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white">
+                        <input type="date" id="date" name="raw_date_input" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white outline-none focus:border-talex-gold-accent" style="color-scheme: dark;">
+                        <input type="number" name="num_guests" id="num_guests" placeholder="Gäste" min="1" required class="w-full p-3 bg-talex-deep-black border border-gray-700 rounded-md text-off-white outline-none focus:border-talex-gold-accent">
                     </div>
-                    <input type="hidden" id="formatted_date_output" name="reservation_date_formatted">
                     <button type="button" onclick="handlePinPrompt('Reservierung')" class="w-full py-3 px-4 rounded-md text-lg font-extrabold text-black talex-gold-accent hover:opacity-90 uppercase tracking-wider flex items-center justify-center space-x-2">
                         <span id="button-text">Reservierung bestätigen</span>
                         <div id="loading-spinner" class="spinner hidden"></div>
@@ -171,13 +191,14 @@
             </div>
             <div id="success-message" class="hidden mt-10 p-8 rounded-xl border border-talex-gold-accent bg-talex-deep-black text-talex-gold-accent">
                 <h3 class="text-3xl font-bold">Bestätigt!</h3>
-                <p class="text-gray-300">Wir freuen uns auf Sie.</p>
+                <p class="text-gray-300">Vielen Dank. Wir haben Ihre Reservierungsanfrage erhalten.</p>
             </div>
         </div>
     </section>
 
     <footer id="hamburg" class="bg-talex-deep-black py-12 border-t border-gray-800 text-center text-gray-500">
-        <div class="text-2xl font-black text-talex-gold-accent mb-4">TALEX</div>
+        <div class="text-2xl font-black text-talex-gold-accent mb-2">TALEX</div>
+        <p class="text-xs uppercase tracking-widest text-yellow-700 mb-4">Wird präsentiert im Rahmen eines Web-Projekts</p>
         <p>&copy; 2025 TALEX. Jungfernstieg 1, Hamburg.</p>
     </footer>
 
@@ -198,7 +219,7 @@
         </div>
     </div>
 
-    <!-- PIN Modal (Nur noch für Reservierungen genutzt) -->
+    <!-- PIN Modal -->
     <div id="pin-modal-container" class="modal-overlay modal-closed">
         <div class="bg-talex-charcoal p-8 rounded-xl border border-talex-gold-accent w-full max-w-sm text-center">
             <h2 id="modal-title" class="text-xl font-bold mb-2"></h2>
@@ -261,16 +282,35 @@
         }
 
         async function submitReservation() {
-            const btn = document.getElementById('button-text');
+            const btnText = document.getElementById('button-text');
             const spin = document.getElementById('loading-spinner');
-            btn.textContent = "Wird geprüft...";
+            
+            // UI Feedback
+            btnText.textContent = "Wird gesendet...";
             spin.classList.remove('hidden');
 
-            setTimeout(() => {
-                document.getElementById('reservation-form-wrapper').classList.add('hidden');
-                document.getElementById('success-message').classList.remove('hidden');
-                spin.classList.add('hidden');
-            }, 1500);
+            // Formulardaten sammeln
+            const templateParams = {
+                first_name: document.getElementById('first_name').value,
+                last_name: document.getElementById('last_name').value,
+                email: document.getElementById('email').value,
+                reservation_date: document.getElementById('date').value,
+                num_guests: document.getElementById('num_guests').value
+            };
+
+            // EmailJS Senden
+            emailjs.send("service_bk7l6sh", "template_2g55mg6", templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    document.getElementById('reservation-form-wrapper').classList.add('hidden');
+                    document.getElementById('success-message').classList.remove('hidden');
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    btnText.textContent = "Reservierung bestätigen";
+                    spin.classList.add('hidden');
+                    document.getElementById('message-text').textContent = "Fehler beim Senden. Bitte versuchen Sie es später erneut.";
+                    openModal('message-modal-container');
+                });
         }
 
         function toggleChat() {
