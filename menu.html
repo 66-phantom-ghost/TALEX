@@ -24,7 +24,7 @@
             <p class="text-gray-400 text-sm tracking-widest uppercase italic">Our Best Foods & Drinks</p>
             
             <div class="flex justify-center gap-4 mt-6">
-                <button onclick="showModal()" class="text-xs font-bold border border-talex-gold-accent px-4 py-2 rounded hover:bg-white hover:text-black transition uppercase">German Version</button>
+                <button onclick="showModal()" class="text-xs font-bold border border-[#B8860B] text-[#B8860B] px-4 py-2 rounded hover:bg-white hover:text-black transition uppercase">German Version</button>
                 <a href="lunch.html" class="text-xs font-bold bg-white text-black px-4 py-2 rounded hover:bg-gray-200 transition uppercase">Lunch Menu</a>
             </div>
         </header>
@@ -125,22 +125,38 @@
 
     <script>
         const PIN = "187";
+        
         function showModal() { 
             document.getElementById('codeModal').classList.remove('hidden'); 
             document.getElementById('codeModal').classList.add('flex');
             document.getElementById('codeInput').focus();
         }
-        function hideModal() { document.getElementById('codeModal').classList.replace('flex', 'hidden'); }
+
+        function hideModal() { 
+            document.getElementById('codeModal').classList.replace('flex', 'hidden'); 
+            document.getElementById('errorMsg').classList.add('hidden');
+            document.getElementById('codeInput').value = '';
+        }
+
         function checkCode() {
             const val = document.getElementById('codeInput').value;
             if(val === PIN) { 
-                alert("PIN correct! Moving to German menu...");
+                // Redirecting to German menu file
+                window.location.href = "menu_de.html";
             }
             else { 
                 document.getElementById('errorMsg').classList.remove('hidden');
                 document.getElementById('codeInput').value = '';
+                document.getElementById('codeInput').focus();
             }
         }
+
+        // Add event listener for 'Enter' key
+        document.getElementById('codeInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkCode();
+            }
+        });
     </script>
 </body>
 </html>
